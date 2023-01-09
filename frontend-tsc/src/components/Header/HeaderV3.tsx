@@ -24,13 +24,11 @@ import MobileNav from './MobileNav';
 const games = [
     {
         name: 'Sprint',
-        description: 'Get a better understanding of where your traffic is coming from.',
         href: '#',
         icon: ArrowSmallRightIcon,
     },
     {
         name: 'Audio-Call',
-        description: 'Speak directly to your customers in a more meaningful way.',
         href: '#',
         icon: ArrowSmallRightIcon,
     },
