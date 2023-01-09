@@ -7,9 +7,14 @@ from pocketbase_api import *
 app = Flask(__name__)
 
 
-@app.route('/', methods=["GET"])
-def hello_world():
-    return {"message": "Hello!"}, 201
+@app.route('/users', methods=["GET", "POST"])
+def users():
+    if (request.method == 'POST'):      # Create new user
+        body = request.get_json()
+        return create_user(body['username'], body['email'], body['password'], body['passwordConfirm'], body['name'], body['role'])
+    elif (request.method == 'GET'):     # Get list of users
+        # TODO
+        return 0
 
 
 @app.route('/courses', methods=["POST", "GET"])
