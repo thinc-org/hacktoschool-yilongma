@@ -7,24 +7,26 @@ import Boy from '../../assets/images/casual-life-3d-boy-sitting-at-the-desk-with
 
 function Home() {
   return (
-    <div className='w-screen h-full p-32 px-72 bg-[#F6F5F4]'>
-      <div id='1' className='flex flex-row gap-16'>
-        <div className='w-full p-8'>
-          <div>
-            <p className='text-[#2B788B] font-[Montserrat] font-bold'>E-COURSE PLATFORM</p>
-            <h1 className='font-[DelaGothicOne] text-black font-normal text-6xl mt-6'>Learning and teaching online, made easy.</h1>
+    <div className='w-screen h-full md:p-12 md:px-24 lg:p-20 lg:px-48  xl:p-32 xl:px-72 bg-[#F6F5F4]'>
+      <div id='1' className='flex flex-col md:flex-row gap-16'>
+        {/* Left Side */}
+        <div className='w-full p-8 flex flex-col items-center md:items-start'>
+          <div className='w-[90%] md:w-[80%]'>
+            <p className='text-[#2B788B] font-[Montserrat] font-bold text-sm md:text-[1vw] text-center md:text-start'>E-COURSE PLATFORM</p>
+            <h1 className='font-[DelaGothicOne] text-black font-normal text-center text-3xl md:text-[2.5vw] mt-6 md:text-start leading-tight'>Learning and teaching online, made easy.</h1>
           </div>
-          <div className='w-[60%] mt-8'>
-            <h2 className='font-[Montserrat] font-semibold text-[#757575] text-md'>Practice your English and learn new things with the platform.</h2>
+          <div className='w-[100%] md:w-[60%] mt-8'>
+            <h2 className='font-[Montserrat] font-semibold text-[#757575] text-sm md:text-start text-center md:text-[0.9vw] hidden md:block'>Practice your English and learn new things with the platform.</h2>
+            <h2 className='font-[Montserrat] font-semibold text-[#757575] text-sm md:text-start text-center md:text-[0.9vw] md:hidden block'>Practice and learn new things with the platform.</h2>
           </div>
           <div>
             <button className='rounded-full bg-[#C3DCE3] px-3 py-2.5 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10'>
               About Platform
             </button>
           </div>
-          <div className='mt-10 flex items-center justify-start w-full flex-row h-fit gap-10'>
+          <div className='mt-10 flex items-center justify-center md:justify-start w-full flex-row h-fit gap-4 md:gap-10'>
             <div>
-              <div className='font-[DelaGothicOne] flex items-center text-3xl'>
+              <div className='font-[DelaGothicOne] flex items-center text-2xl md:text-3xl'>
                 <BsLightningFill className='text-[#2B788B]' />
                 <span>600</span>
                 <span className='text-[#2B788B]'>+</span>
@@ -47,13 +49,13 @@ function Home() {
           </div>
         </div>
         {/* Right Side */}
-        <div className='w-full relative'>
-          <div>
-            <img className="absolute top-36" src={JoyStick}></img>
-            <img className="absolute" src={Boy}></img>
-            <img className="absolute -right-44" src={Plant}></img>
+        <div className='w-full relative flex items-center justify-center'>
+          <div className='relative left-5 w-[80%] md:left-0 md:w-[100%] aspect-[1.2/1] overflow-hidden'>
+            <img className="top-[35%] left-0 w-[30%] hidden absolute md:block" src={JoyStick}></img>
+            <img className="absolute bottom-[10%] left-0 w-[80%]" src={Boy}></img>
+            <img className="absolute bottom-0 right-0 h-[75%]" src={Plant}></img>
           </div>
-          
+
         </div>
       </div>
     </div>
