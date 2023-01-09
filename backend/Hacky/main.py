@@ -13,8 +13,7 @@ def users():
         body = request.get_json()
         return create_user(body['username'], body['email'], body['password'], body['passwordConfirm'], body['name'], body['role'])
     elif (request.method == 'GET'):     # Get list of users
-        # TODO
-        return 0
+        return get_all_users()
 
 
 @app.route('/courses', methods=["POST", "GET"])

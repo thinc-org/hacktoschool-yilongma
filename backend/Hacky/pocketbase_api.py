@@ -16,6 +16,10 @@ def create_user(username, email, password, passwordConfirm, name, role):  # role
     return response.json()
 
 
+def get_all_users(sort='', filter=''):
+    response = requests.get('https://pb.jjus.dev/api/collections/users/records?sort='+sort+'&filter='+filter)
+    return response.json()
+
 def get_all_courses(sort='', filter=''):
     response = requests.get('https://pb.jjus.dev/api/collections/courses/records?sort='+sort+'&filter='+filter)
     return response.json()
