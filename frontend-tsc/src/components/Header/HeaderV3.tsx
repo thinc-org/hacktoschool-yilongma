@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 import { FaUserCircle } from 'react-icons/fa'
 import { RiArrowDropDownLine } from 'react-icons/ri'
+import {BiMenuAltLeft } from 'react-icons/bi'
 import Avatar from '@mui/material/Avatar'
 import { MenuUnstyled } from '@mui/base';
 import { Fragment } from 'react'
@@ -14,20 +15,10 @@ import {
 } from '@heroicons/react/24/outline'
 
 import {
-    ArrowPathIcon,
     Bars3Icon,
-    BookmarkSquareIcon,
-    CalendarIcon,
-    ChartBarIcon,
-    CursorArrowRaysIcon,
-    LifebuoyIcon,
-    PhoneIcon,
-    PlayIcon,
-    ShieldCheckIcon,
-    Squares2X2Icon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
-import MobileNav from './components/MobileNav';
+import MobileNav from './MobileNav';
 
 
 const games = [
@@ -48,7 +39,7 @@ const games = [
 
 
 function HeaderV3() {
-    function classNames(...classes) {
+    function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
     const [open, setOpen] = useState(false)
@@ -66,9 +57,11 @@ function HeaderV3() {
                         <div id='buttons' className='flex flex-row gap-3'>
                             <Popover>
                                 <div className="-my-2 -mr-2 md:hidden">
-                                    <button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-1" onClick={handleNavMenu}>
+                                    <button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 outline-none focus:ring-1" onClick={handleNavMenu}>
                                         <span className="sr-only">Open menu</span>
-                                        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                                        {!open ? <BiMenuAltLeft className="h-6 w-6" aria-hidden="true" /> : <XMarkIcon className="h-6 w-6" aria-hidden="true" />}
+                                        
+                                        
                                     </button>
                                     
                                 </div>
