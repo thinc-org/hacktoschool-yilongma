@@ -7,6 +7,7 @@ import HeaderV2 from './components/Header/HeaderV2'
 import HeaderV3 from './components/Header/HeaderV3'
 import Home from './components/Homepage/Home'
 import Login from './components/Login/Login'
+import Register from './components/Register/Register'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Routes>
           <Route path='/' element={<><HeaderV3/><Home/></>} />
           <Route path='/login' element={<><Login/></>} />
+          <Route path='/register' element={<><Register/></>} />
         </Routes>
       </BrowserRouter>
   </React.StrictMode>,
