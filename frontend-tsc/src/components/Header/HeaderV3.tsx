@@ -116,7 +116,7 @@ function HeaderV3() {
                                                                         <div className="ml-4">
                                                                             <p className="text-base font-medium text-[#757575] hover:text-[#333333]">{item.name}</p>
                                                                         </div>
-                                                                        <item.icon className="h-4 w-4 flex-shrink-0 text-" aria-hidden="true" />
+                                                                        <item.icon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                                                                     </a>
                                                                 ))}
                                                             </div>
