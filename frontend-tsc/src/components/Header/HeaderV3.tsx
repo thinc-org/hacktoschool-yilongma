@@ -134,7 +134,9 @@ function HeaderV3() {
                     <div id='company' className="font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
                     <div className='flex flex-row gap-4 items-center'>
                         <FaUserCircle />
-                        <button id='user'>Login</button>
+                        <a href="/login" className="text-base font-medium hover:text-[#333333] text-[#757575]">
+                            Login
+                        </a>
 
 
                     </div>

@@ -11,6 +11,7 @@ specifiers:
   '@types/react-dom': ^18.0.9
   '@vitejs/plugin-react': ^3.0.0
   autoprefixer: ^10.4.13
+  pocketbase: ^0.9.1
   postcss: ^8.4.21
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -18,7 +19,7 @@ specifiers:
   react-router-dom: ^6.6.1
   tailwindcss: ^3.2.4
   typescript: ^4.9.3
-  vite: ^4.0.0
+  vite: ^4.0.4
 
 dependencies:
   '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
@@ -27,6 +28,7 @@ dependencies:
   '@heroicons/react': 2.0.13_react@18.2.0
   '@mui/base': 5.0.0-alpha.112_ib3m5ricvtkl2cll7qpr2f6lvq
   '@mui/material': 5.11.3_lskpmcsdi7ipu6qpuapyu56ihm
+  pocketbase: 0.9.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
@@ -1422,6 +1424,10 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pocketbase/0.9.1:
+    resolution: {integrity: sha512-a9S/WHak+mgr3WI8bD2tz3lFVFzoy6ZgKTBlUXwIH4VLTKVU3JKeAKxqIFBF7av4qblmB+52tX8sWLS08Ftm/w==}
+    dev: false
 
   /postcss-import/14.1.0_postcss@8.4.21:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
