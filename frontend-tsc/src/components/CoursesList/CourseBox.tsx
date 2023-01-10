@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const CourseBox = ({ id, name, instructor }) => {
+const CourseBox = ({ id, name, instructor }:{id:string; name:string; instructor: string;}) => {
 
     let navigate = useNavigate(); 
     const routeChange = () =>{ 
