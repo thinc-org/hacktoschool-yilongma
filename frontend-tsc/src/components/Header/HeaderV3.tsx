@@ -48,7 +48,7 @@ function HeaderV3() {
     useEffect(() => {
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
-        authRefresh().catch(console.error)
+        authRefresh().catch(handleLogout)
     },[])
 
 
