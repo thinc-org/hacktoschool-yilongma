@@ -28,8 +28,11 @@ function Home() {
             <h2 className='font-[Montserrat] font-semibold text-[#757575] text-sm md:text-start text-center md:text-[0.9vw] hidden md:block'>Practice your English and learn new things with the platform.</h2>
             <h2 className='font-[Montserrat] font-semibold text-[#757575] text-sm md:text-start text-center md:text-[0.9vw] md:hidden block'>Practice and learn new things with the platform.</h2>
           </div>
-          <div>
-            <button className='rounded-full bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'>
+          <div className='flex flex-row gap-4'>
+            <button className='rounded-xl bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'>
+              Sign In ➜
+            </button>
+            <button className='rounded-xl bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'>
               About Platform
             </button>
           </div>

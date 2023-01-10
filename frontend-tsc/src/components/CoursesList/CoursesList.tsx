@@ -40,14 +40,14 @@ function CoursesList() {
 
     return (
         <div className='max-w-screen min-h-screen bg-[#F6F5F4]'>
-            <div className='flex flex-col md:p-12 md:px-24 lg:p-12 lg:px-48  xl:p-12 xl:px-48'>
+            <div className='flex flex-col p-6 md:p-12 md:px-24 lg:p-12 lg:px-48  xl:p-12 xl:px-48'>
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
                         <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
                     </div>
                 </div>
 
-                <div>
+                <div className='max-w-full'>
                     {
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }) => {
                             console.log(data);
