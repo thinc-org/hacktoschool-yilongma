@@ -16,14 +16,18 @@ const Course = () => {
         navigate('/login');
     }
 
+    console.log(pb.authStore.model!)
+
     const [courseData, setCourseData] = useState<any>({
         "id": "",
         "name": "",
+        "instructor": "",
         "expand": {
             "instructor": {},
             "student": []
         },
-        "description": ""
+        "description": "",
+        "student": [],
     });
 
     const getCourseData = async () => {
@@ -49,8 +53,13 @@ const Course = () => {
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-3 font-bold overflow-hidden whitespace-pre-line">Instructor: {courseData.expand.instructor.name}</p>
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-auto whitespace-pre-line">{courseData.description}</p>
                         <div className="flex flex-col px-8 py-2">
-                            
-                            {(pb.authStore.model!.role.includes('student') && !courseData.student.includes(pb.authStore.model!.id))?<button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button>:""}
+                            {
+                                ((pb.authStore.model!.role).includes('student'))?
+                                    (!courseData.student.includes(pb.authStore.model!.id)?
+                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button>:
+                                        <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline disabled">Enrolled</button>):
+                                    ""
+                            }
                         </div>
 
                     </div>
