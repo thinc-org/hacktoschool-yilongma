@@ -16,11 +16,17 @@ function CoursesList() {
         navigate('/login');
     }
 
+    var rolefilter = "";
+    if (pb.authStore.model!.role.includes('instructor')) {
+        rolefilter = 'instructor ~ "' + pb.authStore.model!.id + '"'
+    }
+
+
     const [coursesList, setCoursesList] = useState<any>([]);
 
     const getCoursesList = async () => {
         const resultList = await pb.collection('courses').getList(1, 50, {
-            filter: '',
+            filter: rolefilter,
             expand: 'instructor'
         })
         setCoursesList(resultList.items)
