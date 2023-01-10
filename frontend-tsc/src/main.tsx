@@ -19,8 +19,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/' element={<><HeaderV3/><Home/><Footer/></>} />
           <Route path='/login' element={<><Login/></>} />
           <Route path='/register' element={<><Register/></>} />
-          <Route path='/courses' element={<><HeaderV3/><CoursesList/></>} />
-          <Route path='/courses/:id' element={<><HeaderV3/><Course/></>} />
+          <Route path='/courses' element={<><HeaderV3/><CoursesList/><Footer/></>} />
+          <Route path='/courses/:id' element={<><HeaderV3/><Course/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
