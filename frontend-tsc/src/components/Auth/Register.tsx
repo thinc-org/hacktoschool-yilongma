@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie'
@@ -26,8 +26,17 @@ const regisSchema = Yup.object().shape({
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
+
 function Register() {
     const navigate = useNavigate();
+    const token = pb.authStore.token;
+
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    })
+
 
     const handleLogin = async (values: { email: string; password: string }) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
@@ -63,9 +72,10 @@ function Register() {
             "role": [values.role]
         };
         await pb.collection('users').create(data)
-            .then(() => {
+            .then(async () => {
+                await pb.collection('users').requestVerification(values.email);
+                console.log('Sent Email')
                 handleLogin(values)
-                pb.collection('users').requestVerification(values.email);
             })
     }
 
@@ -79,7 +89,7 @@ function Register() {
                         onSubmit={(values) => {
                             handleRegister(values)
                         }}
-                        initialValues={{ username: "", email: "", password: "", name: "", confirm: "", role: "" }}
+                        initialValues={{ username: "", email: "", password: "", name: "", confirm: "", role: "student" }}
                         validationSchema={regisSchema}>
                         {({
                             values,
@@ -206,7 +216,6 @@ function Register() {
                                     <button
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                         type="submit"
-                                        disabled={isSubmitting}
                                     >
                                         Sign Up
                                     </button>

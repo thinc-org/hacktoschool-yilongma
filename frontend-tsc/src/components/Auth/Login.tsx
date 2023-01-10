@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie'
@@ -18,6 +18,13 @@ const pb = new PocketBase('https://pb.jjus.dev');
 
 function Login() {
     const navigate = useNavigate();
+    const token = pb.authStore.token;
+
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    })
 
     const handleSubmit = async (values: { email: string; password: string; }) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
