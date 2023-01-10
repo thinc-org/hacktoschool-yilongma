@@ -15,6 +15,7 @@ import {
 function Home() {
   return (
     <div className='max-w-screen h-full'>
+      
       <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-12 md:px-24 lg:p-20 lg:px-48  xl:p-32 xl:px-72'>
         {/* Left Side */}
         <div className='w-full p-8 flex flex-col items-center md:items-start'>
