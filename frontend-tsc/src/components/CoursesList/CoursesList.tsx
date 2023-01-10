@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
 
@@ -7,22 +7,21 @@ const pb = new PocketBase('https://pb.jjus.dev');
 
 
 function CoursesList() {
-
-    const [coursesList, setCoursesList] = useState();
+    const [coursesList, setCoursesList] = useState([]);
 
     const getCoursesList = async () => {
         const resultList = await pb.collection('courses').getList(1, 50, {
             filter: '',
-        });
+            expand: 'instructor'
+        })
+        setCoursesList(resultList.items)
     }
 
-    const handleSubmit = async (values: { search: string; }) => {
-        
-    }
+    
 
-
-
-
+    useEffect(() => {
+        getCoursesList();
+    }, [])
 
     return (
         <div className='max-w-screen min-h-screen bg-[#F6F5F4]'>
@@ -34,9 +33,15 @@ function CoursesList() {
                 </div>
 
                 <div>
-                    <CourseBox/>
-                    <CourseBox/>
-                    <CourseBox/>
+                    {
+                        coursesList.map((data) => {
+                            console.log(data);
+                            return (
+                                
+                                <CourseBox name={data.name} instructor={data.expand.instructor.name}/>
+                            )
+                        })
+                    }
                 </div>
             
             </div>
