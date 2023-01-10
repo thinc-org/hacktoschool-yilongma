@@ -87,7 +87,7 @@ const Course = () => {
     }, [])
 
     return (
-        <div className='max-w-screen min-h-screen bg-[#F6F5F4 flex items-center md:items-start'>
+        <div className='max-w-screen min-h-screen bg-[#F6F5F4 flex flex-col items-center md:items-start'>
             <div className='flex flex-col md:p-12 md:px-24 lg:p-12 lg:px-48  xl:p-12 xl:px-48'>
                 <div className="hidden md:grid grid-cols-[20vw_1fr] rounded-lg bg-[#FFFFFF] h-64 mt-8 mb-8 shadow hover:shadow-lg">
                     <img src="https://picsum.photos/200/300" className='w-full h-full rounded-l-lg min-h-64 max-h-64 min-w-64 max-w-64' />
@@ -123,8 +123,9 @@ const Course = () => {
                         </div>
                     </div>
                 </div>
+                {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
             </div>
-            {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
+            
         </div>
 
     )
