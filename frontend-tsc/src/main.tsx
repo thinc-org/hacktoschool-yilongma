@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
-import App from './App'
 import HeaderV3 from './components/Header/HeaderV3'
 import Home from './components/Homepage/Home'
 import Footer from './components/Footer/Footer'
