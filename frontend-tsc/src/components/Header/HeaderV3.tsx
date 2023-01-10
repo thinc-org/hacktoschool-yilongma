@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaUserCircle } from 'react-icons/fa'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { Fragment } from 'react'
@@ -34,9 +34,25 @@ const games = [
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
+
+
 function HeaderV3() {
-    const cookie = Cookies.get('token')
+    const token = pb.authStore.token;
     const navigate = useNavigate();
+    const dataFetchedRef = useRef(false);
+
+    const authRefresh = async () => {
+        await pb.collection('users').authRefresh();
+    }
+
+    useEffect(() => {
+        if (dataFetchedRef.current || (token == '')) return;
+        dataFetchedRef.current = true;
+        console.log('Refresh')
+        console.log(token)
+        authRefresh().catch(console.error)
+    },[])
+
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
@@ -138,7 +154,7 @@ function HeaderV3() {
                     </div>
                     <div id='company' className="absolute left-[50%] -translate-x-[50%] font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
                     <div className='flex flex-row gap-1 md:gap-2 items-center'>
-                        {!cookie ?
+                        {!token ?
                             <a href="/login" className="text-base font-semibold font-[Montserrat] text-[#000]">
                                 Login <span className='text-[0.5rem] text-center align-middle'>➜</span>
                             </a> :
