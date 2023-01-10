@@ -5,10 +5,10 @@ import HeaderV3 from './components/Header/HeaderV3'
 import Home from './components/Homepage/Home'
 import Footer from './components/Footer/Footer'
 import Login from './components/Auth/Login'
-import Register from './components/Register/Register'
 import CoursesList from './components/CoursesList/CoursesList'
 import Course from './components/Course/Course'
 import './index.css'
+import Register from './components/Auth/Register'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
