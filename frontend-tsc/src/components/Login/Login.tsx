@@ -35,11 +35,6 @@ function Login() {
                         Sign In
                     </button>
                 </div>
-                <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        dddddddddddddddddddd
-                    </label>
-                </div>
             </form>
         </div>
 
