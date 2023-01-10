@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import PocketBase from 'pocketbase'
-import StudentList from './StudentList';
+import StudentList from './StudentList'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 const Course = () => {
     let { id } = useParams();
+    let navigate = useNavigate(); 
+    const cookie = Cookies.get('token')
+
+    if (!cookie) {
+        navigate('/login');
+    }
 
     const [courseData, setCourseData] = useState<any>({
         "id": "",
@@ -27,6 +35,7 @@ const Course = () => {
     }
 
     useEffect(() => {
+        
         getCourseData();
     }, [])
 
@@ -38,14 +47,15 @@ const Course = () => {
                     <div className='flex flex-col'>
                         <p className="font-['DelaGothicOne'] text-[1.2rem] px-8 py-4 overflow-hidden whitespace-pre-line">{courseData.name}</p>
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-3 font-bold overflow-hidden whitespace-pre-line">Instructor: {courseData.expand.instructor.name}</p>
-                        <p className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-auto whitespace-pre-line">Description: {courseData.description}</p>
+                        <p className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-auto whitespace-pre-line">{courseData.description}</p>
                         <div className="flex flex-col px-8 py-2">
-                            <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button>
+                            
+                            {(pb.authStore.model!.role.includes('student') && !courseData.student.includes(pb.authStore.model!.id))?<button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button>:""}
                         </div>
 
                     </div>
                 </div>
-                <StudentList data={courseData}/>
+                {pb.authStore.model!.role.includes('instructor')?<StudentList data={courseData}/>:""}
             </div>
         </div>
         

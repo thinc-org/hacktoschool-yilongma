@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 
 function CoursesList() {
+    let navigate = useNavigate(); 
+    const cookie = Cookies.get('token')
+
+    if (!cookie) {
+        navigate('/login');
+    }
+
     const [coursesList, setCoursesList] = useState<any>([]);
 
     const getCoursesList = async () => {
