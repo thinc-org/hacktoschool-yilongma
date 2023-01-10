@@ -54,7 +54,7 @@ function Register() {
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="confirm" type="password" placeholder="**********" />
                     </div>
                 </div>
-                <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3 mb-6 md:mb-0">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Role
@@ -73,7 +73,7 @@ function Register() {
                 </div>
                 
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-center">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                         Sign Up
                     </button>
