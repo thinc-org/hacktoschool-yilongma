@@ -20,7 +20,7 @@ const CourseBox = ({ id, name, instructor }) => {
                 <p className="font-['Montserrat'] text-[1rem] px-8 py-2 font-bold overflow-hidden whitespace-pre-line">Instructor: {instructor}</p>
                 
                 <div className="flex flex-col px-8 py-2">
-                    <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" onClick={routeChange}>Enroll</button>
+                    <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" onClick={routeChange}>Description</button>
                 </div>
                 
             </div>

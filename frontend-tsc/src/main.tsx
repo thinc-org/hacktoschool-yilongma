@@ -7,6 +7,7 @@ import Home from './components/Homepage/Home'
 import Login from './components/Auth/Login'
 import Register from './components/Register/Register'
 import CoursesList from './components/CoursesList/CoursesList'
+import Course from './components/Course/Course'
 import './index.css'
 
 
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/login' element={<><Login/></>} />
           <Route path='/register' element={<><Register/></>} />
           <Route path='/courses' element={<><HeaderV3/><CoursesList/></>} />
+          <Route path='/courses/:id' element={<><HeaderV3/><Course/></>} />
         </Routes>
       </BrowserRouter>
   </React.StrictMode>,
