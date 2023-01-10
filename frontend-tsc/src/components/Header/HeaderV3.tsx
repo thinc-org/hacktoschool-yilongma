@@ -48,8 +48,6 @@ function HeaderV3() {
     useEffect(() => {
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
-        console.log('Refresh')
-        console.log(token)
         authRefresh().catch(console.error)
     },[])
 
