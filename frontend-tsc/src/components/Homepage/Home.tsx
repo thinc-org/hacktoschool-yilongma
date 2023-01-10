@@ -7,6 +7,7 @@ import Boy from '../../assets/images/casual-life-3d-boy-sitting-at-the-desk-with
 import Girl from '../../assets/images/image 8.png'
 import Shoes from '../../assets/images/image 10.svg'
 import Megaphone from '../../assets/images/image 11.svg'
+import GirlBook from '../../assets/images/girl-book.png'
 
 import {
   ArrowSmallRightIcon
@@ -15,7 +16,7 @@ import {
 function Home() {
   return (
     <div className='max-w-screen h-full'>
-      <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-12 md:px-24 lg:p-20 lg:px-48  xl:p-32 xl:px-72'>
+      <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-[5vw] lg:p-[10vw] mb-10 md:m-0'>
         {/* Left Side */}
         <div className='w-full p-8 flex flex-col items-center md:items-start'>
           <div className='w-[90%] md:w-[80%]'>
@@ -58,14 +59,14 @@ function Home() {
         {/* Right Side */}
         <div className='w-full relative flex items-center justify-center'>
           <div className='relative left-5 w-[80%] md:left-0 md:w-[100%] aspect-[1.2/1] overflow-hidden'>
-            <img className="top-[35%] left-0 w-[30%] hidden absolute md:block" src={JoyStick}></img>
+            <img className="top-[30%] left-0 w-[30%] hidden absolute md:block" src={JoyStick}></img>
             <img className="absolute bottom-[10%] left-0 w-[80%]" src={Boy}></img>
             <img className="absolute bottom-0 right-0 h-[75%]" src={Plant}></img>
           </div>
 
         </div>
       </div>
-      <div id='2' className='flex flex-col md:flex-row gap-0 md:gap-16 bg-[#FFFFFF] md:p-12 md:px-24 lg:p-20 lg:px-48  xl:p-32 xl:px-72'>
+      <div id='2' className='flex flex-col md:flex-row gap-0 md:gap-16 bg-[#FFFFFF] md:p-[5vw] lg:p-[10vw] mt-10 mb-10 md:m-0'>
         {/* Left Side */}
         <div className='relative w-full p-0 xl:p-8 flex flex-col items-center justify-center mt-10 md:mt-0'>
           <div>
@@ -75,12 +76,15 @@ function Home() {
         </div>
         {/* Right Side */}
         <div className='w-full relative flex flex-col items-center justify-center'>
-          <div className='w-[90%] md:w-[80%] mt-0 md:mt-10'>
-            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
+          <div className='w-[60vw] md:w-[80%] mt-0 md:mt-10'>
+            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-[1.75rem] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
             <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[0.8vw] mt-0 md:mt-5 text-center md:text-start'>Make learning words more fun with mini-games</p>
           </div>
           <div className='w-[100%] flex flex-row mt-16 gap-3 justify-center md:justify-start'>
-            <button className='relative bg-[#F2D4DC] w-32 aspect-square rounded-xl flex items-end justify-center'>
+            <button 
+            className='relative bg-[#F2D4DC] w-32 aspect-square rounded-xl flex items-end justify-center'
+            onClick={() => {window.alert('Clicked')}}
+            >
               <img className="absolute -top-[30%]" src={Shoes} />
               <div className='flex text-md flex-row items-center p-3'>
                 <p className='font-[Montserrat] font-semibold text-[#945069]'>Sprint ➜</p>
@@ -94,6 +98,25 @@ function Home() {
             </button>
 
           </div>
+        </div>
+      </div>
+      <div id='3' className='flex flex-col md:flex-row md:items-center md:justify-center bg-[#F6F5F4] md:px-[5vw] lg:px-[10vw] mt-10 mb-10 md:m-0'>
+        {/* Left Side */}
+        <div className='p-8 w-full flex flex-col items-center md:items-start'>
+          <div className='mt-0 md:mt-10 px-32 md:px-0'>
+            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h1>
+            <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Traditional and new effective approaches to word study</p>
+          </div>
+          <div>
+            <button className='rounded-full bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-4 md:mt-10 leading-tight'>
+              Textbook ➜
+            </button>
+          </div>
+        </div>
+        {/* Right Side */}
+        <div className="w-full flex justify-end md:justify-center md:items-center bg-cover">
+          <img className="w-[70vw] md:w-full" src={GirlBook}></img>
+
         </div>
       </div>
     </div>

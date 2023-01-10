@@ -5,7 +5,6 @@ import App from './App'
 import HeaderV3 from './components/Header/HeaderV3'
 import Home from './components/Homepage/Home'
 import Login from './components/Auth/Login'
-// import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import './index.css'
 
@@ -20,4 +19,3 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </BrowserRouter>
   </React.StrictMode>,
 )
-
