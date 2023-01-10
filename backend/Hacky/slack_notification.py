@@ -2,7 +2,7 @@ import slack
 import json
 
 with open('token.json') as json_file:
-    SLACK_TOKEN = json.load(json_file)['DISCORD_TOKEN']
+    SLACK_TOKEN = json.load(json_file)['SLACK_TOKEN']
 
 
 def send_notification_slack(msg):
