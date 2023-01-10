@@ -54,12 +54,12 @@ function HeaderV3() {
     };
     return (
         <div>
-            <header className='flex items-center justify-between h-10 max-w-screen p-6 md:px-12 lg:p-8 lg:px-52 xl:px-72 border-b-2 border-x-[100%]'>
+            <header className='flex items-center justify-between h-10 md:h-16 max-w-screen p-6 px-[5vw] lg:px-[12vw] xl:px-[16vw] border-b-2 border-x-[100%]'>
                 <div className='w-full flex flex-row justify-between items-center'>
                     <div className='flex flex-row gap-4 items-center'>
                         <div id='company' className="font-['DelaGothicOne'] md:text-[1.5rem] font-normal text-sm hidden md:block">GlobalTalk</div>
                         <div id='divider' className='w-[1px] h-[1rem] bg-[#E0E0E0] hidden md:block'></div>
-                        <div id='buttons' className='flex flex-row gap-3'>
+                        <div id='buttons' className='flex flex-row'>
                             <Popover>
                                 <div className="-my-2 -mr-2 md:hidden">
                                     <button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 outline-none focus:ring-1" onClick={handleNavMenu}>
@@ -71,8 +71,8 @@ function HeaderV3() {
 
                                 </div>
 
-                                <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-                                    <a href="#" className="text-base font-medium text-[#000]">
+                                <Popover.Group as="nav" className="hidden space-x-6 lg:space-x-10 md:flex">
+                                    <a href="/" className="text-base font-medium text-[#000]">
                                         Home
                                     </a>
                                     <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
@@ -136,19 +136,19 @@ function HeaderV3() {
 
                         </div>
                     </div>
-                    <div id='company' className="font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
-                    <div className='flex flex-row gap-4 items-center'>
+                    <div id='company' className="absolute left-[50%] -translate-x-[50%] font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
+                    <div className='flex flex-row gap-1 md:gap-2 items-center'>
                         {!cookie ?
                             <a href="/login" className="text-base font-semibold font-[Montserrat] text-[#000]">
                                 Login <span className='text-[0.5rem] text-center align-middle'>➜</span>
                             </a> :
                             <>
-                                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
-                                    <span className="font-medium text-[#2B788B]">{pb.authStore.model!.name[0]}</span>
+                                <div className="relative inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
+                                    <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
                                 </div>
 
-                                <p>{pb.authStore.model!.name.split(' ')[0]}</p>
-                                <button onClick={handleLogout} className="text-base font-semibold font-[Montserrat] text-[#000]">
+                                <p className='font-[Montserrat] text-[1rem]'>{pb.authStore.model!.name.split(' ')[0]}</p>
+                                <button onClick={handleLogout} className="text-[1rem] leading-[22px] font-bold font-[Montserrat] text-[#000] hidden md:block">
                                     Logout <span className='text-[0.5rem] text-center align-middle'>➜</span>
                                 </button>
                             </>}

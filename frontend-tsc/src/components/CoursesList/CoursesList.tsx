@@ -7,7 +7,7 @@ const pb = new PocketBase('https://pb.jjus.dev');
 
 
 function CoursesList() {
-    const [coursesList, setCoursesList] = useState([]);
+    const [coursesList, setCoursesList] = useState<any>([]);
 
     const getCoursesList = async () => {
         const resultList = await pb.collection('courses').getList(1, 50, {
@@ -34,7 +34,7 @@ function CoursesList() {
 
                 <div>
                     {
-                        coursesList.map((data) => {
+                        coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }) => {
                             console.log(data);
                             return (
                                 <CourseBox id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
