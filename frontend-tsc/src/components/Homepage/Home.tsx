@@ -8,6 +8,7 @@ import Girl from '../../assets/images/image 8.png'
 import Shoes from '../../assets/images/image 10.svg'
 import Megaphone from '../../assets/images/image 11.svg'
 import GirlBook from '../../assets/images/girl-book.png'
+import GirlBoy from '../../assets/images/boy-girl.png'
 
 import {
   ArrowSmallRightIcon
@@ -15,7 +16,7 @@ import {
 
 function Home() {
   return (
-    <div className='max-w-screen h-full'>
+    <div className='max-w-screen h-full overflow-hidden'>
       <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-[5vw] lg:p-[10vw] mb-10 md:m-0'>
         {/* Left Side */}
         <div className='w-full p-8 flex flex-col items-center md:items-start'>
@@ -76,14 +77,14 @@ function Home() {
         </div>
         {/* Right Side */}
         <div className='w-full relative flex flex-col items-center justify-center'>
-          <div className='w-[60vw] md:w-[80%] mt-0 md:mt-10'>
-            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-[1.75rem] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
+          <div className='px-24 md:px-0 mt-0 md:mt-10'>
+            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
             <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[0.8vw] mt-0 md:mt-5 text-center md:text-start'>Make learning words more fun with mini-games</p>
           </div>
           <div className='w-[100%] flex flex-row mt-16 gap-3 justify-center md:justify-start'>
-            <button 
-            className='relative bg-[#F2D4DC] w-32 aspect-square rounded-xl flex items-end justify-center'
-            onClick={() => {window.alert('Clicked')}}
+            <button
+              className='relative bg-[#F2D4DC] w-32 aspect-square rounded-xl flex items-end justify-center'
+              onClick={() => { window.alert('Clicked') }}
             >
               <img className="absolute -top-[30%]" src={Shoes} />
               <div className='flex text-md flex-row items-center p-3'>
@@ -103,8 +104,8 @@ function Home() {
       <div id='3' className='flex flex-col md:flex-row md:items-center md:justify-center bg-[#F6F5F4] md:px-[5vw] lg:px-[10vw] mt-10 mb-10 md:m-0'>
         {/* Left Side */}
         <div className='p-8 w-full flex flex-col items-center md:items-start'>
-          <div className='mt-0 md:mt-10 px-32 md:px-0'>
-            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h1>
+          <div className='mt-0 px-24 md:px-0'>
+            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h1>
             <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Traditional and new effective approaches to word study</p>
           </div>
           <div>
@@ -117,6 +118,27 @@ function Home() {
         <div className="w-full flex justify-end md:justify-center md:items-center bg-cover">
           <img className="w-[70vw] md:w-full" src={GirlBook}></img>
 
+        </div>
+      </div>
+      <div id='4' className='flex flex-col md:flex-row md:items-center md:justify-center bg-[#FFFFFF] md:p-[5vw] lg:p-[10vw] mt-10 mb-10 md:m-0'>
+        {/* Left Side */}
+        <div className='relative w-full p-0 xl:p-8 flex flex-col items-center justify-center mt-10 md:mt-0'>
+          <div>
+            <img className="w-[70vw] md:w-full" src={GirlBoy}></img>
+          </div>
+
+        </div>
+        {/* Right Side */}
+        <div className='p-8 w-full flex flex-col items-center md:items-start'>
+          <div className='mt-0 px-24 md:px-0'>
+            <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Watch your progress every day</h1>
+            <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Save statistics on your achievements, words learned, and mistakes</p>
+          </div>
+          <div>
+            <button className='rounded-full bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-4 md:mt-10 leading-tight'>
+              Statistics ➜
+            </button>
+          </div>
         </div>
       </div>
     </div>
