@@ -1,24 +1,22 @@
 import React, { useState } from 'react'
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 import { FaUserCircle } from 'react-icons/fa'
-import { RiArrowDropDownLine } from 'react-icons/ri'
-import {BiMenuAltLeft } from 'react-icons/bi'
-import Avatar from '@mui/material/Avatar'
-import { MenuUnstyled } from '@mui/base';
+import { BiMenuAltLeft } from 'react-icons/bi'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import {
-    ArrowSmallRightIcon
-} from '@heroicons/react/24/outline'
+import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
+import Cookies from 'js-cookie'
+import PocketBase from 'pocketbase';
+import Avatar from '@mui/material/Avatar';
 
 import {
     Bars3Icon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import MobileNav from './MobileNav';
+
+import { RemoveScroll } from 'react-remove-scroll';
+import { useNavigate } from 'react-router-dom';
 
 
 const games = [
@@ -34,9 +32,12 @@ const games = [
     },
 ]
 
-
+const pb = new PocketBase('https://pb.jjus.dev');
 
 function HeaderV3() {
+    const cookie = Cookies.get('token')
+    const navigate = useNavigate();
+
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
@@ -45,6 +46,12 @@ function HeaderV3() {
         setOpen(!open)
         console.log(open)
     }
+
+    const handleLogout = () => {
+        pb.authStore.clear()
+        Cookies.remove('token')
+        window.location.href = "/";
+    };
     return (
         <div>
             <header className='flex items-center justify-between h-10 max-w-screen p-6 md:px-12 lg:p-8 lg:px-52 xl:px-72 border-b-2 border-x-[100%]'>
@@ -58,12 +65,12 @@ function HeaderV3() {
                                     <button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 outline-none focus:ring-1" onClick={handleNavMenu}>
                                         <span className="sr-only">Open menu</span>
                                         {!open ? <BiMenuAltLeft className="h-6 w-6" aria-hidden="true" /> : <XMarkIcon className="h-6 w-6" aria-hidden="true" />}
-                                        
-                                        
+
+
                                     </button>
-                                    
+
                                 </div>
-                                
+
                                 <Popover.Group as="nav" className="hidden space-x-10 md:flex">
                                     <a href="#" className="text-base font-medium text-[#000]">
                                         Home
@@ -126,22 +133,35 @@ function HeaderV3() {
                                     </Popover>
                                 </Popover.Group>
                             </Popover>
-                            
+
                         </div>
                     </div>
                     <div id='company' className="font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
                     <div className='flex flex-row gap-4 items-center'>
-                        <FaUserCircle />
-                        <a href="/login" className="text-base font-medium text-[#000]">
-                            Login
-                        </a>
+                        {!cookie ?
+                            <a href="/login" className="text-base font-semibold font-[Montserrat] text-[#000]">
+                                Login <span className='text-[0.5rem] text-center align-middle'>➜</span>
+                            </a> :
+                            <>
+                                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
+                                    <span className="font-medium text-[#2B788B]">{pb.authStore.model!.name[0]}</span>
+                                </div>
+
+                                <p>{pb.authStore.model!.name.split(' ')[0]}</p>
+                                <button onClick={handleLogout} className="text-base font-semibold font-[Montserrat] text-[#000]">
+                                    Logout <span className='text-[0.5rem] text-center align-middle'>➜</span>
+                                </button>
+                            </>}
+
+
+
 
 
                     </div>
                 </div>
             </header>
             <div className='h-full relative'>
-                {open ? <MobileNav /> : null}
+                {open ? <RemoveScroll><MobileNav /></RemoveScroll> : null}
             </div>
         </div>
     )
