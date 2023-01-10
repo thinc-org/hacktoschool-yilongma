@@ -5,9 +5,9 @@ const StudentList = ({ data }:{data:any;}) => {
 
     let trData = ""
     if (data.expand.student) {
-        trData = data.expand.student.map((studentData : any) => {
+        trData = data.expand.student.map((studentData : any, index: number) => {
             return (
-                <tr className="hover:bg-[#F6F5F4]">
+                <tr key={index} className="hover:bg-[#F6F5F4]">
                     <td className="px-4 py-2">{studentData.name}</td>
                     <td className="px-4 py-2">{studentData.email || "<hidden>"}</td>
                 </tr>
