@@ -37,8 +37,7 @@ function CoursesList() {
                         coursesList.map((data) => {
                             console.log(data);
                             return (
-                                
-                                <CourseBox name={data.name} instructor={data.expand.instructor.name}/>
+                                <CourseBox id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
                             )
                         })
                     }
