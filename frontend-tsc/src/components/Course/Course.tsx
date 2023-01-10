@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import PocketBase from 'pocketbase'
 import StudentList from './StudentList'
@@ -11,9 +11,10 @@ const pb = new PocketBase('https://pb.jjus.dev');
 const Course = () => {
     let { id } = useParams();
     let navigate = useNavigate();
-    const cookie = Cookies.get('token')
+    const token = pb.authStore.token;
+    const dataFetchedRef = useRef(false);
 
-    if (!cookie) {
+    if (!token) {
         navigate('/login');
     }
 
@@ -83,8 +84,10 @@ const Course = () => {
     }
 
     useEffect(() => {
+        if (dataFetchedRef.current || (token == '')) return;
+        dataFetchedRef.current = true;
         getCourseData();
-    }, [])
+    },[])
 
     return (
         <div className='max-w-screen min-h-screen bg-[#F6F5F4 flex flex-col items-center md:items-start'>
