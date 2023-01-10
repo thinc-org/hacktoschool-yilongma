@@ -4,6 +4,7 @@ import PocketBase from 'pocketbase'
 import StudentList from './StudentList'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -15,8 +16,6 @@ const Course = () => {
     if (!cookie) {
         navigate('/login');
     }
-
-    console.log(pb.authStore.model!)
 
     const [courseData, setCourseData] = useState<any>({
         "id": "",
@@ -38,8 +37,52 @@ const Course = () => {
         setCourseData(record)
     }
 
-    useEffect(() => {
+    const enrolling = async () => {
+        const record = await pb.collection('courses').getOne(id || "", {
+            expand: 'instructor,student',
+        });
+        var newStudentArray = record.student || []
+        newStudentArray.push(pb.authStore.model!.id)
 
+        var sendData = {
+            "id": record.id,
+            "name": record.name,
+            "instructor": record.instructor,
+            "thumbnail" : record.thumbnail || "",
+            "description": record.description || "",
+            "student": newStudentArray,
+        };
+
+        try {
+            const newRecord = await pb.collection('courses').update(id || "", sendData)
+            console.log(newRecord)
+            Swal.fire({
+                title: "Success",
+                text: 'You are now joined this courses!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000
+            }).then(() => {
+                window.location.reload()
+            })
+        }
+        catch {
+            Swal.fire({
+                title:'Error', 
+                text:'Please try again later', 
+                icon:'error',
+                showConfirmButton: false,
+                timer: 2000})
+        }
+        
+            
+        
+
+
+
+    }
+
+    useEffect(() => {
         getCourseData();
     }, [])
 
@@ -56,7 +99,7 @@ const Course = () => {
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
                                     (!courseData.student.includes(pb.authStore.model!.id) ?
-                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button> :
+                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" onClick={enrolling}>Enroll</button> :
                                         <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
                                     ""
                             }
