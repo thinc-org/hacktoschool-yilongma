@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import Cookies from 'js-cookie'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup";
-import FormControlUnstyled from '@mui/base/FormControlUnstyled';
+import { useNavigate } from 'react-router-dom';
 
 const loginSchema = Yup.object().shape({
     password: Yup.string()
@@ -17,7 +17,9 @@ const loginSchema = Yup.object().shape({
 const pb = new PocketBase('https://pb.jjus.dev');
 
 function Login() {
-    const handleSubmit = async (values: { email?: string; password: string; }) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (values: { email: string; password: string; }) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
                 Cookies.set('token', value.token)
@@ -26,16 +28,17 @@ function Login() {
                     text: 'Yay',
                     icon: 'success',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1000
                 }).then(() => {
-                    console.log('Logged in')
-                    console.log(pb.authStore.isValid);
-                    console.log(pb.authStore.token);
-                    console.log(pb.authStore.model.id);
-
+                    navigate('/');
                 })
             }).catch(() => {
-                swal('Error', 'Wrong Username or Password', 'error')
+                Swal.fire({
+                    title:'Error', 
+                    text:'Wrong Username or Password', 
+                    icon:'error',
+                    showConfirmButton: false,
+                    timer: 2000})
             })
     }
 
@@ -47,10 +50,7 @@ function Login() {
                 <div className="w-full max-w-xs">
                     <Formik
                         onSubmit={(values) => {
-                            // Alert the input values of the form that we filled
-                            alert(JSON.stringify(values));
                             handleSubmit(values)
-
                         }}
                         initialValues={{ email: "", password: "" }}
                         validationSchema={loginSchema}>

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import App from './App'
 import HeaderV3 from './components/Header/HeaderV3'
 import Home from './components/Homepage/Home'
@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/login' element={<><Login/></>} />
           <Route path='/register' element={<><Register/></>} />
           <Route path='/courses' element={<><HeaderV3/><CoursesList/></>} />
+          <Route path='*' element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
   </React.StrictMode>,
