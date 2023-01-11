@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PocketBase from 'pocketbase'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -8,6 +9,12 @@ const AnnouncementBox = () => {
     let { id, announcementId } = useParams();
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
+    let navigate = useNavigate();
+
+    if (!token) {
+        navigate('/login')
+    }
+    
 
     const [announcementData, setAnnouncementData] = useState<any>({
         "id": "",
