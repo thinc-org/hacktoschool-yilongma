@@ -11,6 +11,7 @@ import './index.css'
 import Register from './components/Auth/Register'
 import AnnouncementBox from './components/Announcement/AnnouncementBox'
 import AnnouncementEditor from './components/Editor/AnnouncementEditor'
+import MaterialEditor from './components/Editor/MaterialEditor'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/courses/:id' element={<><HeaderV3/><Course/><Footer/></>} />
           <Route path='/courses/:id/announcements/:announcementId' element={<><HeaderV3/><AnnouncementBox/><Footer/></>} />
           <Route path='/courses/:id/announcements/:announcementId/edit' element={<><HeaderV3/><AnnouncementEditor/><Footer/></>} />
+          <Route path='/courses/:id/materials/:materialId/edit' element={<><HeaderV3/><MaterialEditor/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
