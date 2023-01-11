@@ -62,8 +62,8 @@ function HeaderV3() {
                                     <a href="/" className="text-base font-medium text-[#000]">
                                         Home
                                     </a>
-                                    <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
-                                        Textbook
+                                    <a href="/courses" className="text-base font-medium hover:text-[#333333] text-[#757575]">
+                                        Courses
                                     </a>
                                     <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
                                         Statistics
