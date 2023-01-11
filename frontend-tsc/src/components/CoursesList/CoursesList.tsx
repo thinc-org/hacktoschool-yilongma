@@ -1,40 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Navigate } from 'react-router-dom';
 import CourseAdder from './CourseAdder';
 import useDebounce from './useDebounce';
-import { Skeleton } from '@mui/material';
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 
 function CoursesList() {
-    let navigate = useNavigate(); 
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
 
+    if (!token) {
+        { return <Navigate to='/' /> }
+
+    }
     const [search, setSearch] = useState("")
     const [loading, setLoading] = useState(true);
     const [coursesList, setCoursesList] = useState<any>([]);
-
-    const [currentPage, setCurrentPage] = useState(1);
-
-    
-    const handleScroll = () => {
-        let userScrollHeight = window.innerHeight + window.scrollY;
-    let windowBottomHeight = document.documentElement.offsetHeight;
-
-    if (userScrollHeight >= windowBottomHeight) {
-        
-        setCurrentPage(count => count + 1)
-        console.log("Page: "+currentPage)
-        getCoursesList(search)
-    }
-    };
-
-
 
     var rolefilter = "";
     if (pb.authStore.model!.role.includes('instructor')) {
@@ -42,37 +30,32 @@ function CoursesList() {
     }
 
 
-    
 
-    const getCoursesList = async (search:string) => {
+
+    const getCoursesList = async (search: string) => {
         let filterArray = []
-        if (rolefilter) {filterArray.push(rolefilter)}
-        if (search) {filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`)}
+        if (rolefilter) { filterArray.push(rolefilter) }
+        if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
         console.log(filterArray.join(" && "));
-        const resultList = await pb.collection('courses').getList(currentPage, 10, {
+        const resultList = await pb.collection('courses').getList(1, 50, {
             filter: filterArray.join(" && "),
             expand: 'instructor'
-        })
-        console.log(resultList.items);
-        setCoursesList([...coursesList, ...resultList.items])
-        
-        setLoading(false)
+        }).then((resultList) => {
+            console.log(resultList.items);
+            setCoursesList(resultList.items)
+            setLoading(false)
+        }
+        )
+
     }
 
     useDebounce(() => {
-        
         setLoading(true)
-        setCurrentPage(1)
-        setCoursesList([])
         getCoursesList(search);
-      }, [search], 500
+    }, [search], 500
     );
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        if (!token) {
-            navigate('/');
-        }
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
         getCoursesList(search);
@@ -82,7 +65,7 @@ function CoursesList() {
         <div className='max-w-screen min-h-screen bg-[#F6F5F4]'>
             <div className='flex flex-col p-6 md:p-12 md:px-24 lg:p-12 lg:px-48  xl:p-12 xl:px-48'>
 
-                {pb.authStore.model!.role.includes('instructor') && <CourseAdder/>}
+                {pb.authStore.model!.role.includes('instructor') && <CourseAdder />}
 
                 <div>
                     <label className="block font-['DelaGothicOne'] text-[1.5rem] py-4 overflow-hidden whitespace-pre-line">
@@ -91,27 +74,27 @@ function CoursesList() {
                 </div>
 
                 <div className='flex flex-col w-full justify-center'>
-                    <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setLoading(true); setCoursesList([]);}}/>
+                    <div className="flex justify-center ">
+                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => { setSearch(e.target.value) }} />
                     </div>
                 </div>
 
                 <div className='max-w-full'>
-                    
-                    {loading && <div className="min-h-64 mt-8"><Skeleton variant="rectangular" animation="wave" height={150}/></div>
+
+                    {loading && <div className="min-h-64 mt-8"><Skeleton /></div>
                     }
                     {!loading &&
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
-                            
+
                             return (
-                                <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                                <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name} />
                             )
                         })
                     }
                 </div>
-            
+
             </div>
-            
+
         </div>
     )
 }

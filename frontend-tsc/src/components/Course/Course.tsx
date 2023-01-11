@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import PocketBase from 'pocketbase'
 import StudentList from './StudentList'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Announcement from './Announcement'
 import Material from './Material'
@@ -16,7 +16,8 @@ const Course = () => {
     const dataFetchedRef = useRef(false);
 
     if (!token) {
-        navigate('/login');
+        { return <Navigate to='/' /> }
+
     }
 
     const [courseData, setCourseData] = useState<any>({
@@ -54,7 +55,7 @@ const Course = () => {
             "id": record.id,
             "name": record.name,
             "instructor": record.instructor,
-            "thumbnail" : record.thumbnail || "",
+            "thumbnail": record.thumbnail || "",
             "description": record.description || "",
             "student": newStudentArray,
         };
@@ -74,25 +75,20 @@ const Course = () => {
         }
         catch {
             Swal.fire({
-                title:'Error', 
-                text:'Please try again later', 
-                icon:'error',
+                title: 'Error',
+                text: 'Please try again later',
+                icon: 'error',
                 showConfirmButton: false,
-                timer: 2000})
+                timer: 2000
+            })
         }
-        
-            
-        
-
-
 
     }
-
     useEffect(() => {
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
         getCourseData();
-    },[])
+    }, [])
 
     return (
         <div className='max-w-screen min-h-screen bg-[#F6F5F4] flex flex-col items-center md:items-start'>
@@ -122,7 +118,7 @@ const Course = () => {
                         <div className="overflow-auto max-h-[14rem]">
                             <p className="font-['Montserrat'] text-[1rem] px-8 py-2 whitespace-pre-line">{courseData.description}</p>
                         </div>
-                        
+
                         <div className="flex flex-col px-8 py-2 items-center">
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
@@ -135,10 +131,10 @@ const Course = () => {
                     </div>
                 </div>
                 {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
-                {pb.authStore.model!.role.includes('instructor')||courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
-                {pb.authStore.model!.role.includes('instructor')||courseData.student.includes(pb.authStore.model!.id) ? <Material data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Material data={courseData} /> : ""}
             </div>
-            
+
         </div>
 
     )
