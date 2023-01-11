@@ -16,7 +16,7 @@ function CoursesList() {
     const dataFetchedRef = useRef(false);
 
     const [search, setSearch] = useState("")
-    
+    const [loading, setLoading] = useState(true);
     const [coursesList, setCoursesList] = useState<any>([]);
 
     var rolefilter = "";
@@ -38,9 +38,11 @@ function CoursesList() {
         })
         console.log(resultList.items);
         setCoursesList(resultList.items)
+        setLoading(false)
     }
 
     useDebounce(() => {
+        setLoading(true)
         getCoursesList(search);
       }, [search], 500
     );
@@ -74,7 +76,9 @@ function CoursesList() {
 
                 <div className='max-w-full'>
                     
-                    {
+                    {loading && <div className="min-h-64 mt-8"><Skeleton variant="rectangular" animation="wave" height={150}/></div>
+                    }
+                    {!loading &&
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
                             
                             return (
