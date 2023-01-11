@@ -22,6 +22,7 @@ function CoursesList() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [hasMore, setHasMore] = useState(true);
+    
 
     /*
     const handleScroll = () => {
@@ -36,21 +37,8 @@ function CoursesList() {
     }
     };
     */
-
-    const observer = useRef()
-    const lastCourseElementRef = useCallback((node:any) => {
-    if (loading) return
-    if (observer.current) observer.current.disconnect()
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        setCurrentPage(prevPageNumber => prevPageNumber + 1)
-        getCoursesList(search)
-      }
-    })
-    if (node) observer.current.observe(node)
-    }, [loading, hasMore])
     
-
+    
 
     var rolefilter = "";
     if (pb.authStore.model!.role.includes('instructor')) {
@@ -70,9 +58,8 @@ function CoursesList() {
             expand: 'instructor'
         }).then((resultList: {items:any}) => {
             setCoursesList([...coursesList, ...resultList.items])
-            setHasMore(resultList.items > 0)
+            setHasMore(resultList.items.length > 0)
             setLoading(false)
-            console.log(coursesList)
 
         })
         
@@ -80,19 +67,20 @@ function CoursesList() {
     }
 
     useDebounce(() => {
-        
+        /*
+        setCoursesList([])
         setLoading(true)
         setCurrentPage(1)
-        setCoursesList([])
+        */
         getCoursesList(search);
       }, [search], 500
     );
 
     useEffect(() => {
-
         if (!token) {
             navigate('/');
         }
+        
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
         getCoursesList(search);
@@ -112,7 +100,7 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value);}}/>
+                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setCoursesList([]); setLoading(true); setCurrentPage(1);}}/>
                     </div>
                 </div>
 
@@ -123,10 +111,10 @@ function CoursesList() {
                     {!loading &&
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
                             if (coursesList.length === index+1) {
-                                return <CourseBox ref={lastCourseElementRef} key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
                             }
                             else {
-                                return <CourseBox red={() => {}} key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
                             }
                         })
                     }
