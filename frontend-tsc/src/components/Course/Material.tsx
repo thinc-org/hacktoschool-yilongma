@@ -17,7 +17,7 @@ const Material = ({data}:{data:any;}) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]">
                     <td className="px-4 py-2" onClick={async () => {const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{materialData.name}</td>
-                    <td className="px-4 py-2" onClick={async () => {const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{(new Date(materialData.created)).toLocaleString()}</td>
+                    <td className="px-4 py-2" onClick={async () => {const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{(moment(materialData.created)).fromNow()}</td>
                     {pb.authStore.model!.role.includes('instructor') && 
                     <td className="px-4 py-2">
                         <div className="flex items-center justify-center gap-x-2">
