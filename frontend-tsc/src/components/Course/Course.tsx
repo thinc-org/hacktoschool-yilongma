@@ -133,7 +133,7 @@ const Course = () => {
                     </div>
                 </div>
                 {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
-                {pb.authStore.model!.role.includes('student')&&courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor')||courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
             </div>
             
         </div>
