@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase';
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import LoginPop from '../Auth/LoginPop';
 
 
@@ -16,6 +16,7 @@ function User() {
 
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
+    let navigate = useNavigate();
 
     const authRefresh = async () => {
         await pb.collection('users').authRefresh();
@@ -54,7 +55,13 @@ function User() {
                                 >
                                     <div className='flex flex-row items-center gap-2 p-2 -m-2'>
                                         <div className="relative inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
-                                            <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
+                                            {
+                                                (!pb.authStore.model!.avatar) ? 
+                                                <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
+                                                :
+                                                <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}?thumb=100x100`}></img>
+                                            }
+                                            
                                         </div>
                                         <p className='font-[Montserrat] text-[1rem]'>{pb.authStore.model!.name.split(' ')[0]}</p>
                                     </div>
@@ -79,6 +86,15 @@ function User() {
                                     <Popover.Panel className="absolute mt-6">
                                         <div className="overflow-hidden rounded-lg shadow-md w-fit">
                                             <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6">
+                                                <button
+                                                    className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
+                                                    
+                                                >
+                                                    <div className="ml-4">
+                                                        <p className="text-base font-medium text-[#757575] hover:text-[#333333]">Profile</p>
+                                                    </div>
+                                                    <ArrowSmallRightIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                                                </button>
                                                 <button
                                                     className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
                                                     onClick={handleLogout}
