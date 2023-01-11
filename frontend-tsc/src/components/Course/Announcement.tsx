@@ -20,28 +20,29 @@ const Announcement = ({ data }:{data:any;}) => {
                     <td className="px-4 py-2" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{(moment(announcementData.created)).fromNow()}</td>
                     {pb.authStore.model!.role.includes('instructor') && 
                     <td className="px-4 py-2">
-                        <div className="flex items-center justify-center">
-                            <button className="bg-red-500 hover:bg-red-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {Swal.fire({
-                                                                                                                                                                                                                  title: 'Do you want to delete this announcement?',
-                                                                                                                                                                                                                  showDenyButton: true,
-                                                                                                                                                                                                                    
-                                                                                                                                                                                                                  confirmButtonText: 'Delete',
-                                                                                                                                                                                                                  
-                                                                                                                                                                                                                }).then(async (result) => {
-                                                                                                                                                                                                                  /* Read more about isConfirmed, isDenied below */
-                                                                                                                                                                                                                  if (result.isConfirmed) {
-                                                                                                                                                                                                                    await pb.collection('announcements').delete(announcementData.id)
-                                                                                                                                                                                                                    .then(() => Swal.fire({
-                                                                                                                                                                                                                      
-                                                                                                                                                                                                                        icon: 'success',
-                                                                                                                                                                                                                        title: 'This announcement is deleted!',
-                                                                                                                                                                                                                        showConfirmButton: false,
-                                                                                                                                                                                                                        timer: 1500
-                                                                                                                                                                                                                      }).then(() => {window.location.reload()}))
-                                                                                                                                                                                                                    
-                                                                                                                                                                                                                  }
-                                                                                                                                                                                                                })}}>
+                        <div className="flex items-center justify-center gap-x-2">
+                            <button className="bg-[#A95151] hover:bg-red-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {
+                                Swal.fire({
+                                  title: 'Do you want to delete this announcement?',
+                                  showDenyButton: true,
+                                  confirmButtonText: 'Delete',
+                                }).then(async (result) => {
+                                  /* Read more about isConfirmed, isDenied below */
+                                  if (result.isConfirmed) {
+                                    await pb.collection('announcements').delete(announcementData.id)
+                                    .then(() => Swal.fire({
+                                      
+                                        icon: 'success',
+                                        title: 'This announcement is deleted!',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                      }).then(() => {window.location.reload()}))
+                                  }
+                                })}}>
                                 Delete
+                            </button>
+                            <button className="bg-[#5996A5] hover:bg-blue-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {navigate('/courses/'+data.id+'/announcements/'+announcementData.id+'/edit')}}>
+                                Edit
                             </button>
                         </div>
                     </td>
