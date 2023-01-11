@@ -12,3 +12,8 @@
   url('./assets/fonts/DelaGothicOne-Regular.ttf') format('truetype');
   font-display: swap;
 }
+
+
+.swal2-container {
+  z-index: 1000000;
+}
