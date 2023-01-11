@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import HeaderV3 from './components/Header/HeaderV3'
-import Home from './components/Homepage/Home'
+const Home = React.lazy(() => import('./components/Homepage/Home'));
 import Footer from './components/Footer/Footer'
 import Login from './components/Auth/Login'
 import CoursesList from './components/CoursesList/CoursesList'
