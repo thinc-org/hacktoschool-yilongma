@@ -59,7 +59,7 @@ function User() {
                                                 (!pb.authStore.model!.avatar) ? 
                                                 <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
                                                 :
-                                                <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}?thumb=100x100`}></img>
+                                                <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
                                             }
                                             
                                         </div>
@@ -85,24 +85,22 @@ function User() {
                                 >
                                     <Popover.Panel className="absolute mt-6">
                                         <div className="overflow-hidden rounded-lg shadow-md w-fit">
-                                            <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6">
+                                            <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6 whitespace-nowrap">
                                                 <button
                                                     className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
                                                     
                                                 >
-                                                    <div className="ml-4">
+                                                    <div className="">
                                                         <p className="text-base font-medium text-[#757575] hover:text-[#333333]">Profile</p>
                                                     </div>
-                                                    <ArrowSmallRightIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                                                 </button>
                                                 <button
                                                     className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
                                                     onClick={handleLogout}
                                                 >
-                                                    <div className="ml-4">
+                                                    <div className="">
                                                         <p className="text-base font-medium text-[#757575] hover:text-[#333333]">Logout</p>
                                                     </div>
-                                                    <ArrowSmallRightIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                                                 </button>
                                             </div>
                                         </div>
