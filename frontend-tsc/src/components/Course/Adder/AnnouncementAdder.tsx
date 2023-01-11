@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
-const AnnouncementAdder = () => {
+const AnnouncementAdder = ({ data }:{data:any;}) => {
 
     const navigate = useNavigate();
 
@@ -24,28 +24,48 @@ const AnnouncementAdder = () => {
                 timer: 2000})
         }
         else {
-            const data = {
+            const createdData = {
                 "name": name,
-                "instructor": pb.authStore.model!.id,
                 "description": descriptionText,
             };
-            await pb.collection('courses').create(data)
-                .then((record) => {
-                    Swal.fire({
-                        title: "Success",
-                        text: 'Create new course successfully!',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1000
-                }).then(() => {
-                    navigate('/courses/'+record.id)
-                })}).catch(() => {
+            await pb.collection('announcements').create(createdData)
+                .then(async (record) => {
+
+                    const oldCourseRecord = await pb.collection('courses').getOne(data.id || "", {
+                        expand: '',
+                    });
+
+                    var newAnnouncementArray = oldCourseRecord.announcement || []
+                    newAnnouncementArray.push(record.id)
+
+                    var sendData = {
+                        "id": oldCourseRecord.id,
+                        "name": oldCourseRecord.name,
+                        "instructor": oldCourseRecord.instructor,
+                        "thumbnail" : oldCourseRecord.thumbnail || "",
+                        "description": oldCourseRecord.description || "",
+                        "announcement": newAnnouncementArray,
+                    };
+                    const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
+                    .then(async () => {
+                        await Swal.fire({
+                            title: "Success",
+                            text: 'Create new course successfully!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000
+                    
+                        }).then(() => {
+                            navigate('/courses/'+data.id+'/announcements/'+record.id)
+                        })
+                    }).catch(() => {
                     Swal.fire({
                         title:'Error', 
                         text:'Some fields are empty!', 
                         icon:'error',
                         showConfirmButton: false,
                         timer: 2000})
+                    })
                 })
             
         }
