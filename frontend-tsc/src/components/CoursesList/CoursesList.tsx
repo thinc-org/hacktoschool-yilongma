@@ -19,6 +19,23 @@ function CoursesList() {
     const [loading, setLoading] = useState(true);
     const [coursesList, setCoursesList] = useState<any>([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    
+    const handleScroll = () => {
+        let userScrollHeight = window.innerHeight + window.scrollY;
+    let windowBottomHeight = document.documentElement.offsetHeight;
+
+    if (userScrollHeight >= windowBottomHeight) {
+        
+        setCurrentPage(count => count + 1)
+        console.log("Page: "+currentPage)
+        getCoursesList(search)
+    }
+    };
+
+
+
     var rolefilter = "";
     if (pb.authStore.model!.role.includes('instructor')) {
         rolefilter = 'instructor ~ "' + pb.authStore.model!.id + '"'
@@ -32,22 +49,27 @@ function CoursesList() {
         if (rolefilter) {filterArray.push(rolefilter)}
         if (search) {filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`)}
         console.log(filterArray.join(" && "));
-        const resultList = await pb.collection('courses').getList(1, 50, {
+        const resultList = await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
             expand: 'instructor'
         })
         console.log(resultList.items);
-        setCoursesList(resultList.items)
+        setCoursesList([...coursesList, ...resultList.items])
+        
         setLoading(false)
     }
 
     useDebounce(() => {
+        
         setLoading(true)
+        setCurrentPage(1)
+        setCoursesList([])
         getCoursesList(search);
       }, [search], 500
     );
 
     useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
         if (!token) {
             navigate('/');
         }
@@ -70,7 +92,7 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value)}}/>
+                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setLoading(true); setCoursesList([]);}}/>
                     </div>
                 </div>
 
