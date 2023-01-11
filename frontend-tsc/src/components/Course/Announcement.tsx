@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 const Announcement = ({ data }:{data:any;}) => {
+
+    let navigate = useNavigate();
 
     let trData = ""
     if (data.expand.announcement) {
         trData = data.expand.announcement.map((announcementData : any, index: number) => {
             return (
-                <tr key={index} className="hover:bg-[#F6F5F4]">
+                <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>
                     <td className="px-4 py-2">{announcementData.name}</td>
                     <td className="px-4 py-2">{announcementData.created}</td>
                 </tr>
