@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
-import Cookies from 'js-cookie'
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik'
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +28,6 @@ function Login() {
     const handleLogin = async (values: { email: string; password: string; } , actions: FormikHelpers<{ email: string; password: string; }>) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
-                Cookies.set('token', value.token)
                 Swal.fire({
                     title: "Success",
                     text: 'Yay',

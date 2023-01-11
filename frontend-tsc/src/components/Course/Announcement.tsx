@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AnnouncementAdder from './Adder/AnnouncementAdder';
 import PocketBase from 'pocketbase';
+import moment from 'moment'
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -15,7 +16,7 @@ const Announcement = ({ data }:{data:any;}) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>
                     <td className="px-4 py-2">{announcementData.name}</td>
-                    <td className="px-4 py-2">{(new Date(announcementData.created)).toLocaleString()}</td>
+                    <td className="px-4 py-2">{(moment(announcementData.created)).fromNow()}</td>
                 </tr>
             )
         });
