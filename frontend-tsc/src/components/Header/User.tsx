@@ -76,7 +76,7 @@ function User() {
                                     leaveFrom="opacity-100 translate-y-0"
                                     leaveTo="opacity-0 translate-y-1"
                                 >
-                                    <Popover.Panel className="absolute mt-3">
+                                    <Popover.Panel className="absolute mt-6">
                                         <div className="overflow-hidden rounded-lg shadow-md w-fit">
                                             <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6">
                                                 <button
