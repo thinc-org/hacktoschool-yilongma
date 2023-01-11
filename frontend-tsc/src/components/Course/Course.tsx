@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import PocketBase from 'pocketbase'
 import StudentList from './StudentList'
-import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Announcement from './Announcement'
