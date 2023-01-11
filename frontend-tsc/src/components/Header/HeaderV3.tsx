@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaUserCircle } from 'react-icons/fa'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
-import Cookies from 'js-cookie'
-import PocketBase from 'pocketbase';
+
 import Avatar from '@mui/material/Avatar';
 
 import {
-    Bars3Icon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import MobileNav from './MobileNav';
 
 import { RemoveScroll } from 'react-remove-scroll';
-import { useNavigate } from 'react-router-dom';
+import User from './User'
 
 
 const games = [
@@ -32,26 +29,7 @@ const games = [
     },
 ]
 
-const pb = new PocketBase('https://pb.jjus.dev');
-
-
-
 function HeaderV3() {
-    const token = pb.authStore.token;
-    const navigate = useNavigate();
-    const dataFetchedRef = useRef(false);
-
-    const authRefresh = async () => {
-        await pb.collection('users').authRefresh();
-    }
-
-    useEffect(() => {
-        if (dataFetchedRef.current || (token == '')) return;
-        dataFetchedRef.current = true;
-        authRefresh().catch(handleLogout)
-    },[])
-
-
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
@@ -61,11 +39,6 @@ function HeaderV3() {
         console.log(open)
     }
 
-    const handleLogout = () => {
-        pb.authStore.clear()
-        Cookies.remove('token')
-        window.location.href = "/";
-    };
     return (
         <div>
             <header className='flex items-center justify-between h-10 md:h-16 max-w-screen p-6 px-[5vw] lg:px-[12vw] xl:px-[16vw] border-b-2 border-x-[100%]'>
@@ -89,8 +62,8 @@ function HeaderV3() {
                                     <a href="/" className="text-base font-medium text-[#000]">
                                         Home
                                     </a>
-                                    <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
-                                        Textbook
+                                    <a href="/courses" className="text-base font-medium hover:text-[#333333] text-[#757575]">
+                                        Courses
                                     </a>
                                     <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
                                         Statistics
@@ -107,7 +80,7 @@ function HeaderV3() {
                                                     <span>Games</span>
                                                     <ChevronDownIcon
                                                         className={classNames(
-                                                            open ? "text-['#BABABA']" : 'text-gray-400',
+                                                            open ? "text-['#BABABA'] rotate-180 transform" : 'text-gray-400',
                                                             'ml-2 h-5 w-5 group-hover:text-gray-500'
                                                         )}
                                                         aria-hidden="true"
@@ -151,27 +124,7 @@ function HeaderV3() {
                         </div>
                     </div>
                     <div id='company' className="absolute left-[50%] -translate-x-[50%] font-['DelaGothicOne'] font-normal text-center text-xl md:hidden">GlobalTalk</div>
-                    <div className='flex flex-row gap-1 md:gap-2 items-center'>
-                        {!token ?
-                            <a href="/login" className="text-base font-semibold font-[Montserrat] text-[#000]">
-                                Login <span className='text-[0.5rem] text-center align-middle'>➜</span>
-                            </a> :
-                            <>
-                                <div className="relative inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
-                                    <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
-                                </div>
-
-                                <p className='font-[Montserrat] text-[1rem]'>{pb.authStore.model!.name.split(' ')[0]}</p>
-                                <button onClick={handleLogout} className="text-[1rem] leading-[22px] font-bold font-[Montserrat] text-[#000] hidden md:block">
-                                    Logout <span className='text-[0.5rem] text-center align-middle'>➜</span>
-                                </button>
-                            </>}
-
-
-
-
-
-                    </div>
+                    <User/>
                 </div>
             </header>
             <div className='h-full relative'>

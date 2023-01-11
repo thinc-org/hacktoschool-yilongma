@@ -2,13 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import HeaderV3 from './components/Header/HeaderV3'
-import Home from './components/Homepage/Home'
+const Home = React.lazy(() => import('./components/Homepage/Home'));
 import Footer from './components/Footer/Footer'
 import Login from './components/Auth/Login'
 import CoursesList from './components/CoursesList/CoursesList'
 import Course from './components/Course/Course'
 import './index.css'
 import Register from './components/Auth/Register'
+import AnnouncementBox from './components/Announcement/AnnouncementBox'
+import AnnouncementEditor from './components/Editor/AnnouncementEditor'
+import MaterialEditor from './components/Editor/MaterialEditor'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -20,6 +23,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/register' element={<><Register/></>} />
           <Route path='/courses' element={<><HeaderV3/><CoursesList/><Footer/></>} />
           <Route path='/courses/:id' element={<><HeaderV3/><Course/><Footer/></>} />
+          <Route path='/courses/:id/announcements/:announcementId' element={<><HeaderV3/><AnnouncementBox/><Footer/></>} />
+          <Route path='/courses/:id/announcements/:announcementId/edit' element={<><HeaderV3/><AnnouncementEditor/><Footer/></>} />
+          <Route path='/courses/:id/materials/:materialId/edit' element={<><HeaderV3/><MaterialEditor/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
