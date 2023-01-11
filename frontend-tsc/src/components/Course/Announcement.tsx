@@ -12,7 +12,7 @@ const Announcement = ({ data }:{data:any;}) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>
                     <td className="px-4 py-2">{announcementData.name}</td>
-                    <td className="px-4 py-2">{announcementData.created}</td>
+                    <td className="px-4 py-2">{(new Date(announcementData.created)).toLocaleString()}</td>
                 </tr>
             )
         });
@@ -28,8 +28,8 @@ const Announcement = ({ data }:{data:any;}) => {
                     <table className="table-fixed">
                         <thead>
                             <tr>
-                                <th className="w-[60%] px-4 py-2">Name</th>
-                                <th className="w-[40%] px-4 py-2">Date</th>
+                                <th className="w-[70%] px-4 py-2">Name</th>
+                                <th className="w-[30%] px-4 py-2">Date</th>
                             </tr>
                         </thead>
                         <tbody>

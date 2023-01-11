@@ -9,6 +9,7 @@ import CoursesList from './components/CoursesList/CoursesList'
 import Course from './components/Course/Course'
 import './index.css'
 import Register from './components/Auth/Register'
+import AnnouncementBox from './components/Announcement/AnnouncementBox'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/register' element={<><Register/></>} />
           <Route path='/courses' element={<><HeaderV3/><CoursesList/><Footer/></>} />
           <Route path='/courses/:id' element={<><HeaderV3/><Course/><Footer/></>} />
+          <Route path='/courses/:id/announcements/:announcementId' element={<><HeaderV3/><AnnouncementBox/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
