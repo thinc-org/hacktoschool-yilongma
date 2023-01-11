@@ -25,27 +25,40 @@ function Login() {
         }
     })
 
-    const handleLogin = async (values: { email: string; password: string; } , actions: FormikHelpers<{ email: string; password: string; }>) => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+    })
+
+    const handleLogin = async (values: { email: string; password: string; }, actions: FormikHelpers<{ email: string; password: string; }>) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
-                Swal.fire({
-                    title: "Success",
-                    text: 'Yay',
+                Toast.fire({
+                    title: "Logged In",
+                    text: 'Welcome ' + pb.authStore.model!.name,
                     icon: 'success',
-                    showConfirmButton: false,
-                    timer: 1000
+                    timer: 1500
                 }).then(() => {
                     navigate('/');
                 })
             }).catch(() => {
-                Swal.fire({
+                Toast.fire({
                     title: 'Error',
                     text: 'Wrong Username or Password',
                     icon: 'error',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1500
                 });
-                actions.resetForm()
+                actions.resetForm({
+                    values: {
+                        email: values.email,
+                        password: ''
+                    },
+                    isSubmitting : false
+                })
             })
     }
 
