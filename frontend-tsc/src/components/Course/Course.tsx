@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Announcement from './Announcement'
+import Material from './Material'
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -27,15 +28,17 @@ const Course = () => {
             "instructor": {},
             "student": [],
             "announcement": [],
+            "material": [],
         },
         "description": "",
         "student": [],
         "announcement": [],
+        "material": [],
     });
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
-            expand: 'instructor,student,announcement',
+            expand: 'instructor,student,announcement,material',
         });
         console.log(record)
         setCourseData(record)
@@ -134,6 +137,7 @@ const Course = () => {
                 </div>
                 {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
                 {pb.authStore.model!.role.includes('instructor')||courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor')||courseData.student.includes(pb.authStore.model!.id) ? <Material data={courseData} /> : ""}
             </div>
             
         </div>

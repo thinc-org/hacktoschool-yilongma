@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
-const AnnouncementAdder = ({ data }:{data:any;}) => {
+const MaterialAdder = ({ data }:{data:any;}) => {
 
     const navigate = useNavigate();
 
     const [show, toggleShow] = useState(false);
 
     const [name, setName] = useState("");
-    const [descriptionText, setDescriptionText] = useState("");
+    const [file, setFile] = useState<File>();
 
     const handleSubmit = async () => {
-        if (!name || !descriptionText) {
+        if (!name || !file) {
             Swal.fire({
                 title:'Error', 
                 text:'Some fields are empty!', 
@@ -24,41 +24,36 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                 timer: 2000})
         }
         else {
-            const createdData = {
-                "name": name,
-                "description": descriptionText,
-            };
-            await pb.collection('announcements').create(createdData)
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('name', name);
+            await pb.collection('materials').create(formData)
                 .then(async (record) => {
 
                     const oldCourseRecord = await pb.collection('courses').getOne(data.id || "", {
                         expand: '',
                     });
 
-                    var newAnnouncementArray = oldCourseRecord.announcement || []
-                    newAnnouncementArray.push(record.id)
+                    var newMaterialArray = oldCourseRecord.material || []
+                    newMaterialArray.push(record.id)
 
                     var sendData = {
-                        "id": oldCourseRecord.id,
-                        "name": oldCourseRecord.name,
-                        "instructor": oldCourseRecord.instructor,
-                        "thumbnail" : oldCourseRecord.thumbnail || "",
-                        "description": oldCourseRecord.description || "",
-                        "announcement": newAnnouncementArray,
+                        "material": newMaterialArray
                     };
                     const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
-                    .then(async () => {
-                        await Swal.fire({
+                    .then(() => {
+                        Swal.fire({
                             title: "Success",
-                            text: 'Create new announcement successfully!',
+                            text: 'Create new material successfully!',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1000
                     
                         }).then(() => {
-                            navigate('/courses/'+data.id+'/announcements/'+record.id)
+                            window.location.reload()    
                         })
-                    }).catch(() => {
+                    }).catch((e) => {
+                        console.log(e)
                     Swal.fire({
                         title:'Error', 
                         text:'Please try again later', 
@@ -84,22 +79,26 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                     <div className="px-8 pt-6 pb-6 mb-4 w-full">
                         <div className="flex flex-row mb-6 items-center">
                             <label className="block text-gray-700 text-lg font-bold mb-2">
-                                Create New Announcement
+                                Create New Material
                             </label>
                         </div>
 
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
-                                Announcement Name
+                                Material Name
                             </label>
                             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Announcement Name" value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
 
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
-                                Description
+                                File
                             </label>
-                            <textarea className="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Description" value={descriptionText} onChange={(e) => setDescriptionText(e.target.value)} />
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" placeholder="Material" onChange={(e) => {
+                                                                                                                                                                                                                if (e.target.files){
+                                                                                                                                                                                                                    setFile(e.target.files[0])
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                                }}/>
                             
                         </div>
 
@@ -121,4 +120,4 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
 
 }
 
-export default AnnouncementAdder
+export default MaterialAdder
