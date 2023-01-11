@@ -13,7 +13,7 @@ function CoursesList() {
     const token = pb.authStore.token;
 
     useEffect(() => {
-        if (token) {
+        if (!token) {
             navigate('/');
         }
     })
