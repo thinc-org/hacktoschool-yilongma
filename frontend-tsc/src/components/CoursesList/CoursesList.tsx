@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
 import { useNavigate } from 'react-router-dom';
 import CourseAdder from './CourseAdder';
+import useDebounce from './useDebounce';
+import { Skeleton } from '@mui/material';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
@@ -11,12 +13,11 @@ const pb = new PocketBase('https://pb.jjus.dev');
 function CoursesList() {
     let navigate = useNavigate(); 
     const token = pb.authStore.token;
+    const dataFetchedRef = useRef(false);
 
-    useEffect(() => {
-        if (!token) {
-            navigate('/');
-        }
-    })
+    const [search, setSearch] = useState("")
+    const [loading, setLoading] = useState(true);
+    const [coursesList, setCoursesList] = useState<any>([]);
 
     var rolefilter = "";
     if (pb.authStore.model!.role.includes('instructor')) {
@@ -24,20 +25,33 @@ function CoursesList() {
     }
 
 
-    const [coursesList, setCoursesList] = useState<any>([]);
+    
 
-    const getCoursesList = async () => {
+    const getCoursesList = async (search:string) => {
+        let filterArray = []
+        if (rolefilter) {filterArray.push(rolefilter)}
+        if (search) {filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`)}
+        console.log(filterArray.join(" && "));
         const resultList = await pb.collection('courses').getList(1, 50, {
-            filter: rolefilter,
+            filter: filterArray.join(" && "),
             expand: 'instructor'
         })
+        console.log(resultList.items);
         setCoursesList(resultList.items)
     }
 
-    
+    useDebounce(() => {
+        getCoursesList(search);
+      }, [search], 500
+    );
 
     useEffect(() => {
-        getCoursesList();
+        if (!token) {
+            navigate('/');
+        }
+        if (dataFetchedRef.current || (token == '')) return;
+        dataFetchedRef.current = true;
+        getCoursesList(search);
     }, [])
 
     return (
@@ -54,16 +68,17 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
+                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value)}}/>
                     </div>
                 </div>
 
                 <div className='max-w-full'>
+                    
                     {
-                        coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }) => {
-                            console.log(data);
+                        coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
+                            
                             return (
-                                <CourseBox id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                                <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
                             )
                         })
                     }
