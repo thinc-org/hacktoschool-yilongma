@@ -5,7 +5,6 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
-import Cookies from 'js-cookie'
 import PocketBase from 'pocketbase';
 import Avatar from '@mui/material/Avatar';
 
@@ -63,7 +62,6 @@ function HeaderV3() {
 
     const handleLogout = () => {
         pb.authStore.clear()
-        Cookies.remove('token')
         window.location.href = "/";
     };
     return (
