@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
-import HeaderV3 from './components/Header/HeaderV3'
+import Header from './components/Header/Header'
 const Home = React.lazy(() => import('./components/Homepage/Home'));
 import Footer from './components/Footer/Footer'
 import Login from './components/Auth/Login'
@@ -18,14 +18,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
         <Routes>
-          <Route path='/' element={<><HeaderV3/><Home/><Footer/></>} />
+          <Route path='/' element={<><Header/><Home/><Footer/></>} />
           <Route path='/login' element={<><Login/></>} />
           <Route path='/register' element={<><Register/></>} />
-          <Route path='/courses' element={<><HeaderV3/><CoursesList/><Footer/></>} />
-          <Route path='/courses/:id' element={<><HeaderV3/><Course/><Footer/></>} />
-          <Route path='/courses/:id/announcements/:announcementId' element={<><HeaderV3/><AnnouncementBox/><Footer/></>} />
-          <Route path='/courses/:id/announcements/:announcementId/edit' element={<><HeaderV3/><AnnouncementEditor/><Footer/></>} />
-          <Route path='/courses/:id/materials/:materialId/edit' element={<><HeaderV3/><MaterialEditor/><Footer/></>} />
+          <Route path='/courses' element={<><Header/><CoursesList/><Footer/></>} />
+          <Route path='/courses/:id' element={<><Header/><Course/><Footer/></>} />
+          <Route path='/courses/:id/announcements/:announcementId' element={<><Header/><AnnouncementBox/><Footer/></>} />
+          <Route path='/courses/:id/announcements/:announcementId/edit' element={<><Header/><AnnouncementEditor/><Footer/></>} />
+          <Route path='/courses/:id/materials/:materialId/edit' element={<><Header/><MaterialEditor/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
