@@ -16,7 +16,7 @@ function CoursesList() {
     const dataFetchedRef = useRef(false);
 
     const [search, setSearch] = useState("")
-    const [loading, setLoading] = useState(true);
+    
     const [coursesList, setCoursesList] = useState<any>([]);
 
     var rolefilter = "";
