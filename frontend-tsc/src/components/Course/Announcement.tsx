@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AnnouncementAdder from './Adder/AnnouncementAdder';
 import PocketBase from 'pocketbase';
 import moment from 'moment'
+import Swal from 'sweetalert2';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -14,9 +15,38 @@ const Announcement = ({ data }:{data:any;}) => {
     if (data.expand.announcement) {
         trData = data.expand.announcement.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((announcementData : any, index: number) => {
             return (
-                <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>
-                    <td className="px-4 py-2">{announcementData.name}</td>
-                    <td className="px-4 py-2">{(moment(announcementData.created)).fromNow()}</td>
+                <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" >
+                    <td className="px-4 py-2" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{announcementData.name}</td>
+                    <td className="px-4 py-2" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{(moment(announcementData.created)).fromNow()}</td>
+                    {pb.authStore.model!.role.includes('instructor') && 
+                    <td className="px-4 py-2">
+                        <div className="flex items-center justify-center">
+                            <button className="bg-red-500 hover:bg-red-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {Swal.fire({
+                                                                                                                                                                                                                  title: 'Do you want to delete this announcement?',
+                                                                                                                                                                                                                  showDenyButton: true,
+                                                                                                                                                                                                                    
+                                                                                                                                                                                                                  confirmButtonText: 'Delete',
+                                                                                                                                                                                                                  
+                                                                                                                                                                                                                }).then(async (result) => {
+                                                                                                                                                                                                                  /* Read more about isConfirmed, isDenied below */
+                                                                                                                                                                                                                  if (result.isConfirmed) {
+                                                                                                                                                                                                                    await pb.collection('announcements').delete(announcementData.id)
+                                                                                                                                                                                                                    .then(() => Swal.fire({
+                                                                                                                                                                                                                      
+                                                                                                                                                                                                                        icon: 'success',
+                                                                                                                                                                                                                        title: 'This announcement is deleted!',
+                                                                                                                                                                                                                        showConfirmButton: false,
+                                                                                                                                                                                                                        timer: 1500
+                                                                                                                                                                                                                      }).then(() => {window.location.reload()}))
+                                                                                                                                                                                                                    
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                })}}>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                        
+                    }
                 </tr>
             )
         });
@@ -35,8 +65,9 @@ const Announcement = ({ data }:{data:any;}) => {
                     <table className="table-fixed">
                         <thead>
                             <tr>
-                                <th className="w-[70%] px-4 py-2">Name</th>
-                                <th className="w-[30%] px-4 py-2">Date</th>
+                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[60%] px-4 py-2" : "w-[70%] px-4 py-2"}>Name</th>
+                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[20%] px-4 py-2" : "w-[30%] px-4 py-2"}>Date</th>
+                                {pb.authStore.model!.role.includes('instructor') && <th className="w-[20%] px-4 py-2">Operation</th>}
                             </tr>
                         </thead>
                         <tbody>
