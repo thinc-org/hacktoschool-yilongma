@@ -8,7 +8,7 @@ const Announcement = ({ data }:{data:any;}) => {
 
     let trData = ""
     if (data.expand.announcement) {
-        trData = data.expand.announcement.map((announcementData : any, index: number) => {
+        trData = data.expand.announcement.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((announcementData : any, index: number) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>
                     <td className="px-4 py-2">{announcementData.name}</td>
