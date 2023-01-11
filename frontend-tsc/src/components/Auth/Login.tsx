@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik'
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ function Login() {
         }
     })
 
-    const handleSubmit = async (values: { email: string; password: string; }) => {
+    const handleLogin = async (values: { email: string; password: string; } , actions: FormikHelpers<{ email: string; password: string; }>) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
                 Cookies.set('token', value.token)
@@ -41,35 +41,33 @@ function Login() {
                 })
             }).catch(() => {
                 Swal.fire({
-                    title:'Error', 
-                    text:'Wrong Username or Password', 
-                    icon:'error',
+                    title: 'Error',
+                    text: 'Wrong Username or Password',
+                    icon: 'error',
                     showConfirmButton: false,
-                    timer: 2000})
+                    timer: 2000
+                });
+                actions.resetForm()
             })
     }
 
     return (
         <div>
             <div className="grid h-screen place-items-center bg-[#F6F5F4]">
-
-
                 <div className="w-full max-w-xs">
                     <Formik
-                        onSubmit={(values) => {
-                            handleSubmit(values)
+                        onSubmit={(values, actions) => {
+                            handleLogin(values, actions)
                         }}
                         initialValues={{ email: "", password: "" }}
                         validationSchema={loginSchema}>
                         {({
                             values,
-                            errors,
-                            touched,
-                            handleChange,
                             handleBlur,
                             handleSubmit,
+                            isSubmitting,
                         }) => (
-                            <form
+                            <Form
                                 className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
                                 noValidate onSubmit={handleSubmit}>
                                 <div className="mb-6">
@@ -82,38 +80,35 @@ function Login() {
                                     <label className="block text-gray-700 text-sm font-bold mb-2">
                                         Username
                                     </label>
-                                    <input
+                                    <Field
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         type="email"
                                         name="email"
-                                        onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
                                         placeholder="Enter email id / username"
                                         id="email" />
-                                    <p className="text-red-600 font-[Montserrat] font-[500]">
-                                        {errors.email && touched.email && errors.email}
-                                    </p>
+                                    <ErrorMessage name='email' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
                                 </div>
                                 <div className="mb-6">
                                     <label className="block text-gray-700 text-sm font-bold mb-2">
                                         Password
                                     </label>
-                                    <input
+                                    <Field
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="password"
+                                        name="password"
                                         type="password"
                                         placeholder="******************"
-                                        name="password"
-                                        onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.password} />
-                                    <p className="text-red-600 font-[Montserrat] font-[500]">
-                                        {errors.password && touched.password && errors.password}
-                                    </p>
+                                    <ErrorMessage name='password' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
                                 </div>
                                 <div className="flex items-center justify-center mb-6">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                    >
                                         Sign In
                                     </button>
                                 </div>
@@ -122,7 +117,7 @@ function Login() {
                                         Don't have an account? <a className='text-blue-700' href='/register'>Sign Up!</a>
                                     </label>
                                 </div>
-                            </form>
+                            </Form>
                         )}
                     </Formik>
                 </div>
