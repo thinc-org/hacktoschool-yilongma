@@ -14,15 +14,16 @@ const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required")
 });
 
+const resetSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required")
+});
+
 const pb = new PocketBase('https://pb.jjus.dev');
 
 function LoginPop() {
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
-
-    const navigate = useNavigate();
-    const token = pb.authStore.token;
 
     const Toast = Swal.mixin({
         toast: true,
@@ -62,6 +63,23 @@ function LoginPop() {
             })
     }
 
+    const [forgot, setForgot] = useState(false)
+
+    const handlePasswordReset = async (values: { email: string; }, actions: any) => {
+        await pb.collection('users').requestPasswordReset(values.email)
+        .then(() => {
+            Toast.fire({
+                title: "Password Reset",
+                text: 'Reset password link sent to mail.',
+                icon: 'success',
+                timer: 1500
+            }).then(() => {
+                setForgot(false);
+                actions.resetForm();
+            })
+        })
+    }
+
     return (
         <Popover className="relative">
             {({ open }) => (
@@ -69,10 +87,11 @@ function LoginPop() {
                     <Popover.Button
                         className={classNames(
                             open ? 'text-[#333333]' : "text-[#757575]",
-                            'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-[#333333] focus:outline-none'
+                            'group inline-flex items-center rounded-lg bg-white text-base font-medium hover:text-[#333333] focus:outline-none p-2 -m-2'
                         )}
+                        onClick={() => {setForgot(false)}}
                     >
-                        <p>Login <span className='text-[0.5rem] text-center align-middle'>➜</span></p>
+                        <p>Login</p>
                     </Popover.Button>
 
                     <Transition
@@ -84,69 +103,115 @@ function LoginPop() {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                     >
-                        <Popover.Panel className="z-[2000] absolute mt-3 right-0 max-w-screen">
+                        <Popover.Panel className="z-[2000] absolute mt-6 right-0 max-w-screen">
                             {({ close }) => (
                                 <div className="overflow-hidden rounded-lg shadow-md">
-                                    <Formik
-                                        onSubmit={(values, actions) => {
-                                            handleLogin(values, actions, close)
-                                        }}
-                                        initialValues={{ email: "", password: "" }}
-                                        validationSchema={loginSchema}>
-                                        {({
-                                            values,
-                                            handleBlur,
-                                            handleSubmit,
-                                            isSubmitting,
-                                        }) => (
-                                            <Form
-                                                className="bg-white shadow-md rounded p-10"
-                                                noValidate onSubmit={handleSubmit}>
+                                    {!forgot ?
+                                        <Formik
+                                            onSubmit={(values, actions) => {
+                                                handleLogin(values, actions, close)
+                                            }}
+                                            initialValues={{ email: "", password: "" }}
+                                            validationSchema={loginSchema}>
+                                            {({
+                                                values,
+                                                handleBlur,
+                                                isSubmitting,
+                                                resetForm
+                                            }) => (
+                                                <Form
+                                                    className="bg-white shadow-md rounded p-10"
+                                                >
 
-                                                <div className="mb-4 w-32 md:w-48">
-                                                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                                                        Username
-                                                    </label>
-                                                    <Field
-                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        type="email"
-                                                        name="email"
-                                                        onBlur={handleBlur}
-                                                        value={values.email}
-                                                        placeholder="Enter email"
-                                                        id="email" />
-                                                    <ErrorMessage name='email' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
-                                                </div>
-                                                <div className="mb-6">
-                                                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                                                        Password
-                                                    </label>
-                                                    <Field
-                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        name="password"
-                                                        type="password"
-                                                        placeholder="******************"
-                                                        onBlur={handleBlur}
-                                                        value={values.password} />
-                                                    <ErrorMessage name='password' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
-                                                </div>
-                                                <div className="flex items-center justify-center mb-6">
-                                                    <button
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                                        type="submit"
-                                                        disabled={isSubmitting}
-                                                    >
-                                                        Sign In
-                                                    </button>
-                                                </div>
-                                                <div className="flex items-center justify-center">
-                                                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                                                        Don't have an account? <a className='text-blue-700' href='/register'>Sign Up!</a>
-                                                    </label>
-                                                </div>
-                                            </Form>
-                                        )}
-                                    </Formik>
+                                                    <div className="mb-4">
+                                                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                                                            Username
+                                                        </label>
+                                                        <Field
+                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                            type="email"
+                                                            name="email"
+                                                            onBlur={handleBlur}
+                                                            value={values.email}
+                                                            placeholder="Enter email"
+                                                            id="email" />
+                                                        <ErrorMessage name='email' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
+                                                    </div>
+                                                    <div className="mb-2">
+                                                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                                                            Password
+                                                        </label>
+                                                        <Field
+                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                            name="password"
+                                                            type="password"
+                                                            placeholder="******************"
+                                                            onBlur={handleBlur}
+                                                            value={values.password} />
+                                                        <ErrorMessage name='password' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
+                                                    </div>
+                                                    <div className="flex items-center justify-end whitespace-nowrap mb-4">
+                                                        <label className="text-gray-700 text-sm font-semibold">
+                                                            <a onClick={() => { setForgot(true); resetForm() }} className='text-blue-700'>Forgot password?</a>
+                                                        </label>
+                                                    </div>
+                                                    <div className="flex items-center justify-center mb-6">
+                                                        <button
+                                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                            type="submit"
+                                                            disabled={isSubmitting}
+                                                        >
+                                                            Sign In
+                                                        </button>
+                                                    </div>
+                                                    <div className="flex items-center justify-center whitespace-nowrap">
+                                                        <label className="block text-gray-700 text-sm font-bold mb-2 ">
+                                                            Don't have an account? <a className='text-blue-700' href='/register'>Sign Up!</a>
+                                                        </label>
+                                                    </div>
+                                                </Form>
+                                            )}
+                                        </Formik> : 
+                                        <Formik
+                                            onSubmit={(values, actions) => {
+                                                handlePasswordReset(values , actions)
+                                            }}
+                                            initialValues={{ email: ""}}
+                                            validationSchema={resetSchema}>
+                                            {({
+                                                values,
+                                                handleBlur
+                                            }) => (
+                                                <Form
+                                                    className="bg-white shadow-md rounded p-10"
+                                                >
+
+                                                    <div className="mb-4">
+                                                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                                                            Username
+                                                        </label>
+                                                        <Field
+                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                            type="email"
+                                                            name="email"
+                                                            onBlur={handleBlur}
+                                                            value={values.email}
+                                                            placeholder="Enter email"
+                                                            id="email" />
+                                                        <ErrorMessage name='email' component='p' className='text-red-600 font-[Montserrat] font-[500] p-2' />
+                                                    </div>
+                                                    <div className="flex items-center justify-center whitespace-nowrap">
+                                                        <button
+                                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                            type="submit"
+                                                        >
+                                                            Forgot Password
+                                                        </button>
+                                                    </div>
+                                                </Form>
+                                            )}
+                                        </Formik>
+                                        }
                                 </div>
                             )}
                         </Popover.Panel>
