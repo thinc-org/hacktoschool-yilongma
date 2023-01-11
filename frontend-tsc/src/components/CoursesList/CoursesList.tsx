@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,9 @@ function CoursesList() {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    
+    const [hasMore, setHasMore] = useState(true);
+
+    /*
     const handleScroll = () => {
         let userScrollHeight = window.innerHeight + window.scrollY;
     let windowBottomHeight = document.documentElement.offsetHeight;
@@ -33,7 +35,21 @@ function CoursesList() {
         getCoursesList(search)
     }
     };
+    */
 
+    const observer = useRef()
+    const lastCourseElementRef = useCallback((node:any) => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setCurrentPage(prevPageNumber => prevPageNumber + 1)
+        getCoursesList(search)
+      }
+    })
+    if (node) observer.current.observe(node)
+    }, [loading, hasMore])
+    
 
 
     var rolefilter = "";
@@ -49,14 +65,18 @@ function CoursesList() {
         if (rolefilter) {filterArray.push(rolefilter)}
         if (search) {filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`)}
         console.log(filterArray.join(" && "));
-        const resultList = await pb.collection('courses').getList(currentPage, 10, {
+        await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
             expand: 'instructor'
+        }).then((resultList: {items:any}) => {
+            setCoursesList([...coursesList, ...resultList.items])
+            setHasMore(resultList.items > 0)
+            setLoading(false)
+            console.log(coursesList)
+
         })
-        console.log(resultList.items);
-        setCoursesList([...coursesList, ...resultList.items])
         
-        setLoading(false)
+        
     }
 
     useDebounce(() => {
@@ -69,7 +89,7 @@ function CoursesList() {
     );
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
+
         if (!token) {
             navigate('/');
         }
@@ -92,7 +112,7 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setLoading(true); setCoursesList([]);}}/>
+                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value);}}/>
                     </div>
                 </div>
 
@@ -102,10 +122,12 @@ function CoursesList() {
                     }
                     {!loading &&
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
-                            
-                            return (
-                                <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
-                            )
+                            if (coursesList.length === index+1) {
+                                return <CourseBox ref={lastCourseElementRef} key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                            }
+                            else {
+                                return <CourseBox red={() => {}} key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
+                            }
                         })
                     }
                 </div>
