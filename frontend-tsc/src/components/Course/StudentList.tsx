@@ -21,7 +21,7 @@ const StudentList = ({ data }:{data:any;}) => {
             <div className='flex flex-col rounded-lg bg-[#FFFFFF] min-h-64 mt-8 mb-8 shadow hover:shadow-lg'>
                 <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Students List</label>
                 <label className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-hidden whitespace-pre-line">Total: {data.expand.student? data.expand.student.length : 0} student(s)</label>
-                <div className="flex flex-col px-8 py-4">
+                <div className="flex flex-col px-8 py-4 max-h-[20rem] overflow-auto">
                     <table className="table-fixed">
                         <thead>
                             <tr>
