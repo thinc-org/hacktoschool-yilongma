@@ -1,20 +1,25 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import PocketBase from 'pocketbase'
 import CourseBox from './CourseBox';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Navigate } from 'react-router-dom';
 import CourseAdder from './CourseAdder';
 import useDebounce from './useDebounce';
-import { Skeleton } from '@mui/material';
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 
 function CoursesList() {
-    let navigate = useNavigate(); 
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
 
+    if (!token) {
+        { return <Navigate to='/' /> }
+
+    }
     const [search, setSearch] = useState("")
     const [loading, setLoading] = useState(true);
     const [coursesList, setCoursesList] = useState<any>([]);
@@ -46,12 +51,12 @@ function CoursesList() {
     }
 
 
-    
 
-    const getCoursesList = async (search:string) => {
+
+    const getCoursesList = async (search: string) => {
         let filterArray = []
-        if (rolefilter) {filterArray.push(rolefilter)}
-        if (search) {filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`)}
+        if (rolefilter) { filterArray.push(rolefilter) }
+        if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
         console.log(filterArray.join(" && "));
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
@@ -73,14 +78,10 @@ function CoursesList() {
         setCurrentPage(1)
         */
         getCoursesList(search);
-      }, [search], 500
+    }, [search], 500
     );
 
     useEffect(() => {
-        if (!token) {
-            navigate('/');
-        }
-        
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;
         getCoursesList(search);
@@ -90,7 +91,7 @@ function CoursesList() {
         <div className='max-w-screen min-h-screen bg-[#F6F5F4]'>
             <div className='flex flex-col p-6 md:p-12 md:px-24 lg:p-12 lg:px-48  xl:p-12 xl:px-48'>
 
-                {pb.authStore.model!.role.includes('instructor') && <CourseAdder/>}
+                {pb.authStore.model!.role.includes('instructor') && <CourseAdder />}
 
                 <div>
                     <label className="block font-['DelaGothicOne'] text-[1.5rem] py-4 overflow-hidden whitespace-pre-line">
@@ -105,8 +106,8 @@ function CoursesList() {
                 </div>
 
                 <div className='max-w-full'>
-                    
-                    {loading && <div className="min-h-64 mt-8"><Skeleton variant="rectangular" animation="wave" height={150}/></div>
+
+                    {loading && <div className="min-h-64 mt-8"><Skeleton /></div>
                     }
                     {!loading &&
                         coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
@@ -119,9 +120,9 @@ function CoursesList() {
                         })
                     }
                 </div>
-            
+
             </div>
-            
+
         </div>
     )
 }
