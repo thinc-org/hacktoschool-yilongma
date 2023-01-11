@@ -17,7 +17,7 @@ const Announcement = ({ data }:{data:any;}) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]" >
                     <td className="px-4 py-2" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{announcementData.name}</td>
-                    <td className="px-4 py-2" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{(moment(announcementData.created)).fromNow()}</td>
+                    <td className="px-4 py-2 text-center" onClick={() => {navigate(`/courses/${data.id}/announcements/${announcementData.id}`)}}>{(moment(announcementData.created)).fromNow()}</td>
                     {pb.authStore.model!.role.includes('instructor') && 
                     <td className="px-4 py-2">
                         <div className="flex items-center justify-center gap-x-2">
