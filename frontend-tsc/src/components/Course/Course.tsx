@@ -41,7 +41,7 @@ const Course = () => {
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
-            expand: 'instructor,student,announcement,material',
+            expand: 'instructor,student,announcement,material,video',
         });
         console.log(record)
         setCourseData(record)

@@ -11,7 +11,7 @@ const Material = ({data}:{data:any;}) => {
 
     let navigate = useNavigate();
 
-    let trData = ""
+    let trData = null
     if (data.expand.material) {
         trData = data.expand.material.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((materialData : any, index: number) => {
             return (
