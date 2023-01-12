@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import Pluralize from 'react-pluralize'
 
 
-const socket = io('http://localhost:8888')
+const socket = io('http://ws.jjus.dev')
 
 // const WS_URL = 'ws://127.0.0.1:8080';
 // const ws = new WebSocket("ws://127.0.0.1:8080");

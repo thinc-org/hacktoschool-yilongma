@@ -11,7 +11,6 @@ specifiers:
   autoprefixer: ^10.4.13
   formik: ^2.2.9
   moment: ^2.29.4
-  pluralize: ^8.0.0
   pocketbase: ^0.9.1
   postcss: ^8.4.21
   react: ^18.2.0
@@ -39,7 +38,6 @@ dependencies:
   '@types/react-helmet': 6.1.6
   formik: 2.2.9_react@18.2.0
   moment: 2.29.4
-  pluralize: 8.0.0
   pocketbase: 0.9.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1323,11 +1321,6 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /pluralize/8.0.0:
-    resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
-    engines: {node: '>=4'}
-    dev: false
 
   /pocketbase/0.9.1:
     resolution: {integrity: sha512-a9S/WHak+mgr3WI8bD2tz3lFVFzoy6ZgKTBlUXwIH4VLTKVU3JKeAKxqIFBF7av4qblmB+52tX8sWLS08Ftm/w==}
