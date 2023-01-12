@@ -1,12 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import PocketBase from 'pocketbase';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import EnrolledCourses from './EnrolledCourses';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 const Profile = () => {
+
+    let { userId } = useParams();
+    let navigate = useNavigate();
+    const token = pb.authStore.token;
+
+    if (!token) {
+        { return <Navigate to='/' /> }
+    }
+    if (pb.authStore.model!.id !== userId) {
+        { return <Navigate to='/' /> }
+    }
 
     return (
         <div className='max-w-screen min-h-screen bg-[#F6F5F4] flex flex-col items-center md:items-start'>
@@ -30,19 +44,23 @@ const Profile = () => {
                             <p className='font-[Montserrat] text-[1rem]'>[{pb.authStore.model!.role[0]}]</p>
                         </div>
                     </div>
+
+                    {/* Tab Bar */}
                     <div className="flex flex-col items-center justify-center gap-2 p-2 -m-2 mt-2 mb-2 px-3 py-2">
                         <Tabs className="min-w-full">
                             <TabList>
                                 <Tab>User Profile</Tab>
-                                <Tab>Enrolled Course</Tab>
+                                {pb.authStore.model!.role.includes('student') && <Tab>Enrolled Courses</Tab>}
                             </TabList>
 
                             <TabPanel>
                                 <h2>Any content 1</h2>
                             </TabPanel>
+                            
+                            {pb.authStore.model!.role.includes('student') && 
                             <TabPanel>
-                                <h2>Any content 2</h2>
-                            </TabPanel>
+                                <EnrolledCourses />
+                            </TabPanel>}
                         </Tabs>
                     </div>
 
