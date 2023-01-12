@@ -67,12 +67,14 @@ const VideoBox = () => {
                 <div className='flex flex-col rounded-lg bg-[#FFFFFF]  mt-8 mb-8 shadow hover:shadow-lg'>
                     <label className="font-['Montserrat'] text-[1.2rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">{videoData.name}</label>
                     <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Created on: {(new Date(videoData.created).toLocaleString())}</label>
+                    <div className='flex items-center justify-center '>
                     {
                         (videoData.type === "url") ?
                         <ReactPlayer url={videoData.video_link} controls = {true}/>
                         :
                         <video src={videoData.video_link} controls />
                     }
+                    </div>
                 </div>
             </div>
         </div>
