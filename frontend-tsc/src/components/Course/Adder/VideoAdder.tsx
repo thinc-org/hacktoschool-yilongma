@@ -13,9 +13,10 @@ const VideoAdder = ({ data }:{data:any;}) => {
 
     const [name, setName] = useState("");
     const [linkUrl, setLinkUrl] = useState("");
+    const [file, setFile] = useState<File>();
 
     const handleSubmit = async () => {
-        if (!name) {
+        if (!name || (!file && !linkUrl)) {
             Swal.fire({
                 title:'Error', 
                 text:'Some fields are empty!', 
@@ -24,39 +25,40 @@ const VideoAdder = ({ data }:{data:any;}) => {
                 timer: 2000})
         }
         else {
-            const createdData = {
-                "name": name,
-                "description": descriptionText,
-            };
-            await pb.collection('announcements').create(createdData)
+            const formData = new FormData();
+            
+            if (linkUrl) {
+                formData.append('video_link', linkUrl);
+            }
+            else if (file) {
+                formData.append('video_file', file);
+            }
+            
+            formData.append('name', name);
+            await pb.collection('videos').create(formData)
                 .then(async (record) => {
 
                     const oldCourseRecord = await pb.collection('courses').getOne(data.id || "", {
                         expand: '',
                     });
 
-                    var newAnnouncementArray = oldCourseRecord.announcement || []
-                    newAnnouncementArray.push(record.id)
+                    var newVideoArray = oldCourseRecord.video || []
+                    newVideoArray.push(record.id)
 
                     var sendData = {
-                        "id": oldCourseRecord.id,
-                        "name": oldCourseRecord.name,
-                        "instructor": oldCourseRecord.instructor,
-                        "thumbnail" : oldCourseRecord.thumbnail || "",
-                        "description": oldCourseRecord.description || "",
-                        "announcement": newAnnouncementArray,
+                        "video": newVideoArray
                     };
                     const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
                     .then(async () => {
                         await Swal.fire({
                             title: "Success",
-                            text: 'Create new announcement successfully!',
+                            text: 'Create new video successfully!',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1000
                     
                         }).then(() => {
-                            navigate('/courses/'+data.id+'/announcements/'+record.id)
+                            window.location.reload()
                         })
                     }).catch(() => {
                     Swal.fire({
@@ -92,12 +94,12 @@ const VideoAdder = ({ data }:{data:any;}) => {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Video Name
                             </label>
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Announcement Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Video Name" value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
 
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
-                                Select one of these
+                                Select one of these (In case filling both field, video link will be used)
                             </label>
                         </div>
 
@@ -105,7 +107,7 @@ const VideoAdder = ({ data }:{data:any;}) => {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Video Link
                             </label>
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Announcement Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Video Link" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)}/>
                             
                         </div>
 
@@ -113,7 +115,11 @@ const VideoAdder = ({ data }:{data:any;}) => {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Video File
                             </label>
-                            <textarea className="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Description" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" placeholder="Video File" onChange={(e) => {
+                                                                                                                                                                                                                if (e.target.files){
+                                                                                                                                                                                                                    setFile(e.target.files[0])
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                                }}/>
                             
                         </div>
 
