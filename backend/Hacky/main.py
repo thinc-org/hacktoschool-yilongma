@@ -45,5 +45,15 @@ def slack_noti():
     except:
         return {"result": 0}, 500
 
+@app.route('/notification/slack', methods=["GET"])
+def login_sso():
+    payload = {'service': 'https://jjus.dev', 'ouid': '6000000021','firstname': 'John', 'lastname': 'Doe'}
+    r = requests.get('https://sso.thinc.in.th/login', params=payload)
+    try:
+        send_notification_slack(record['msg'])
+        return {"result": r.url.split('?')[1].split('ticket=')[1]}, 201
+    except:
+        return {"result": 0}, 500
+
 
 app.run()
