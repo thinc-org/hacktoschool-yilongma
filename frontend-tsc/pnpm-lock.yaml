@@ -22,6 +22,7 @@ specifiers:
   react-pluralize: ^1.6.3
   react-remove-scroll: ^2.5.5
   react-router-dom: ^6.6.1
+  react-tabs: ^6.0.0
   react-use-websocket: ^4.2.0
   socket.io-client: ^4.5.4
   sweetalert: ^2.1.2
@@ -48,6 +49,7 @@ dependencies:
   react-pluralize: 1.6.3_react@18.2.0
   react-remove-scroll: 2.5.5_kzbn2opkn2327fwg5yzwzya5o4
   react-router-dom: 6.6.1_biqbaboplfbrettd7655fr4n2y
+  react-tabs: 6.0.0_react@18.2.0
   react-use-websocket: 4.2.0_biqbaboplfbrettd7655fr4n2y
   socket.io-client: 4.5.4
   sweetalert: 2.1.2
@@ -790,6 +792,11 @@ packages:
 
   /client-only/0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
+    dev: false
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
     dev: false
 
   /color-convert/1.9.3:
@@ -1615,6 +1622,16 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.4.1
+    dev: false
+
+  /react-tabs/6.0.0_react@18.2.0:
+    resolution: {integrity: sha512-8jKLKrlwxmn5/+xsa76yi27ZdB8E/WhlhQZw739O5UlOeUGtVoVeWnpqIewv/KbjTw7gQf/uA51zWUNt4IVygQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-use-websocket/4.2.0_biqbaboplfbrettd7655fr4n2y:
