@@ -60,7 +60,7 @@ function CoursesList() {
         console.log(filterArray.join(" && "));
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
-            expand: 'instructor'
+            expand: 'instructor,tag,student'
         }).then((resultList: {items:any}) => {
             setCoursesList([...coursesList, ...resultList.items])
             setHasMore(resultList.items.length > 0)
@@ -110,13 +110,8 @@ function CoursesList() {
                     {loading && <div className="min-h-64 mt-8"><Skeleton /></div>
                     }
                     {!loading &&
-                        coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
-                            if (coursesList.length === index+1) {
-                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
-                            }
-                            else {
-                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
-                            }
+                        coursesList.map((data: any, index: number) => {
+                            return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name} data={data} tag={data.expand.tag}/>
                         })
                     }
                 </div>

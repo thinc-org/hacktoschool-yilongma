@@ -31,9 +31,11 @@ const EnrolledCourses = () => {
     return (
 
         <div className='flex flex-col px-2 py-2'>
-            <div className='flex flex-col items-center justify-center'>
-                <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Enrolled Courses</label>
-            </div>
+            <div className="flex flex-row px-8 py-4 items-center justify-center">
+                            <label className="block text-gray-700 text-lg font-bold mb-2">
+                                Enrolled Courses
+                            </label>
+                        </div>
             <div className="flex flex-col px-8 py-4 max-h-[60rem] overflow-auto text-[1rem]">
                     <table className="table-fixed">
                         <thead>
