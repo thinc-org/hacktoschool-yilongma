@@ -11,13 +11,27 @@ const Material = ({data}:{data:any;}) => {
 
     let navigate = useNavigate();
 
+    const updateViewcount = async (materialId:string) => {
+        try{
+            const record = await pb.collection('materials').getOne(materialId, {});
+            const data = {
+                "viewcount": (record.viewcount || 0) + 1
+            };
+            const newRecord = await pb.collection('materials').update(materialId, data);
+        }
+        catch{
+            console.log("update failed")
+        }
+    }
+
+
     let trData = null
     if (data.expand.material) {
         trData = data.expand.material.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((materialData : any, index: number) => {
             return (
                 <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]">
-                    <td className="px-4 py-2" onClick={async () => {const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{materialData.name}</td>
-                    <td className="px-4 py-2" onClick={async () => {const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{(moment(materialData.created)).fromNow()}</td>
+                    <td className="px-4 py-2" onClick={async () => {await updateViewcount(materialData.id); const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{materialData.name}</td>
+                    <td className="px-4 py-2" onClick={async () => {await updateViewcount(materialData.id); const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{(moment(materialData.created)).fromNow()}</td>
                     {pb.authStore.model!.role.includes('instructor') && 
                     <td className="px-4 py-2">
                         <div className="flex items-center justify-center gap-x-2">
