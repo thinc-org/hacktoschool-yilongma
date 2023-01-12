@@ -13,6 +13,7 @@ import AnnouncementBox from './components/Announcement/AnnouncementBox'
 import AnnouncementEditor from './components/Editor/AnnouncementEditor'
 import MaterialEditor from './components/Editor/MaterialEditor'
 import VideoBox from './components/Video/VideoBox';
+import VideoEditor from './components/Editor/VideoEditor';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/courses/:id/announcements/:announcementId/edit' element={<><Header/><AnnouncementEditor/><Footer/></>} />
           <Route path='/courses/:id/materials/:materialId/edit' element={<><Header/><MaterialEditor/><Footer/></>} />
           <Route path='/courses/:id/videos/:videoId' element={<><Header/><VideoBox/><Footer/></>} />
+          <Route path='/courses/:id/videos/:videoId/edit' element={<><Header/><VideoEditor/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
