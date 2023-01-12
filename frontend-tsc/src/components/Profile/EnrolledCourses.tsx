@@ -34,13 +34,12 @@ const EnrolledCourses = () => {
             <div className='flex flex-col items-center justify-center'>
                 <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Enrolled Courses</label>
             </div>
-            <div className="flex flex-col px-8 py-4 max-h-[60rem] overflow-auto font-semibold text-[1rem]">
+            <div className="flex flex-col px-8 py-4 max-h-[60rem] overflow-auto text-[1rem]">
                     <table className="table-fixed">
                         <thead>
                             <tr>
-                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[60%] px-4 py-2" : "w-[70%] px-4 py-2"}>Name</th>
-                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[20%] px-4 py-2" : "w-[30%] px-4 py-2"}>Instructor</th>
-                                {pb.authStore.model!.role.includes('instructor') && <th className="w-[20%] px-4 py-2">Operation</th>}
+                                <th className="w-[70%] px-4 py-2">Name</th>
+                                <th className="w-[30%] px-4 py-2">Instructor</th>
                             </tr>
                         </thead>
                         <tbody>
