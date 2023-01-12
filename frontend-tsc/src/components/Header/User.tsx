@@ -6,7 +6,6 @@ import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
 import { Navigate, useNavigate } from 'react-router-dom';
 import LoginPop from '../Auth/LoginPop';
 
-
 const pb = new PocketBase('https://pb.jjus.dev');
 
 function User() {
@@ -37,7 +36,7 @@ function User() {
         <div className='flex flex-row gap-1 md:gap-2 items-center'>
             {!token ?
                 <>
-                    <LoginPop/>
+                    <LoginPop />
                 </>
                 :
                 <>
@@ -56,14 +55,14 @@ function User() {
                                     <div className='flex flex-row items-center gap-2 p-2 -m-2'>
                                         <div className="relative inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 overflow-hidden bg-[#C3DCE3] rounded-full">
                                             {
-                                                (!pb.authStore.model!.avatar) ? 
-                                                <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
-                                                :
-                                                <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
+                                                (!pb.authStore.model!.avatar) ?
+                                                    <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
+                                                    :
+                                                    <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
                                             }
-                                            
+
                                         </div>
-                                        <p className='font-[Montserrat] text-[1rem]'>{pb.authStore.model!.name.split(' ')[0]}</p>
+                                        <p className='font-[Montserrat] text-[1rem] hidden md:block'>{pb.authStore.model!.name.split(' ')[0]}</p>
                                     </div>
                                     <ChevronDownIcon
                                         className={classNames(
@@ -83,12 +82,15 @@ function User() {
                                     leaveFrom="opacity-100 translate-y-0"
                                     leaveTo="opacity-0 translate-y-1"
                                 >
-                                    <Popover.Panel className="absolute mt-6">
+                                    <Popover.Panel className="absolute -left-1/2 mt-6">
                                         <div className="overflow-hidden rounded-lg shadow-md w-fit">
-                                            <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6 whitespace-nowrap">
+                                            <div className="relative grid gap-6 bg-white sm:gap-8 p-6 whitespace-nowrap">
+                                                {/* <div>
+                                                    <p className='font-[Montserrat] text-[1rem] md:hidden block'>{pb.authStore.model!.name.split(' ')[0]}</p>
+                                                </div> */}
                                                 <button
                                                     className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
-                                                    onClick={() => {if (pb.authStore.model!.id) {navigate('/users/'+pb.authStore.model!.id)} else {navigate('/')}}}
+                                                    onClick={() => { if (pb.authStore.model!.id) { navigate('/users/' + pb.authStore.model!.id) } else { navigate('/') } }}
                                                 >
                                                     <div className="">
                                                         <p className="text-base font-medium text-[#757575] hover:text-[#333333]">Profile</p>
