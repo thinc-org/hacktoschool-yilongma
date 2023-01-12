@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PocketBase from 'pocketbase';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -26,6 +29,21 @@ const Profile = () => {
                             <p className='font-[Montserrat] text-[1.2rem]'>{pb.authStore.model!.name}</p>
                             <p className='font-[Montserrat] text-[1rem]'>[{pb.authStore.model!.role[0]}]</p>
                         </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-2 p-2 -m-2 mt-2 mb-2 px-3 py-2">
+                        <Tabs className="min-w-full">
+                            <TabList>
+                                <Tab>User Profile</Tab>
+                                <Tab>Enrolled Course</Tab>
+                            </TabList>
+
+                            <TabPanel>
+                                <h2>Any content 1</h2>
+                            </TabPanel>
+                            <TabPanel>
+                                <h2>Any content 2</h2>
+                            </TabPanel>
+                        </Tabs>
                     </div>
 
 
