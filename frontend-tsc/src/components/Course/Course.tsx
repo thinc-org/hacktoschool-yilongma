@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import Announcement from './Announcement'
 import Material from './Material'
 import Video from './Video';
+import Tag from '../Tags/Tag';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -31,17 +32,19 @@ const Course = () => {
             "announcement": [],
             "material": [],
             "video": [],
+            "tag": [],
         },
         "description": "",
         "student": [],
         "announcement": [],
         "material": [],
         "video": [],
+        "tag": [],
     });
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
-            expand: 'instructor,student,announcement,material,video',
+            expand: 'instructor,student,announcement,material,video,tag',
         });
         console.log(record)
         setCourseData(record)
@@ -101,6 +104,14 @@ const Course = () => {
                     <div className='flex flex-col max-h-64'>
                         <p className="font-['DelaGothicOne'] text-[1.2rem] px-8 py-4 overflow-hidden whitespace-pre-line">{courseData.name}</p>
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-3 font-bold overflow-hidden whitespace-pre-line">Instructor: {courseData.expand.instructor.name}</p>
+                        <div className="flex flex-row max-w-full font-['Montserrat'] text-sm md:text-[1rem] font-bold whitespace-pre-line flex-wrap gap-1 px-8 py-3">
+                            {
+                                (courseData.expand.tag) &&
+                                (courseData.expand.tag.map((data: any, index: number) => {
+                                    return <Tag key={index} name={data.name} bgColor="#daeffe" textColor="#0c5a93" />
+                                }))
+                            }
+                        </div>
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-auto whitespace-pre-line">{courseData.description}</p>
                         <div className="flex flex-col px-8 py-2">
                             {
@@ -113,11 +124,19 @@ const Course = () => {
                         </div>
                     </div>
                 </div>
-                <div className="max-h-[43rem] md:hidden grid grid-rows-[h-64_1fr] rounded-lg bg-[#FFFFFF] h-fit shadow hover:shadow-lg m-8">
+                <div className="max-h-[50rem] md:hidden grid grid-rows-[h-64_1fr] rounded-lg bg-[#FFFFFF] h-fit shadow hover:shadow-lg m-8">
                     <img src="https://picsum.photos/200/300" className='w-full h-full object-fill rounded-t-lg min-h-64 max-h-64 min-w-64 max-w-64' />
                     <div className='flex flex-col m-4'>
                         <p className="font-['DelaGothicOne'] text-[1.2rem] px-8 py-0 overflow-hidden whitespace-pre-line">{courseData.name}</p>
                         <p className="font-['Montserrat'] text-[1rem] px-8 py-3 font-bold overflow-hidden whitespace-pre-line">Instructor: {courseData.expand.instructor.name}</p>
+                        <div className="flex flex-row max-w-full font-['Montserrat'] text-sm md:text-[1rem] font-bold whitespace-pre-line flex-wrap gap-1 px-8 py-3">
+                            {
+                                (courseData.expand.tag) &&
+                                (courseData.expand.tag.map((data: any, index: number) => {
+                                    return <Tag key={index} name={data.name} bgColor="#daeffe" textColor="#0c5a93" />
+                                }))
+                            }
+                        </div>
                         <div className="overflow-auto max-h-[14rem]">
                             <p className="font-['Montserrat'] text-[1rem] px-8 py-2 whitespace-pre-line">{courseData.description}</p>
                         </div>
