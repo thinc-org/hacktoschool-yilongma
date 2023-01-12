@@ -20,8 +20,6 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
     useEffect(()=> {
         setLoading(false);
     },[])
-    console.log(data.expand)
-    console.log(data.expand)
 
 
     return (
