@@ -33,6 +33,9 @@ const Material = ({data}:{data:any;}) => {
                     <td className="px-4 py-2" onClick={async () => {await updateViewcount(materialData.id); const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{materialData.name}</td>
                     <td className="px-4 py-2" onClick={async () => {await updateViewcount(materialData.id); const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{(moment(materialData.created)).fromNow()}</td>
                     {pb.authStore.model!.role.includes('instructor') && 
+                    <td className="px-4 py-2" onClick={async () => {await updateViewcount(materialData.id); const url = pb.getFileUrl(await pb.collection('materials').getOne(materialData.id), materialData.file); window.location.href = url;}}>{materialData.viewcount}</td>
+                    }
+                    {pb.authStore.model!.role.includes('instructor') && 
                     <td className="px-4 py-2">
                         <div className="flex items-center justify-center gap-x-2">
                             <button className="bg-[#A95151] hover:bg-red-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {
@@ -78,8 +81,9 @@ const Material = ({data}:{data:any;}) => {
                     <table className="table-fixed">
                         <thead>
                             <tr>
-                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[60%] px-4 py-2" : "w-[70%] px-4 py-2"}>Name</th>
-                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[20%] px-4 py-2" : "w-[30%] px-4 py-2"}>Date</th>
+                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[60%] px-4 py-2" : "w-[65%] px-4 py-2"}>Name</th>
+                                <th className={pb.authStore.model!.role.includes('instructor') ? "w-[20%] px-4 py-2" : "w-[25%] px-4 py-2"}>Date</th>
+                                {pb.authStore.model!.role.includes('instructor') && <th className="w-[10%] px-4 py-2">View</th>}
                                 {pb.authStore.model!.role.includes('instructor') && <th className="w-[20%] px-4 py-2">Operation</th>}
                             </tr>
                         </thead>
