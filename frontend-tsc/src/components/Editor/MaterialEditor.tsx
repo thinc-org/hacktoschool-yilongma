@@ -14,7 +14,7 @@ const MaterialEditor = () => {
     
 
     if (!token) {
-        navigate('/login')
+        navigate('/')
     }
 
     
