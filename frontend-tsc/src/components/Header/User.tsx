@@ -88,7 +88,7 @@ function User() {
                                             <div className="relative grid gap-6 bg-white sm:gap-8 sm:p-6 whitespace-nowrap">
                                                 <button
                                                     className="-m-3 flex items-center rounded-lg p-2 text-[#757575] hover:text-[#333333]"
-                                                    onClick={() => {if (pb.authStore.model!.id) {navigate('users/'+pb.authStore.model!.id)} else {navigate('/')}}}
+                                                    onClick={() => {if (pb.authStore.model!.id) {navigate('/users/'+pb.authStore.model!.id)} else {navigate('/')}}}
                                                 >
                                                     <div className="">
                                                         <p className="text-base font-medium text-[#757575] hover:text-[#333333]">Profile</p>
