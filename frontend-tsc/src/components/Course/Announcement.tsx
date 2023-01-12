@@ -11,7 +11,7 @@ const Announcement = ({ data }:{data:any;}) => {
 
     let navigate = useNavigate();
 
-    let trData = ""
+    let trData = null
     if (data.expand.announcement) {
         trData = data.expand.announcement.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((announcementData : any, index: number) => {
             return (

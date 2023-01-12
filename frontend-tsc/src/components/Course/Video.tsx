@@ -4,6 +4,7 @@ import AnnouncementAdder from './Adder/AnnouncementAdder';
 import PocketBase from 'pocketbase';
 import moment from 'moment'
 import Swal from 'sweetalert2';
+import VideoAdder from './Adder/VideoAdder';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -11,7 +12,7 @@ const Video = ({ data }:{data:any;}) => {
 
     let navigate = useNavigate();
 
-    let trData = ""
+    let trData = null
     if (data.expand.video) {
         trData = data.expand.video.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((videoData : any, index: number) => {
             return (
@@ -60,7 +61,7 @@ const Video = ({ data }:{data:any;}) => {
                 <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Course Videos</label>
                 <label className="font-['Montserrat'] text-[1rem] px-8 py-2 overflow-hidden whitespace-pre-line">Total: {data.expand.video? data.expand.video.length : 0} video(s)</label>
                 {
-                    /*pb.authStore.model!.role.includes('instructor') && <AnnouncementAdder data={data}/>*/
+                    pb.authStore.model!.role.includes('instructor') && <VideoAdder data={data}/>
                 }
                 <div className="flex flex-col px-8 py-4 max-h-[20rem] overflow-auto">
                     <table className="table-fixed">
