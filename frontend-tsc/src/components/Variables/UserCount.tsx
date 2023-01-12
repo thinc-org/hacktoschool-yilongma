@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
-//@ts-ignore
-import Pluralize from 'react-pluralize'
 
-const socket = io('http://ws.jjus.dev')
+// import Pluralize from 'react-pluralize'
+import pluralize from 'pluralize'
+
+const socket = io('https://ws.jjus.dev' , {secure: true})
 
 function UserCount(props: { text: boolean }) {
     const [online, setOnline] = useState(0)
@@ -16,9 +17,10 @@ function UserCount(props: { text: boolean }) {
     useEffect(() => {
         socket.emit("connected")
     }, [])
+
     return (
         <>
-            {props.text ? <Pluralize singular={'Person'} plural={'People'} count={online} /> : <span>{ online }</span>}
+            {props.text ? <span>{ online } {pluralize.plural('Person')}</span> : <span>{ online }</span>}
         </>
 
     )
