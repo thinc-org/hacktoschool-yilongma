@@ -85,6 +85,7 @@ function LoginPop() {
             {({ open }) => (
                 <>
                     <Popover.Button
+                        id='login-button'
                         className={classNames(
                             open ? 'text-[#333333]' : "text-[#757575]",
                             'group inline-flex items-center rounded-lg bg-white text-base font-medium hover:text-[#333333] focus:outline-none p-2 -m-2'

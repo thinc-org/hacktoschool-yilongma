@@ -26,7 +26,7 @@ const VideoAdder = ({ data }:{data:any;}) => {
         else {
             const createdData = {
                 "name": name,
-                "description": descriptionText,
+                // "description": descriptionText,
             };
             await pb.collection('announcements').create(createdData)
                 .then(async (record) => {
