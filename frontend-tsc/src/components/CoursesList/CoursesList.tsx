@@ -75,7 +75,14 @@ function CoursesList() {
         let filterArray = []
         if (rolefilter) { filterArray.push(rolefilter) }
         if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
-        if (tagArray) {  }
+        if (tagArray && tagArray.length > 0) { 
+            console.log(tagArray)
+            let tempArray: string[] = []
+            tagArray.map((data:any) => {
+                tempArray.push("tag ~ '" + data.value + "'")
+            })
+            filterArray.push(tempArray.join(" && "))
+         }
         console.log(filterArray.join(" && "));
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
