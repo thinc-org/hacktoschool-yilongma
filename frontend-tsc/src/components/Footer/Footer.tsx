@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import io from "socket.io-client";
-//@ts-ignore
 import UserCount from '../Variables/UserCount'
-// const socket = io('http://ws.jjus.dev')
 
 function Footer() {
     return (
@@ -24,7 +21,7 @@ function Footer() {
                 </div>
             </div>
             <div id='divider' className='w-[calc(100%-2vw)] h-[1px] rounded-full bg-[#E0E0E0] m-2'></div>
-            <div className='w-full p-2 md:p-0'>
+            <div className='w-full p-2 md:p-0 flex md:block flex-col items-center md:items-start'>
                 <div className='float-left'>
                     <div className='flex flex-row items-center gap-4 font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
                         <svg width="28" height="28" viewBox="0 0 30 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
