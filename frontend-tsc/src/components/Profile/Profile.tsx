@@ -6,6 +6,7 @@ import 'react-tabs/style/react-tabs.css';
 import EnrolledCourses from './EnrolledCourses';
 import { useNavigate, Navigate } from 'react-router-dom';
 import InterestedCourses from './InterestedCourses';
+import InstructorCourses from './InstructorCourses';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
@@ -59,12 +60,21 @@ const Profile = () => {
                     <div className="flex flex-col items-center justify-center gap-2 p-2 -m-2 mt-2 mb-2 px-3 py-2">
                         <Tabs className="min-w-full">
                             <TabList>
+
+                                {pb.authStore.model!.role.includes('instructor') && <Tab>My Courses</Tab>}
+
                                 
                                 {pb.authStore.model!.role.includes('student') && <Tab>Enrolled Courses</Tab>}
                                 {pb.authStore.model!.role.includes('student') && <Tab>Interested Courses</Tab>}
                             </TabList>
 
-                            
+                            {pb.authStore.model!.role.includes('instructor') && 
+                            <TabPanel>
+                                <InstructorCourses />
+                            </TabPanel>}
+
+
+
                             
                             {pb.authStore.model!.role.includes('student') && 
                             <TabPanel>
