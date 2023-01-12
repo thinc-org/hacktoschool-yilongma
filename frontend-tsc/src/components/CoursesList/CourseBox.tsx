@@ -4,15 +4,80 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Tag from '../Tags/Tag';
 import PocketBase from 'pocketbase'
+import Swal from 'sweetalert2';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: string; instructor: string; data: any; tag: any }) => {
 
     let navigate = useNavigate();
+
+    const [isInterested, setInterested] = useState<boolean>(pb.authStore.model!.interested_course.includes(id))
+
     const routeChange = () => {
         let path = `/courses/${id}`;
         navigate(path);
+    }
+
+    const interested = async () => {
+        const record = await pb.collection('users').getOne(pb.authStore.model!.id || "");
+        var newInterestArray = record.interested_course || []
+        newInterestArray.push(id)
+        var sendData = {
+            "interested_course": newInterestArray
+        };
+        const newRecord = await pb.collection('users').update(pb.authStore.model!.id || "", sendData)
+                    .then(async () => {
+                        await Swal.fire({
+                            title: "Success",
+                            text: 'Add to interested courses!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000
+                    
+                        }).then(() => {
+                            setInterested((prev) => !prev)
+                        })
+                    }).catch(() => {
+                    Swal.fire({
+                        title:'Error', 
+                        text:'Please try again later', 
+                        icon:'error',
+                        showConfirmButton: false,
+                        timer: 2000})
+                    })
+    }
+
+    const uninterested = async () => {
+        const record = await pb.collection('users').getOne(pb.authStore.model!.id || "");
+        var newInterestArray = record.interested_course || []
+        var index = newInterestArray.indexOf(id);
+        if (index !== -1) {
+            newInterestArray.splice(index, 1);
+        }
+        var sendData = {
+            "interested_course": newInterestArray
+        };
+        const newRecord = await pb.collection('users').update(pb.authStore.model!.id || "", sendData)
+                    .then(async () => {
+                        await Swal.fire({
+                            title: "Success",
+                            text: 'Remove from interested courses!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000
+                    
+                        }).then(() => {
+                            setInterested((prev) => !prev)
+                        })
+                    }).catch(() => {
+                    Swal.fire({
+                        title:'Error', 
+                        text:'Please try again later', 
+                        icon:'error',
+                        showConfirmButton: false,
+                        timer: 2000})
+                    })
     }
 
     const [loading, setLoading] = useState(true);
@@ -48,7 +113,17 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                             }
                             
                             </div>
-                            <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
+                            <div className="flex flex-row flex-wrap gap-2">
+                                <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
+                                {
+                                    pb.authStore.model!.role.includes('student') && 
+                                    (isInterested?
+                                    <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
+                                    :
+                                    <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
+                                }
+                            </div>
+                            
                         </div>
                     </div><div className="md:hidden grid grid-rows-2 rounded-lg bg-[#FFFFFF] h-fit mt-8 mb-8 shadow hover:shadow-lg m-8">
                         <img src="https://picsum.photos/300/200" className='aspect-[2/3] w-full h-full rounded-t-lg min-h-64 max-h-64 min-w-64 max-w-64' />
@@ -71,6 +146,13 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                             }
                             </div>
                             <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
+                            {
+                                pb.authStore.model!.role.includes('student') && 
+                                (isInterested?
+                                <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
+                                :
+                                <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
+                            }
                         </div>
                     </div>
                 </>}
