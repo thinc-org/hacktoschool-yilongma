@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import io from "socket.io-client";
 //@ts-ignore
-import Pluralize from 'react-pluralize'
-
-
-const socket = io('http://ws.jjus.dev')
-
-// const WS_URL = 'ws://127.0.0.1:8080';
-// const ws = new WebSocket("ws://127.0.0.1:8080");
+import UserCount from '../Variables/UserCount'
+// const socket = io('http://ws.jjus.dev')
 
 function Footer() {
-    const [online,setOnline] = useState(0)
-    useEffect(() => {
-        socket.on("broadcast", (data: React.SetStateAction<number>) => {
-          setOnline(data);
-        });
-        
-      }, [socket]);
-    useEffect(() => {
-        socket.emit("connected")
-    },[])
-
     return (
         <div className='w-full bg-[#F6F5F4] p-6 md:px-[5vw] lg:px-[10vw] flex flex-col items-center'>
             <div className='w-full p-2 md:p-0'>
@@ -52,7 +36,7 @@ function Footer() {
                 </div>
                 <div className='float-right'>
                     <div className='h-[28px] flex flex-row gap-4 items-center font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
-                        <a><Pluralize singular={'Person'} plural={'People'} count={online} /> Online</a>
+                        <a><UserCount text={true}/> Online</a>
                         <a className='p-2 -m-2'>GlobalTalk</a>
                     </div>
                 </div>

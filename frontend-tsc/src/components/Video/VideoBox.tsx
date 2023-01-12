@@ -70,8 +70,8 @@ const VideoBox = () => {
                     
                     {
                         (videoData.type === "url") ?
-                        <div className='relative h-[26rem] flex items-center justify-center pb-[56.25%]'>
-                            <ReactPlayer url={videoData.video_link} className="absolute" controls = {true} width="100%"/>
+                        <div className='flex items-center justify-center aspect-video'>
+                            <ReactPlayer url={videoData.video_link} controls = {true} width="100%" height="100%"/>
                         </div>
                         :
                         <video src={videoData.video_link} controls />
