@@ -20,10 +20,14 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^4.7.1",
     "react-loading-skeleton": "^3.1.0",
+    "react-pluralize": "^1.6.3",
     "react-remove-scroll": "^2.5.5",
     "react-router-dom": "^6.6.1",
+    "react-use-websocket": "^4.2.0",
+    "socket.io-client": "^4.5.4",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.6.16",
+    "vite-imagetools": "^4.0.14",
     "yup": "^0.32.11"
   },
   "devDependencies": {
