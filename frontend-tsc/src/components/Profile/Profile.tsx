@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import EnrolledCourses from './EnrolledCourses';
 import { useNavigate, Navigate } from 'react-router-dom';
+import InterestedCourses from './InterestedCourses';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
@@ -60,6 +61,7 @@ const Profile = () => {
                             <TabList>
                                 
                                 {pb.authStore.model!.role.includes('student') && <Tab>Enrolled Courses</Tab>}
+                                {pb.authStore.model!.role.includes('student') && <Tab>Interested Courses</Tab>}
                             </TabList>
 
                             
@@ -67,6 +69,11 @@ const Profile = () => {
                             {pb.authStore.model!.role.includes('student') && 
                             <TabPanel>
                                 <EnrolledCourses />
+                            </TabPanel>}
+
+                            {pb.authStore.model!.role.includes('student') && 
+                            <TabPanel>
+                                <InterestedCourses />
                             </TabPanel>}
                         </Tabs>
                     </div>
