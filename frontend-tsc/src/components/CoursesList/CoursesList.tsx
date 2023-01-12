@@ -4,6 +4,8 @@ import CourseBox from './CourseBox';
 import { useNavigate , Navigate } from 'react-router-dom';
 import CourseAdder from './CourseAdder';
 import useDebounce from './useDebounce';
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -15,6 +17,7 @@ const pb = new PocketBase('https://pb.jjus.dev');
 function CoursesList() {
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
+    const animatedComponents = makeAnimated();
 
     if (!token) {
         { return <Navigate to='/' /> }
@@ -27,6 +30,8 @@ function CoursesList() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [hasMore, setHasMore] = useState(true);
+
+    const [tagArray, settagArray] = useState([])
     
 
     /*
@@ -42,6 +47,19 @@ function CoursesList() {
     }
     };
     */
+    const filterOptions = [
+         
+        {value: '1okzq0iwh34nk0y', label: 'Mathematics'},
+        {value: 'uhngxqgqn21vye3', label: 'Sciences'},
+        {value: 'p8v2nympnp6e16v', label: 'Technology'},
+        {value: 'wx09yyvxv6pemyf', label: 'Civic'},
+        {value: 'wuxyjpwxnan3s43', label: 'Languages'},
+        {value: 'wglhcidl0fnpux3', label: 'Geology'},
+        {value: 'gsmg93ecip4ga4b', label: 'Management'},
+    ]
+
+
+    
     
     
 
@@ -57,6 +75,7 @@ function CoursesList() {
         let filterArray = []
         if (rolefilter) { filterArray.push(rolefilter) }
         if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
+        if (tagArray) {  }
         console.log(filterArray.join(" && "));
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
@@ -78,7 +97,7 @@ function CoursesList() {
         setCurrentPage(1)
         */
         getCoursesList(search);
-    }, [search], 500
+    }, [search, tagArray], 500
     );
 
     useEffect(() => {
@@ -101,8 +120,15 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setCoursesList([]); setLoading(true); setCurrentPage(1);}}/>
+                        <input type="text" id="search" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setCoursesList([]); setLoading(true); setCurrentPage(1);}}/>
                     </div>
+                </div>
+
+                <div>
+                    <label className="block text-[1.2rem] py-4 overflow-hidden whitespace-pre-line">
+                        Filter
+                    </label>
+                    <Select className='z-40' closeMenuOnSelect={false} isMulti components={animatedComponents} options={filterOptions} placeholder="Select Filters" onChange={(inputValue:any) => {settagArray(inputValue); setCoursesList([]); setLoading(true); setCurrentPage(1);}} />
                 </div>
 
                 <div className='max-w-full'>
