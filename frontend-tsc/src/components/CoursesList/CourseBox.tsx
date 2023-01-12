@@ -20,8 +20,8 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
     useEffect(()=> {
         setLoading(false);
     },[])
-
-    console.log(data)
+    console.log(data.expand)
+    console.log(data.expand)
 
 
     return (
@@ -34,7 +34,7 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                         <div className='relative flex flex-col flex-shrink min-w-0 items-center md:items-start px-4 py-8 md:px-8 md:py-4 gap-2 md:gap-6'>
                             <p className="font-['DelaGothicOne'] text-sm md:text-[1.2rem] overflow-hidden whitespace-pre-line">{name}</p>
                             <p className="font-['Montserrat'] text-sm md:text-[1rem] font-bold overflow-hidden whitespace-pre-line">Instructor: {instructor}</p>
-                            <div className="font-['Montserrat'] text-sm md:text-[1rem] font-bold overflow-hidden whitespace-pre-line gap-1">
+                            <div className="flex flex-row max-w-full font-['Montserrat'] text-sm md:text-[1rem] font-bold whitespace-pre-line gap-1">
                             {   
                                 pb.authStore.model!.role.includes('student') && 
                                 (data.student.includes(pb.authStore.model!.id) ? 
