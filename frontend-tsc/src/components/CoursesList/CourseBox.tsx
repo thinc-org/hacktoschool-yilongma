@@ -38,7 +38,8 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                             {   
                                 pb.authStore.model!.role.includes('student') && 
                                 (data.student.includes(pb.authStore.model!.id) ? 
-                                <Tag name="Enrolled" bgColor="#d1feb6" textColor="#4b991c" /> 
+                                
+                                <div className={`bg-[#d1feb6] px-2 py-1 rounded-full`}><span className={`text-[#4b991c] text-[0.8rem]`}>Enrolled</span></div>
                                 : 
                                 <Tag name="Unenrolled" bgColor="#ffe2bf" textColor="#d67f19" />)
                             }
