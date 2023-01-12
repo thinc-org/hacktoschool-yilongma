@@ -1,25 +1,33 @@
 import React from 'react'
 import { BsLightningFill } from 'react-icons/bs'
 import { RiRemoteControl2Fill } from 'react-icons/ri'
-import JoyStick from '../../assets/images/image6.png'
-import Plant from '../../assets/images/image 12.png'
-import Boy from '../../assets/images/casual-life-3d-boy-sitting-at-the-desk-with-open-book.png'
-import Girl from '../../assets/images/image 8.png'
-import Shoes from '../../assets/images/image 10.svg'
-import Megaphone from '../../assets/images/image 11.svg'
-import GirlBook from '../../assets/images/girl-book.png'
-import GirlBoy from '../../assets/images/boy-girl.png'
+import JoyStick from '../../assets/images/image6.png?webp&imagetools'
+import Plant from '../../assets/images/image12.png?webp&imagetools'
+import Boy from '../../assets/images/casual-life-3d-boy-sitting-at-the-desk-with-open-book.png?webp&imagetools'
+import Girl from '../../assets/images/image8.png?webp&imagetools'
+import Shoes from '../../assets/images/image10.svg?webp&imagetools'
+import Megaphone from '../../assets/images/image11.svg?webp&imagetools'
+import GirlBook from '../../assets/images/girl-book.png?webp&imagetools'
+import GirlBoy from '../../assets/images/boy-girl.png?webp&imagetools'
 import { Helmet } from 'react-helmet'
 
 import {
   ArrowSmallRightIcon
 } from '@heroicons/react/24/outline'
 
+import PocketBase from 'pocketbase';
+
+
+const pb = new PocketBase('https://pb.jjus.dev');
+
+
 function Home() {
+  const token = pb.authStore.token;
   return (
     <>
       <Helmet>
         <link rel="preload" as="image" href={Boy} type="image/png"/>
+        <link rel="preload" as="image" href={Girl} type="image/png"/>
       </Helmet>
       <div className='max-w-screen h-full overflow-hidden'>
         <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-[5vw] lg:p-[10vw] mb-10 md:m-0'>
@@ -34,9 +42,12 @@ function Home() {
               <h2 className='font-[Montserrat] font-semibold text-[#757575] text-sm md:text-start text-center md:text-[0.9vw] md:hidden block'>Practice and learn new things with the platform.</h2>
             </div>
             <div className='flex flex-row gap-4'>
-              <button className='rounded-xl bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'>
+              {!token ?
+              <button 
+              className='rounded-xl bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'
+              onClick={() =>{document.getElementById('login-button')!.click()}}>
                 Sign In ➜
-              </button>
+              </button>: null}
               <button className='rounded-xl bg-[#C3DCE3] px-4 py-3 text-[#2B788B] font-[Montserrat] font-bold text-sm mt-10 leading-tight'>
                 About Platform
               </button>
@@ -68,9 +79,9 @@ function Home() {
           {/* Right Side */}
           <div className='w-full relative flex items-center justify-center'>
             <div className='relative left-5 w-[80%] md:left-0 md:w-[100%] aspect-[1.2/1] overflow-hidden'>
-              <img className="top-[30%] left-0 w-[30%] hidden absolute md:block" src={JoyStick}></img>
-              <img className="absolute left-0 h-full w-[80%] object-contain bottom-0" src={Boy}></img>
-              <img className="absolute bottom-0 right-0 h-[75%]" src={Plant}></img>
+              <img className="top-[30%] left-0 w-[30%] hidden absolute md:block" src={JoyStick} loading='eager'></img>
+              <img className="absolute left-0 h-full w-[80%] object-contain bottom-0" src={Boy} loading='eager'></img>
+              <img className="absolute bottom-0 right-0 h-[75%]" src={Plant} loading='eager'></img>
             </div>
 
           </div>
@@ -79,7 +90,7 @@ function Home() {
           {/* Left Side */}
           <div className='relative w-full p-0 xl:p-8 flex flex-col items-center justify-center mt-10 md:mt-0'>
             <div>
-              <img className="w-full h-full" src={Girl}></img>
+              <img className="w-full h-full" src={Girl} loading='eager'></img>
             </div>
 
           </div>
@@ -124,7 +135,7 @@ function Home() {
           </div>
           {/* Right Side */}
           <div className="w-full flex justify-end md:justify-center md:items-center bg-cover">
-            <img className="w-[70vw] md:w-full" src={GirlBook}></img>
+            <img className="w-[70vw] md:w-full" src={GirlBook} loading='eager'></img>
 
           </div>
         </div>
@@ -132,7 +143,7 @@ function Home() {
           {/* Left Side */}
           <div className='relative w-full p-0 xl:p-8 flex flex-col items-center justify-center mt-10 md:mt-0'>
             <div>
-              <img className="w-[70vw] md:w-full" src={GirlBoy}></img>
+              <img className="w-[70vw] md:w-full" src={GirlBoy} loading='eager'></img>
             </div>
 
           </div>

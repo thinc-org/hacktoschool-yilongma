@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
