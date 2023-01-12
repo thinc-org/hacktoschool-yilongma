@@ -6,6 +6,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Announcement from './Announcement'
 import Material from './Material'
+import Video from './Video';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -29,11 +30,13 @@ const Course = () => {
             "student": [],
             "announcement": [],
             "material": [],
+            "video": [],
         },
         "description": "",
         "student": [],
         "announcement": [],
         "material": [],
+        "video": [],
     });
 
     const getCourseData = async () => {
@@ -133,6 +136,7 @@ const Course = () => {
                 {pb.authStore.model!.role.includes('instructor') ? <StudentList data={courseData} /> : ""}
                 {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
                 {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Material data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Video data={courseData} /> : ""}
             </div>
 
         </div>
