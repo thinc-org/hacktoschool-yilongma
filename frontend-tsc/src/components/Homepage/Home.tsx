@@ -97,7 +97,7 @@ function Home() {
           {/* Right Side */}
           <div className='w-full relative flex flex-col items-center justify-center'>
             <div className='px-24 md:px-0 mt-0 md:mt-10'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
+              <h2 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h2>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[0.8vw] mt-0 md:mt-5 text-center md:text-start'>Make learning words more fun with mini-games</p>
             </div>
             <div className='w-[100%] flex flex-row mt-16 gap-3 justify-center md:justify-start'>
@@ -124,7 +124,7 @@ function Home() {
           {/* Left Side */}
           <div className='p-8 w-full flex flex-col items-center md:items-start'>
             <div className='mt-0 px-24 md:px-0'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h1>
+              <h2 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h2>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Traditional and new effective approaches to word study</p>
             </div>
             <div>
@@ -150,7 +150,7 @@ function Home() {
           {/* Right Side */}
           <div className='p-8 w-full flex flex-col items-center md:items-start'>
             <div className='mt-0 px-24 md:px-0'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Watch your progress every day</h1>
+              <h3 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Watch your progress every day</h3>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Save statistics on your achievements, words learned, and mistakes</p>
             </div>
             <div>
