@@ -2,6 +2,10 @@ import React, { useEffect, useState, useRef } from 'react'
 import PocketBase from 'pocketbase'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -14,6 +18,46 @@ const InstructorAssignment = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [detailReload, setDetailReload] = useState(1);
+
+
+    const handleDetailSubmit = async () => {
+        if (!name) {
+            Swal.fire({
+                title:'Error', 
+                text:'Some fields are empty!', 
+                icon:'error',
+                showConfirmButton: false,
+                timer: 2000})
+        }
+        else {
+            const formData = {
+                "name": name,
+                "description": description,
+            }
+            
+            await pb.collection('assignments').update(assignmentId || "", formData)
+            .then(async () => {
+                await Swal.fire({
+                    title: "Success",
+                    text: 'Edit successfully!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+            
+                }).then(() => {
+                    setDetailReload((prev) => (1-prev))
+                })
+            }).catch(() => {
+            Swal.fire({
+                title:'Error', 
+                text:'Please try again later', 
+                icon:'error',
+                showConfirmButton: false,
+                timer: 2000})
+            })
+        }
+    }
 
 
 
@@ -40,7 +84,7 @@ const InstructorAssignment = () => {
     return (
         <>
             <div className='flex flex-col rounded-lg bg-[#FFFFFF]  mt-8 mb-8 shadow hover:shadow-lg'>
-                <div className="px-8 pt-6 pb-6 mb-4 w-full">
+                <div key={detailReload} className="px-8 pt-6 pb-6 mb-4 w-full">
                     <div className="flex flex-row mb-6 items-center">
                         <label className="block text-gray-700 text-lg font-bold mb-2">
                             Assignment Details
@@ -58,8 +102,16 @@ const InstructorAssignment = () => {
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Description
                         </label>
+                        <ReactQuill theme="snow" value={description} onChange={setDescription} />
                         
                     </div>
+
+                    <div className="flex flex-row items-center justify-between">
+                            
+                            <button className="bg-[#5996A5] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleDetailSubmit}>
+                                Confirm
+                            </button>
+                        </div>
                     
                 </div>
             </div>
