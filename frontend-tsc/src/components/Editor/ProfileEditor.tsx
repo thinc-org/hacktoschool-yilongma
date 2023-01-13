@@ -108,7 +108,7 @@ const ProfileEditor = () => {
                             <label className="block text-gray-700 text-sm font-bold mb-2">
                                 Name
                             </label>
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Announcement Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
 
                         <div className="mb-6">
@@ -116,7 +116,7 @@ const ProfileEditor = () => {
                                 Profile Picture {!clearAvatar? "(Leave it blank if don't want any change)" : "(Your profile picture will be removed after submitting)"}
                             </label>
                             
-                            <input key={resetFileInput} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" placeholder="Material" onChange={(e) => {
+                            <input key={resetFileInput} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" placeholder="Profile Picture" onChange={(e) => {
                                                                                                                                                                                                                 if (e.target.files){
                                                                                                                                                                                                                     setClearAvatar(false);
                                                                                                                                                                                                                     setFile(e.target.files[0]);
