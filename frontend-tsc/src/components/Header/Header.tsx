@@ -13,6 +13,9 @@ import MobileNav from './MobileNav';
 import { RemoveScroll } from 'react-remove-scroll';
 import User from './User'
 
+import PocketBase from 'pocketbase'
+const pb = new PocketBase('https://pb.jjus.dev');
+
 
 const games = [
     {
@@ -63,8 +66,10 @@ function Header() {
                                     <a href="/courses" className="text-base font-medium hover:text-[#333333] text-[#757575]">
                                         Courses
                                     </a>
-                                    <a href="#" className="text-base font-medium hover:text-[#333333] text-[#757575]">
-                                        Statistics
+                                    <a href="/notifications" className="flex flex-row text-base font-medium hover:text-[#333333] text-[#757575] gap-1">
+                                        Notifications {(pb.authStore.model! && pb.authStore.model!.notification.length - pb.authStore.model!.notification_seen > 0) && <div className='bg-[#f3d6fd] px-2 rounded-full'>
+                                                        <span className={'text-[#681a83] text-[0.8rem]'}>{pb.authStore.model!.notification.length - pb.authStore.model!.notification_seen}</span>
+                                                        </div>}
                                     </a>
                                     <Popover className="relative">
                                         {({ open }) => (
