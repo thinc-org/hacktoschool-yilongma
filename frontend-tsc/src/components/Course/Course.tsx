@@ -12,6 +12,7 @@ import GirlStudying from '../../assets/images/girl-studying.png?webp&imagetools'
 import Assignment from './Assignment';
 import MailSender from '../NotificationSender/MailSender';
 import SlackSender from '../NotificationSender/SlackSender';
+import DiscordSender from '../NotificationSender/DiscordSender';
 
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
@@ -82,13 +83,13 @@ const Course = () => {
 
         try {
             const newRecord = await pb.collection('courses').update(id || "", sendData)
-            console.log(newRecord)
+            console.log("1")
             Swal.fire({
                 title: "Success",
-                text: 'You are now joined this courses!',
+                text: 'You are now joined this courses!\nPlease wait for processing...',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 1000
+                timer: 2000
             }).then(async () => {
                 let tempEmail = ""
                 const newNotification = await pb.collection('notifications').create({ "description": `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"` })
@@ -96,10 +97,12 @@ const Course = () => {
                     await pb.collection('users').update(courseData.instructor, { "notification": [...urec.notification, newNotification.id] })
                     tempEmail = urec.email
                 })
-                
-                window.location.reload()
+                console.log("1")
                 await MailSender(`Hack2School - GlobalTalk : New student enrolled in "${courseData.name}"`, `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`, [tempEmail])
                 await SlackSender(`"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`)
+                await DiscordSender(`"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`)
+                window.location.reload()
+                
             })
         }
         catch {

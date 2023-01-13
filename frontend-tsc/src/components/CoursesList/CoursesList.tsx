@@ -65,8 +65,18 @@ function CoursesList() {
 
     const getCoursesList = async (search: string) => {
         let filterArray = []
+        let searchArray = []
         if (rolefilter) { filterArray.push(rolefilter) }
-        if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
+        /*if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }*/
+        if (search) {
+            let searchArray = search.split(" ")
+            for (const eachE of searchArray) {
+                if (eachE) {
+                    filterArray.push(`(name ~ "${eachE}" || instructor.name ~ "${eachE}" || description ~ "${eachE}")`)
+                }
+            }
+            
+        }
         if (tagArray && tagArray.length > 0) { 
             console.log(tagArray)
             let tempArray: string[] = []

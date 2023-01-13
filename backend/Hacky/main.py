@@ -3,6 +3,7 @@ import json
 from slack_notification import *
 from pocketbase_api import *
 from flask_mail import Mail, Message
+from discord_webhook import DiscordWebhook
 
 
 import os
@@ -58,6 +59,19 @@ def slack_noti():
     record = json.loads(request.data)
     try:
         send_notification_slack(record['msg'])
+        return {"result": 1}, 201
+    except:
+        return {"result": 0}, 500
+
+
+@app.route('/notification/discord', methods=["POST"])
+def discord_noti():
+
+    record = json.loads(request.data)
+    try:
+        webhook = DiscordWebhook(url='https://discord.com/api/webhooks/1063441763135664159/yu-C75avWsVa7zlB0M2zbjxqUV6URDfraNPXhS8zzZfwY9rlKwNyDN0Dn1amwRrZjkfn', rate_limit_retry=True,
+                                 content=record['msg'])
+        response = webhook.execute()
         return {"result": 1}, 201
     except:
         return {"result": 0}, 500
