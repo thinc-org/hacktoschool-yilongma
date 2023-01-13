@@ -18,7 +18,7 @@ import {
 import PocketBase from 'pocketbase';
 
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function Home() {
