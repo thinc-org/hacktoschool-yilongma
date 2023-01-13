@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import UserCount from '../Variables/UserCount'
+import { useNavigate, Navigate } from 'react-router-dom';
 
 function Footer() {
+    let navigate = useNavigate();
+
     return (
         <div className='w-full bg-[#F6F5F4] p-6 md:px-[5vw] lg:px-[10vw] flex flex-col items-center'>
             <div className='w-full p-2 md:p-0'>
                 <div className='float-left'>
                     <div className='flex flex-col md:flex-row gap-4 font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
-                        <button className='p-2 -m-2'>Home</button>
-                        <button className='p-2 -m-2'>Textbook</button>
-                        <button className='p-2 -m-2'>Statistics</button>
-                        <button className='p-2 -m-2'>Sprint</button>
-                        <button className='p-2 -m-2'>Audio-call</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/')}>Home</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/courses')}>Courses</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/notifications')}>Notifications</button>
                     </div>
                 </div>
                 <div className='float-right'>
@@ -20,7 +22,7 @@ function Footer() {
                 </div>
             </div>
             <div id='divider' className='w-[calc(100%-2vw)] h-[1px] rounded-full bg-[#E0E0E0] m-2'></div>
-            <div className='w-full p-2 md:p-0'>
+            <div className='w-full p-2 md:p-0 flex md:block flex-col items-center md:items-start'>
                 <div className='float-left'>
                     <div className='flex flex-row items-center gap-4 font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
                         <svg width="28" height="28" viewBox="0 0 30 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -32,6 +34,7 @@ function Footer() {
                 </div>
                 <div className='float-right'>
                     <div className='h-[28px] flex flex-row gap-4 items-center font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
+                        <a><UserCount text={true}/> Online</a>
                         <a className='p-2 -m-2'>GlobalTalk</a>
                     </div>
                 </div>

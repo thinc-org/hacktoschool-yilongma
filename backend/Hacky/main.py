@@ -1,10 +1,15 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 from slack_notification import *
 from pocketbase_api import *
 
+import os
+import stripe
+
 
 app = Flask(__name__)
+
+endpoint_secret = 'whsec_MMHtiLZEuignGR0LshbYYhwFaqtEpyFx'
 
 
 @app.route('/users', methods=["GET", "POST"])
@@ -45,5 +50,47 @@ def slack_noti():
     except:
         return {"result": 0}, 500
 
+@app.route('/notification/slack', methods=["GET"])
+def login_sso():
+    payload = {'service': 'https://jjus.dev', 'ouid': '6000000021','firstname': 'John', 'lastname': 'Doe'}
+    r = requests.get('https://sso.thinc.in.th/login', params=payload)
+    try:
+        send_notification_slack(record['msg'])
+        return {"result": r.url.split('?')[1].split('ticket=')[1]}, 201
+    except:
+        return {"result": 0}, 500
+
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        raise e
+
+    # Handle the event
+    if event['type'] == 'checkout.session.async_payment_failed':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.async_payment_succeeded':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.completed':
+      session = event['data']['object']
+    elif event['type'] == 'checkout.session.expired':
+      session = event['data']['object']
+    # ... handle other event types
+    else:
+      print('Unhandled event type {}'.format(event['type']))
+
+    return jsonify(success=True)
 
 app.run()

@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+import filterOptions from '../Tags/filterOptions';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
 const CourseAdder = () => {
 
     const navigate = useNavigate();
+    const animatedComponents = makeAnimated();
 
     const [show, toggleShow] = useState(false);
 
     const [name, setName] = useState("");
     const [descriptionText, setDescriptionText] = useState("");
+    const [tagArray, settagArray] = useState([])
 
     const handleSubmit = async () => {
         if (!name || !descriptionText) {
@@ -24,10 +29,15 @@ const CourseAdder = () => {
                 timer: 2000})
         }
         else {
+            let tagTempArray: any[] = [];
+            tagArray.map((data:any) => {
+                tagTempArray.push(data.value)
+            })
             const data = {
                 "name": name,
                 "instructor": pb.authStore.model!.id,
                 "description": descriptionText,
+                "tag": tagTempArray,
             };
             await pb.collection('courses').create(data)
                 .then((record) => {
@@ -81,6 +91,13 @@ const CourseAdder = () => {
                             </label>
                             <textarea className="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" placeholder="Description" value={descriptionText} onChange={(e) => setDescriptionText(e.target.value)} />
                             
+                        </div>
+
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Course Category
+                            </label>
+                            <Select className='z-40' closeMenuOnSelect={false} isMulti components={animatedComponents} options={filterOptions} placeholder="Select Filters" onChange={(inputValue:any) => {settagArray(inputValue);}} />
                         </div>
 
 
