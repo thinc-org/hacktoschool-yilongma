@@ -45,6 +45,7 @@ const InterestedCourses = () => {
                         </thead>
                         <tbody>
                             {
+                                (interestedCoursesData) &&
                                 interestedCoursesData.map((data: any, index: number) => {
                                     return (
                                         <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]">

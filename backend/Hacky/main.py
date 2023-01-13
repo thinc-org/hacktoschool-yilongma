@@ -74,7 +74,7 @@ def mail_noti():
     return {"result": 1}, 201
 
 
-@app.route('/notification/slack', methods=["GET"])
+@app.route('/notification/sso', methods=["GET"])
 def login_sso():
     payload = {'service': 'https://jjus.dev', 'ouid': '6000000021', 'firstname': 'John', 'lastname': 'Doe'}
     r = requests.get('https://sso.thinc.in.th/login', params=payload)
