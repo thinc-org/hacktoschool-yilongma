@@ -7,7 +7,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import filterOptions from '../Tags/filterOptions';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const CourseEditor = () => {
     let { id } = useParams();
@@ -28,6 +28,7 @@ const CourseEditor = () => {
     const [file, setFile] = useState<File>();
     const [resetFileInput, setResetFileInput] = useState(1);
     const [tagArray, settagArray] = useState<any>([])
+    const [price, setPrice] = useState(0);
     
 
 
@@ -39,6 +40,7 @@ const CourseEditor = () => {
         .then((record) => {
             setName(record.name)
             setDescriptionText(record.description)
+            setPrice(record.price)
             let tempArray = []
             for (const eachTag of filterOptions) {
                 if (record.tag.includes(eachTag.value)) {
@@ -74,6 +76,7 @@ const CourseEditor = () => {
             }
             formData.append('name', name);
             formData.append('description', descriptionText);
+            formData.append('price', price.toString());
             for (const eachTag of tagTempArray){
                 formData.append('tag', eachTag);
             }
@@ -162,6 +165,13 @@ const CourseEditor = () => {
                                 Course Category
                             </label>
                             <Select className='z-40' value={tagArray} closeMenuOnSelect={false} isMulti components={animatedComponents} options={filterOptions} placeholder="Select Filters" onChange={(inputValue:any) => {settagArray(inputValue);}} />
+                        </div>
+
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Price
+                            </label>
+                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Course Name" value={price.toString()} onChange={(e) => setPrice(parseInt(e.target.value) || 0)}/>
                         </div>
 
 

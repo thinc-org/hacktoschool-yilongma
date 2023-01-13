@@ -18,7 +18,7 @@ const resetSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required")
 });
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 function LoginPop() {
     function classNames(...classes: string[]) {

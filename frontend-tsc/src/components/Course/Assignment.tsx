@@ -5,7 +5,7 @@ import moment from 'moment'
 import Swal from 'sweetalert2';
 import AssignmentAdder from './Adder/AssignmentAdder';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const Assignment = ({ data }:{data:any;}) => {
 

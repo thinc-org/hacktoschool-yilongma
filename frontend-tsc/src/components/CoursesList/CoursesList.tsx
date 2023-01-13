@@ -12,7 +12,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import filterOptions from '../Tags/filterOptions';
 
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function CoursesList() {
@@ -65,8 +65,18 @@ function CoursesList() {
 
     const getCoursesList = async (search: string) => {
         let filterArray = []
+        let searchArray = []
         if (rolefilter) { filterArray.push(rolefilter) }
-        if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
+        /*if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }*/
+        if (search) {
+            let searchArray = search.split(" ")
+            for (const eachE of searchArray) {
+                if (eachE) {
+                    filterArray.push(`(name ~ "${eachE}" || instructor.name ~ "${eachE}" || description ~ "${eachE}")`)
+                }
+            }
+            
+        }
         if (tagArray && tagArray.length > 0) { 
             console.log(tagArray)
             let tempArray: string[] = []
@@ -76,6 +86,7 @@ function CoursesList() {
             filterArray.push(tempArray.join(" && "))
          }
         console.log(filterArray.join(" && "));
+        /*
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
             expand: 'instructor,tag,student'
@@ -85,6 +96,17 @@ function CoursesList() {
             setLoading(false)
 
         })
+        */
+        await pb.collection('courses').getList(currentPage, 200, {
+            filter: filterArray.join(" && "),
+            expand: 'instructor,tag,student'
+        }).then((resultList: {items:any}) => {
+            setCoursesList([...coursesList, ...resultList.items])
+            setHasMore(resultList.items.length > 0)
+            setLoading(false)
+
+        })
+
         
         
     }
