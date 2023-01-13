@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PocketBase from 'pocketbase';
 import moment from 'moment'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const InterestedCourses = () => {
 
@@ -45,6 +45,7 @@ const InterestedCourses = () => {
                         </thead>
                         <tbody>
                             {
+                                (interestedCoursesData) &&
                                 interestedCoursesData.map((data: any, index: number) => {
                                     return (
                                         <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]">

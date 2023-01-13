@@ -14,7 +14,7 @@ import { RemoveScroll } from 'react-remove-scroll';
 import User from './User'
 
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 const games = [
@@ -71,6 +71,7 @@ function Header() {
                                                         <span className={'text-[#681a83] text-[0.8rem]'}>{pb.authStore.model!.notification.length - pb.authStore.model!.notification_seen}</span>
                                                         </div>}
                                     </a>
+                                    {/*
                                     <Popover className="relative">
                                         {({ open }) => (
                                             <>
@@ -121,6 +122,7 @@ function Header() {
                                             </>
                                         )}
                                     </Popover>
+                                    */}
                                 </Popover.Group>
                             </Popover>
 

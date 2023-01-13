@@ -17,7 +17,7 @@ function Footer() {
                 </div>
                 <div className='float-right'>
                     <div className='flex flex-row gap-4 font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
-                        <button className='p-2 -m-2'>Instructors</button>
+                        
                     </div>
                 </div>
             </div>
@@ -34,8 +34,8 @@ function Footer() {
                 </div>
                 <div className='float-right'>
                     <div className='h-[28px] flex flex-row gap-4 items-center font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
-                        <a><UserCount text={true}/> Online</a>
-                        <a className='p-2 -m-2'>GlobalTalk</a>
+                        <span><UserCount text={true}/> Online</span>
+                        <span className='p-2 -m-2'>GlobalTalk</span>
                     </div>
                 </div>
             </div>

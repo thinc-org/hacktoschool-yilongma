@@ -9,26 +9,17 @@ import Shoes from '../../assets/images/image10.svg?webp&imagetools'
 import Megaphone from '../../assets/images/image11.svg?webp&imagetools'
 import GirlBook from '../../assets/images/girl-book.png?webp&imagetools'
 import GirlBoy from '../../assets/images/boy-girl.png?webp&imagetools'
-import { Helmet } from 'react-helmet'
-
-import {
-  ArrowSmallRightIcon
-} from '@heroicons/react/24/outline'
 
 import PocketBase from 'pocketbase';
 
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function Home() {
   const token = pb.authStore.token;
   return (
     <>
-      <Helmet>
-        <link rel="preload" as="image" href={Boy} type="image/png"/>
-        <link rel="preload" as="image" href={Girl} type="image/png"/>
-      </Helmet>
       <div className='max-w-screen h-full overflow-hidden'>
         <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-[5vw] lg:p-[10vw] mb-10 md:m-0'>
           {/* Left Side */}
@@ -97,7 +88,7 @@ function Home() {
           {/* Right Side */}
           <div className='w-full relative flex flex-col items-center justify-center'>
             <div className='px-24 md:px-0 mt-0 md:mt-10'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h1>
+              <h2 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2vw] mt-0 md:mt-6 md:text-start leading-tight">Learn a language in a playful way</h2>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[0.8vw] mt-0 md:mt-5 text-center md:text-start'>Make learning words more fun with mini-games</p>
             </div>
             <div className='w-[100%] flex flex-row mt-16 gap-3 justify-center md:justify-start'>
@@ -124,7 +115,7 @@ function Home() {
           {/* Left Side */}
           <div className='p-8 w-full flex flex-col items-center md:items-start'>
             <div className='mt-0 px-24 md:px-0'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h1>
+              <h2 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Increase your vocabulary</h2>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Traditional and new effective approaches to word study</p>
             </div>
             <div>
@@ -150,7 +141,7 @@ function Home() {
           {/* Right Side */}
           <div className='p-8 w-full flex flex-col items-center md:items-start'>
             <div className='mt-0 px-24 md:px-0'>
-              <h1 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Watch your progress every day</h1>
+              <h3 className="font-[DelaGothicOne] text-black font-normal text-center text-3xl -tracking-[4%] md:text-[2.5vw] mt-0 md:mt-6 md:text-start leading-tight">Watch your progress every day</h3>
               <p className='font-[Montserrat] text-[#757575] font-semibold text-sm md:text-[1vw] mt-0 md:mt-2 text-center md:text-start'>Save statistics on your achievements, words learned, and mistakes</p>
             </div>
             <div>

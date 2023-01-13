@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 function MobileNav() {
     return (
@@ -19,12 +19,7 @@ function MobileNav() {
                                                         <span className={'text-[#681a83] text-[0.8rem]'}>{pb.authStore.model!.notification.length - pb.authStore.model!.notification_seen}</span>
                                                         </div>}
             </a>
-            <a href="#" className="text-[#757575] hover:text-[#333333] p-2 -m-2">
-                Sprint
-            </a>
-            <a href="#" className="text-[#757575] hover:text-[#333333] p-2 -m-2">
-                Audio-Call
-            </a>
+            
         </div>
     )
 }

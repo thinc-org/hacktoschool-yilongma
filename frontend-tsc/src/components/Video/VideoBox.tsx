@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const VideoBox = () => {
     let { id, videoId } = useParams();
@@ -33,7 +33,7 @@ const VideoBox = () => {
                     "id": record.id,
                     "name": record.name,
                     "type": "file",
-                    "video_link": `https://pb.jjus.dev/api/files/ignzt0tm5r1vn5b/${record.id}/${record.video_file}`,
+                    "video_link": `${import.meta.env.VITE_PB_URL}/api/files/ignzt0tm5r1vn5b/${record.id}/${record.video_file}`,
                     "created": record.created
                 }
                 console.log(repRecord)
