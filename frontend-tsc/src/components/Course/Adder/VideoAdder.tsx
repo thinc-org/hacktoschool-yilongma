@@ -94,7 +94,7 @@ const VideoAdder = ({ data }: { data: any; }) => {
         <div className="px-8 py-3">
             {
                 (!show) ?
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold mb-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
+                    <button className="bg-[#5996A5] hover:bg-blue-700 text-white font-bold mb-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
                         Create
                     </button>
                     :
@@ -152,7 +152,7 @@ const VideoAdder = ({ data }: { data: any; }) => {
                                 <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
                                     Hide
                                 </button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                <button className="bg-[#5996A5] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="button"
                                     onClick={() => {
                                         handleSubmit();
