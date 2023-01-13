@@ -15,6 +15,7 @@ import MaterialEditor from './components/Editor/MaterialEditor'
 import VideoBox from './components/Video/VideoBox';
 import VideoEditor from './components/Editor/VideoEditor';
 import Profile from './components/Profile/Profile';
+import ProfileEditor from './components/Editor/ProfileEditor';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/courses/:id/videos/:videoId' element={<><Header/><VideoBox/><Footer/></>} />
           <Route path='/courses/:id/videos/:videoId/edit' element={<><Header/><VideoEditor/><Footer/></>} />
           <Route path='/users/:userId' element={<><Header/><Profile/><Footer/></>} />
+          <Route path='/users/:userId/edit' element={<><Header/><ProfileEditor/><Footer/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
