@@ -76,6 +76,7 @@ function CoursesList() {
             filterArray.push(tempArray.join(" && "))
          }
         console.log(filterArray.join(" && "));
+        /*
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
             expand: 'instructor,tag,student'
@@ -85,6 +86,17 @@ function CoursesList() {
             setLoading(false)
 
         })
+        */
+        await pb.collection('courses').getList(currentPage, 200, {
+            filter: filterArray.join(" && "),
+            expand: 'instructor,tag,student'
+        }).then((resultList: {items:any}) => {
+            setCoursesList([...coursesList, ...resultList.items])
+            setHasMore(resultList.items.length > 0)
+            setLoading(false)
+
+        })
+
         
         
     }
