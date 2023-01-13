@@ -54,7 +54,7 @@ const Course = () => {
 
     });
 
-    var link = "https://stripe.jjus.dev/create-checkout-session?name=" + courseData.name + "&course=" + id + "&price=" + courseData.price + "&user=" + userId
+    var link = import.meta.env.VITE_STRIPE_BACKEND+ "/create-checkout-session?course=" + id +"&user=" + userId
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
@@ -113,20 +113,6 @@ const Course = () => {
         }
     }
 
-    const handlePurchase = (userId: string) => {
-        var link = "https://stripe.jjus.dev/create-checkout-session?name=" + courseData.name + "&course=" + id + "&price=100&user=" + userId
-        console.log(userId)
-        console.log('yo')
-        console.log(link)
-        // window.location.replace(link)
-        fetch(link, {
-            method: 'POST'
-        }).then(response => {
-            // window.location.replace(response.url)
-            console.log(response)
-        });
-
-    }
     useEffect(() => {
         if (dataFetchedRef.current || (token == '')) return;
         dataFetchedRef.current = true;

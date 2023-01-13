@@ -1,7 +1,8 @@
-require('dotenv').config()
+require('dotenv').config({ path: '.env.local' })
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+// console.log(process.env)
 
 // Find your endpoint's secret in your Dashboard's webhook settings
 const endpointSecret = process.env.ENDPOINT_SECRET;
@@ -93,16 +94,18 @@ app.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (reques
 app.use(allowCrossDomain, express.json())
 
 app.post('/create-checkout-session', async (req, res) => {
-    console.log(req.query.name);
+    const record = await pb.collection('courses').getOne(req.query.course || "", {
+        expand: 'instructor,student,announcement,material,video,tag,assignment',
+    })
     const session = await stripe.checkout.sessions.create({
         line_items: [
             {
                 price_data: {
                     currency: 'thb',
                     product_data: {
-                        name: req.query.name,
+                        name: record.name,
                     },
-                    unit_amount: Number(req.query.price) * 100,
+                    unit_amount: Number(record.price) * 100,
                 },
                 quantity: 1,
             },
@@ -116,8 +119,14 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 
-app.post('/', function (req, res) {
-    console.log(req.body);
+app.get('/', async (req, res) => {
+    const record = await pb.collection('courses').getOne("g8ihlv62o5c2ept" || "", {
+        expand: 'instructor,student,announcement,material,video,tag,assignment',
+    })
+    console.log(record)
+    console.log(typeof(record))
+    console.log(Object.keys(record))
+    console.log(record.name)
     res.json(req.body)
 });
 
