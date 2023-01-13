@@ -4,6 +4,7 @@ specifiers:
   '@headlessui/react': ^1.7.7
   '@heroicons/react': ^2.0.13
   '@popperjs/core': ^2.11.6
+  '@stripe/stripe-js': ^1.46.0
   '@types/js-cookie': ^3.0.2
   '@types/pluralize': ^0.0.29
   '@types/react': ^18.0.26
@@ -44,6 +45,7 @@ dependencies:
   '@headlessui/react': 1.7.7_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.13_react@18.2.0
   '@popperjs/core': 2.11.6
+  '@stripe/stripe-js': 1.46.0
   '@types/react-helmet': 6.1.6
   babel-polyfill: 6.26.0
   formik: 2.2.9_react@18.2.0
@@ -843,6 +845,10 @@ packages:
 
   /@socket.io/component-emitter/3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
+    dev: false
+
+  /@stripe/stripe-js/1.46.0:
+    resolution: {integrity: sha512-dkm0zCEoRLu5rTnsIgwDf/QG2DKcalOT2dk1IVgMySOHWTChLyOvQwMYhEduGgLvyYWTwNhAUV4WOLPQvjwLwA==}
     dev: false
 
   /@types/estree/1.0.0:
