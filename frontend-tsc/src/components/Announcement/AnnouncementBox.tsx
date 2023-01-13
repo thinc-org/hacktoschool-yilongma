@@ -13,7 +13,7 @@ const AnnouncementBox = () => {
     let navigate = useNavigate();
 
     if (!token) {
-        navigate('/login')
+        navigate('/')
     }
     
 
