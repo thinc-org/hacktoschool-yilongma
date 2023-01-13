@@ -1,1 +1,1 @@
-{"id":"de0bbbaf-752e-47a7-8652-626c1ee58116","space":35650,"runtime":"python3.9","name":"Hacky","path":"oxzo04","project":"c0bnkfll","account":"144798365827","region":"ap-southeast-1","deps":["flask"],"envs":null,"public":true,"log_level":"debug","cron":""}
+{"id":"de0bbbaf-752e-47a7-8652-626c1ee58116","space":35650,"runtime":"python3.9","name":"Hacky","path":"oxzo04","project":"c0bnkfll","account":"144798365827","region":"ap-southeast-1","deps":["flask","slack","stripe"],"envs":null,"public":true,"log_level":"debug","cron":""}

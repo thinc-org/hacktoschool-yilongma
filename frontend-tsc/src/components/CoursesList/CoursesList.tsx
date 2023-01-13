@@ -4,9 +4,12 @@ import CourseBox from './CourseBox';
 import { useNavigate , Navigate } from 'react-router-dom';
 import CourseAdder from './CourseAdder';
 import useDebounce from './useDebounce';
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import filterOptions from '../Tags/filterOptions';
 
 
 const pb = new PocketBase('https://pb.jjus.dev');
@@ -15,6 +18,7 @@ const pb = new PocketBase('https://pb.jjus.dev');
 function CoursesList() {
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
+    const animatedComponents = makeAnimated();
 
     if (!token) {
         { return <Navigate to='/' /> }
@@ -27,6 +31,8 @@ function CoursesList() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [hasMore, setHasMore] = useState(true);
+
+    const [tagArray, settagArray] = useState([])
     
 
     /*
@@ -43,6 +49,10 @@ function CoursesList() {
     };
     */
     
+
+
+    
+    
     
 
     var rolefilter = "";
@@ -57,10 +67,18 @@ function CoursesList() {
         let filterArray = []
         if (rolefilter) { filterArray.push(rolefilter) }
         if (search) { filterArray.push(`(name ~ "${search}" || instructor.name ~ "${search}")`) }
+        if (tagArray && tagArray.length > 0) { 
+            console.log(tagArray)
+            let tempArray: string[] = []
+            tagArray.map((data:any) => {
+                tempArray.push("tag ~ '" + data.value + "'")
+            })
+            filterArray.push(tempArray.join(" && "))
+         }
         console.log(filterArray.join(" && "));
         await pb.collection('courses').getList(currentPage, 10, {
             filter: filterArray.join(" && "),
-            expand: 'instructor'
+            expand: 'instructor,tag,student'
         }).then((resultList: {items:any}) => {
             setCoursesList([...coursesList, ...resultList.items])
             setHasMore(resultList.items.length > 0)
@@ -78,7 +96,7 @@ function CoursesList() {
         setCurrentPage(1)
         */
         getCoursesList(search);
-    }, [search], 500
+    }, [search, tagArray], 500
     );
 
     useEffect(() => {
@@ -101,8 +119,15 @@ function CoursesList() {
 
                 <div className='flex flex-col w-full justify-center'>
                     <div className="flex justify-center ">   
-                        <input type="text" id="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setCoursesList([]); setLoading(true); setCurrentPage(1);}}/>
+                        <input type="text" id="search" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={search} placeholder="Search" onChange={(e) => {setSearch(e.target.value); setCoursesList([]); setLoading(true); setCurrentPage(1);}}/>
                     </div>
+                </div>
+
+                <div>
+                    <label className="block text-[1.2rem] py-4 overflow-hidden whitespace-pre-line">
+                        Filter
+                    </label>
+                    <Select className='z-40' closeMenuOnSelect={false} isMulti components={animatedComponents} options={filterOptions} placeholder="Select Filters" onChange={(inputValue:any) => {settagArray(inputValue); setCoursesList([]); setLoading(true); setCurrentPage(1);}} />
                 </div>
 
                 <div className='max-w-full'>
@@ -110,13 +135,8 @@ function CoursesList() {
                     {loading && <div className="min-h-64 mt-8"><Skeleton /></div>
                     }
                     {!loading &&
-                        coursesList.map((data: { id: any; name: any; expand: { instructor: { name: any; }; }; }, index: number) => {
-                            if (coursesList.length === index+1) {
-                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
-                            }
-                            else {
-                                return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name}/>
-                            }
+                        coursesList.map((data: any, index: number) => {
+                            return <CourseBox key={index} id={data.id} name={data.name} instructor={data.expand.instructor.name} data={data} tag={data.expand.tag}/>
                         })
                     }
                 </div>

@@ -13,7 +13,7 @@ const AnnouncementBox = () => {
     let navigate = useNavigate();
 
     if (!token) {
-        navigate('/login')
+        navigate('/')
     }
     
 
@@ -46,6 +46,7 @@ const AnnouncementBox = () => {
                     <label className="font-['Montserrat'] text-[1rem] px-8 py-5 font-bold overflow-hidden whitespace-pre-line">Created on: {(new Date (announcementData.created).toLocaleString())}</label>
                     <label className="font-['Montserrat'] text-[1rem] px-8 py-4 overflow-hidden whitespace-pre-line">{announcementData.description}</label>
                 </div>
+                
             </div>
         </div>
         

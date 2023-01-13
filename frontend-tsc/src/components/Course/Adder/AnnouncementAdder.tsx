@@ -48,6 +48,11 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                     };
                     const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
                     .then(async () => {
+                        const newNotification = await pb.collection('notifications').create({"description": `There is new announcement in the course "${data.name}"`})
+                        for (const eachStudentId of data.student)
+                        await pb.collection('users').getOne(eachStudentId).then(async (urec) => {
+                            await pb.collection('users').update(eachStudentId, {"notification": [...urec.notification, newNotification.id]})
+                        })
                         await Swal.fire({
                             title: "Success",
                             text: 'Create new announcement successfully!',
@@ -76,7 +81,7 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
         <div className="px-8 py-3">
             {
                 (!show)?
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold mb-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
+                <button className="bg-[#5996A5] hover:bg-blue-700 text-white font-bold mb-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
                         Create
                 </button>
                 :
@@ -108,7 +113,7 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                             <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => toggleShow(!show)}>
                                 Hide
                             </button>
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
+                            <button className="bg-[#5996A5] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
                                 Create
                             </button>
                         </div>
