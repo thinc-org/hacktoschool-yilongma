@@ -6,7 +6,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import filterOptions from '../Tags/filterOptions';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const CourseAdder = () => {
 

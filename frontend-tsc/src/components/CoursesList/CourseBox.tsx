@@ -7,7 +7,7 @@ import PocketBase from 'pocketbase'
 import Swal from 'sweetalert2';
 import GirlStudying from '../../assets/images/girl-studying.png?webp&imagetools'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: string; instructor: string; data: any; tag: any }) => {
 
@@ -94,7 +94,7 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
             {!loading &&
                 <>
                     <div className="hidden md:grid grid-cols-[20vw_1fr] rounded-lg bg-[#FFFFFF] h-fit mt-8 mb-8 shadow hover:shadow-lg">
-                        <img src={data.thumbnail ? `https://pb.jjus.dev/api/files/1dhkvkt2hpbjlid/${data.id}/${data.thumbnail}` : GirlStudying} loading='lazy' className='w-full h-full object-cover rounded-l-lg min-h-64 max-h-64 min-w-64 max-w-64' />
+                        <img src={data.thumbnail ? `${import.meta.env.VITE_PB_URL}/api/files/1dhkvkt2hpbjlid/${data.id}/${data.thumbnail}` : GirlStudying} loading='lazy' className='w-full h-full object-cover rounded-l-lg min-h-64 max-h-64 min-w-64 max-w-64' />
                         <div className='relative flex flex-col flex-shrink min-w-0 items-center md:items-start px-4 py-8 md:px-8 md:py-4 gap-2 md:gap-6'>
                             <p className="font-['DelaGothicOne'] text-sm md:text-[1.2rem] overflow-hidden whitespace-pre-line">{name}</p>
                             <p className="font-['Montserrat'] text-sm md:text-[1rem] font-bold overflow-hidden whitespace-pre-line">Instructor: {instructor}</p>
@@ -127,7 +127,7 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                             
                         </div>
                     </div><div className="md:hidden grid grid-rows-2 rounded-lg bg-[#FFFFFF] h-fit mt-8 mb-8 shadow hover:shadow-lg m-8">
-                        <img src={data.thumbnail ? `https://pb.jjus.dev/api/files/1dhkvkt2hpbjlid/${data.id}/${data.thumbnail}` : GirlStudying} className='object-cover w-full h-full rounded-t-lg min-h-64 max-h-64 min-w-64 max-w-64' />
+                        <img src={data.thumbnail ? `${import.meta.env.VITE_PB_URL}/api/files/1dhkvkt2hpbjlid/${data.id}/${data.thumbnail}` : GirlStudying} className='object-cover w-full h-full rounded-t-lg min-h-64 max-h-64 min-w-64 max-w-64' />
                         <div className='relative flex flex-col flex-shrink min-w-0 items-center md:items-start px-4 py-8 md:px-8 md:py-4 gap-2 md:gap-6'>
                             <p className="font-['DelaGothicOne'] text-sm md:text-[1.2rem] overflow-hidden whitespace-pre-line">{name}</p>
                             <p className="font-['Montserrat'] text-sm md:text-[1rem] font-bold overflow-hidden whitespace-pre-line">Instructor: {instructor}</p>

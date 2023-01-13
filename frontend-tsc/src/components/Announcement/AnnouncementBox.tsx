@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const AnnouncementBox = () => {
     let { id, announcementId } = useParams();

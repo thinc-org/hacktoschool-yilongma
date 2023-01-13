@@ -6,7 +6,7 @@ import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
 import { Navigate, useNavigate } from 'react-router-dom';
 import LoginPop from '../Auth/LoginPop';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 function User() {
     function classNames(...classes: string[]) {
@@ -58,7 +58,7 @@ function User() {
                                                 (!pb.authStore.model!.avatar) ?
                                                     <span className="font-medium text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
                                                     :
-                                                    <img src={`https://pb.jjus.dev/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
+                                                    <img src={`${import.meta.env.VITE_PB_URL}/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
                                             }
 
                                         </div>

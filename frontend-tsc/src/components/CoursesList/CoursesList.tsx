@@ -12,7 +12,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import filterOptions from '../Tags/filterOptions';
 
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function CoursesList() {

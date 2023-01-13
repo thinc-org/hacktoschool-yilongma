@@ -6,7 +6,7 @@ import moment from 'moment'
 import Swal from 'sweetalert2';
 import VideoAdder from './Adder/VideoAdder';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const Video = ({ data }:{data:any;}) => {
 

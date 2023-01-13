@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 import { useNavigate } from 'react-router-dom';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const AnnouncementAdder = ({ data }:{data:any;}) => {
 

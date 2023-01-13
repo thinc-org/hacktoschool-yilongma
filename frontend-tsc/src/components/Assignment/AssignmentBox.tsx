@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import InstructorAssignment from './InstructorAssignment';
 import StudentAssignment from './StudentAssignment';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const AssignmentBox = () => {
     let { id, assignmentId } = useParams();
