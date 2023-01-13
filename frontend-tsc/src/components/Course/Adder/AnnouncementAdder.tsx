@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 import { useNavigate } from 'react-router-dom';
 import MailSender from '../../NotificationSender/MailSender';
+import SlackSender from '../../NotificationSender/SlackSender';
 
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
@@ -67,6 +68,7 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                         }).then(async () => {
                             navigate('/courses/'+data.id+'/announcements/'+record.id)
                             await MailSender("New announcement in Hack2School - GlobalTalk", `There is new announcement in the course "${data.name}\nTopic: ${record.name}\n${record.description}"`, tempEmail)
+                            await SlackSender(`There is new announcement in the course "${data.name}\nTopic: ${record.name}\n${record.description}"`)
                         })
                     }).catch((e) => {
                         console.log(e)
