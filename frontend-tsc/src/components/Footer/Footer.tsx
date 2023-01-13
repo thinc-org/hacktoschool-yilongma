@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import UserCount from '../Variables/UserCount'
+import { useNavigate, Navigate } from 'react-router-dom';
 
 function Footer() {
+    let navigate = useNavigate();
+
     return (
         <div className='w-full bg-[#F6F5F4] p-6 md:px-[5vw] lg:px-[10vw] flex flex-col items-center'>
             <div className='w-full p-2 md:p-0'>
                 <div className='float-left'>
                     <div className='flex flex-col md:flex-row gap-4 font-[Montserrat] font-semibold text-[#757575] text-[14px]'>
-                        <button className='p-2 -m-2'>Home</button>
-                        <button className='p-2 -m-2'>Textbook</button>
-                        <button className='p-2 -m-2'>Statistics</button>
-                        <button className='p-2 -m-2'>Sprint</button>
-                        <button className='p-2 -m-2'>Audio-call</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/')}>Home</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/courses')}>Courses</button>
+                        <button className='p-2 -m-2' onClick={() => navigate('/notifications')}>Notifications</button>
                     </div>
                 </div>
                 <div className='float-right'>

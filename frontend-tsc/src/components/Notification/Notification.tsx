@@ -22,8 +22,9 @@ const Notification = () => {
     const getData = async () => {
         await pb.collection('users').getOne(pb.authStore.model!.id, {
             expand: 'notification',
-        }).then((record) => {
+        }).then(async (record) => {
             setNotifications(record.expand.notification)
+            await pb.collection('users').update(pb.authStore.model!.id, {"notification_seen": record.notification.length})
         })
     }
 
@@ -53,11 +54,11 @@ const Notification = () => {
                         <tbody>
                             {
                                 notifications &&
-                                notifications.map((data: any, index: number) => {
+                                notifications.sort(function compareFn(a:any, b:any) {return (new Date(b.created).valueOf() - new Date(a.created).valueOf())}).map((data: any, index: number) => {
                                     return (
                                         <tr key={index} className="cursor-pointer hover:bg-[#F6F5F4]">
                                             <td className="px-4 py-2">{data.description}</td>
-                                            <td className="px-4 py-2">{data.created}</td>
+                                            <td className="px-4 py-2">{(moment(data.created)).fromNow()}</td>
                                         </tr>
                                     )
                                 })
