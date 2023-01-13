@@ -39,7 +39,7 @@ const Profile = () => {
                                             (!pb.authStore.model!.avatar) ? 
                                             <span className="font-large text-[#2B788B] font-[Montserrat]">{pb.authStore.model!.name[0]}</span>
                                             :
-                                            <img src={`${import.meta.env.VITE_PB_URL}/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
+                                            <img className='h-full !object-cover' src={`${import.meta.env.VITE_PB_URL}/api/files/_pb_users_auth_/${pb.authStore.model!.id}/${pb.authStore.model!.avatar}`}></img>
                                         }
                             </div>
                             <div className="flex flex-col items-center justify-center">

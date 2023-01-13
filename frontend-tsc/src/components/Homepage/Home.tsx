@@ -9,11 +9,6 @@ import Shoes from '../../assets/images/image10.svg?webp&imagetools'
 import Megaphone from '../../assets/images/image11.svg?webp&imagetools'
 import GirlBook from '../../assets/images/girl-book.png?webp&imagetools'
 import GirlBoy from '../../assets/images/boy-girl.png?webp&imagetools'
-import { Helmet } from 'react-helmet'
-
-import {
-  ArrowSmallRightIcon
-} from '@heroicons/react/24/outline'
 
 import PocketBase from 'pocketbase';
 
@@ -25,10 +20,6 @@ function Home() {
   const token = pb.authStore.token;
   return (
     <>
-      <Helmet>
-        <link rel="preload" as="image" href={Boy} type="image/png"/>
-        <link rel="preload" as="image" href={Girl} type="image/png"/>
-      </Helmet>
       <div className='max-w-screen h-full overflow-hidden'>
         <div id='1' className='flex flex-col md:flex-row gap-16 bg-[#F6F5F4] md:p-[5vw] lg:p-[10vw] mb-10 md:m-0'>
           {/* Left Side */}
