@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { BsPlusSquareDotted } from 'react-icons/bs'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const VideoAdder = ({ data }: { data: any; }) => {
 

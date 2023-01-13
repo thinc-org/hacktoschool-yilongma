@@ -10,7 +10,7 @@ import InstructorFileBox from './Subtasks/InstructorFileBox';
 import InstructorTextBox from './Subtasks/InstructorTextBox';
 import InstructorChoiceBox from './Subtasks/InstructorChoiceBox';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 const InstructorAssignment = () => {

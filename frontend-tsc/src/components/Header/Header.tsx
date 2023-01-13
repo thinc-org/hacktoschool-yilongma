@@ -14,7 +14,7 @@ import { RemoveScroll } from 'react-remove-scroll';
 import User from './User'
 
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 const games = [

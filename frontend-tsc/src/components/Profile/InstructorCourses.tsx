@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PocketBase from 'pocketbase';
 import moment from 'moment'
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const InstructorCourses = () => {
 
