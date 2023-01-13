@@ -19,6 +19,10 @@ const Course = () => {
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
 
+
+
+    var userId = pb.authStore.model!.id
+
     if (!token) {
         { return <Navigate to='/' /> }
 
@@ -44,8 +48,11 @@ const Course = () => {
         "video": [],
         "assignment": [],
         "tag": [],
-        
+        "price": ""
+
     });
+
+    var link = "https://stripe.jjus.dev/create-checkout-session?name=" + courseData.name + "&course=" + id + "&price=" + courseData.price + "&user=" + userId
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
@@ -81,9 +88,9 @@ const Course = () => {
                 showConfirmButton: false,
                 timer: 1000
             }).then(async () => {
-                const newNotification = await pb.collection('notifications').create({"description": `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`})
+                const newNotification = await pb.collection('notifications').create({ "description": `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"` })
                 await pb.collection('users').getOne(courseData.instructor).then(async (urec) => {
-                    await pb.collection('users').update(courseData.instructor, {"notification": [...urec.notification, newNotification.id]})
+                    await pb.collection('users').update(courseData.instructor, { "notification": [...urec.notification, newNotification.id] })
                 })
                 window.location.reload()
             })
@@ -97,6 +104,20 @@ const Course = () => {
                 timer: 2000
             })
         }
+    }
+
+    const handlePurchase = (userId: string) => {
+        var link = "https://stripe.jjus.dev/create-checkout-session?name=" + courseData.name + "&course=" + id + "&price=100&user=" + userId
+        console.log(userId)
+        console.log('yo')
+        console.log(link)
+        // window.location.replace(link)
+        fetch(link, {
+            method: 'POST'
+        }).then(response => {
+            // window.location.replace(response.url)
+            console.log(response)
+        });
 
     }
     useEffect(() => {
@@ -126,13 +147,26 @@ const Course = () => {
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
                                     (!courseData.student.includes(pb.authStore.model!.id) ?
-                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" onClick={enrolling}>Enroll</button> :
+                                        <>
+                                            {courseData.price == 0 ? <button className="bg-[#639B6D] hover:bg-[#74bf81] w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" onClick={enrolling}>Enroll</button>
+                                                :
+                                                <form action={link} method='POST'>
+                                                    <button
+                                                        className="bg-[#639B6D] hover:bg-[#74bf81] w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline"
+                                                        type='submit'
+                                                    >
+                                                        Purchase {courseData.price}
+                                                    </button>
+                                                </form>}
+
+
+                                        </> :
                                         <button className="bg-[#585858] w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
                                     ""
                             }
                             {
                                 ((pb.authStore.model!.role).includes('instructor')) &&
-                                <button className="bg-[#5996A5] hover:bg-blue-700 w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" onClick={() => {navigate('edit')}}>Edit</button>
+                                <button className="bg-[#5996A5] hover:bg-blue-700 w-32 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" onClick={() => { navigate('edit') }}>Edit</button>
                             }
                         </div>
                     </div>
@@ -149,7 +183,7 @@ const Course = () => {
                                     return <Tag key={index} name={data.name} bgColor="#daeffe" textColor="#0c5a93" />
                                 }))
                             }
-                            
+
                         </div>
                         <div className="overflow-auto max-h-[14rem]">
                             <p className="font-['Montserrat'] text-[1rem] px-8 py-2 whitespace-pre-line">{courseData.description}</p>
@@ -159,7 +193,20 @@ const Course = () => {
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
                                     (!courseData.student.includes(pb.authStore.model!.id) ?
-                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline">Enroll</button> :
+                                        <>
+                                            {courseData.price == 0 ? <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline">Enroll</button>
+                                                :
+                                                <form action={link} method='POST'>
+                                                    <button
+                                                        className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline"
+                                                        type='submit'
+                                                    >
+                                                        Purchase {courseData.price}
+                                                    </button>
+                                                </form>}
+
+
+                                        </> :
                                         <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
                                     ""
                             }
