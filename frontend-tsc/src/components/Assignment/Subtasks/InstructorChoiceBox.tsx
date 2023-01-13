@@ -20,6 +20,7 @@ function InstructorChoiceBox ({ id, index }: {id:any; index:number}) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [choices, setChoices] = useState<any>([])
+    const [score, setScore] = useState(0);
 
     const getData = async () => {
         await pb.collection('subtasks').getOne(id || "", {})
@@ -27,15 +28,27 @@ function InstructorChoiceBox ({ id, index }: {id:any; index:number}) {
             setName(record.name)
             setDescription(record.description || "")
             setChoices(record.choice || [])
+            setScore(record.score || 0)
         });
         
     }
 
     const handleSubmit = async () => {
+        if (score < 0) {
+            Swal.fire({
+                title:'Error', 
+                text:'Maximum score must not be negative!', 
+                icon:'error',
+                showConfirmButton: false,
+                timer: 2000});
+            return;
+        }
+        
         const formData = {
             "name": name,
             "description": description,
             "choice": choices,
+            "score" : score,
         }
         await pb.collection('subtasks').update(id || "", formData)
             .then(async () => {
@@ -131,6 +144,12 @@ function InstructorChoiceBox ({ id, index }: {id:any; index:number}) {
                         
                     </div>
                     
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Maximum Score
+                        </label>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Task Name" value={score.toString()} onChange={(e) => setScore(parseInt(e.target.value) || 0)}/>
+                    </div>
 
                     <div className="flex flex-row items-center justify-between">
                             

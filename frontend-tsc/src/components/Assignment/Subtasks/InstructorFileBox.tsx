@@ -19,6 +19,7 @@ function InstructorFileBox ({ id, index }: {id:any; index:number}) {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [score, setScore] = useState(0);
 
     const getData = async () => {
         await pb.collection('subtasks').getOne(id || "", {})
@@ -30,6 +31,15 @@ function InstructorFileBox ({ id, index }: {id:any; index:number}) {
     }
 
     const handleSubmit = async () => {
+        if (score < 0) {
+            Swal.fire({
+                title:'Error', 
+                text:'Maximum score must not be negative!', 
+                icon:'error',
+                showConfirmButton: false,
+                timer: 2000});
+            return;
+        }
         const formData = {
             "name": name,
             "description": description,
@@ -56,6 +66,7 @@ function InstructorFileBox ({ id, index }: {id:any; index:number}) {
     }
 
     const handleDelete = async () => {
+        
         await pb.collection('subtasks').delete(id || "")
         .then(async () => {
             await Swal.fire({
@@ -107,6 +118,13 @@ function InstructorFileBox ({ id, index }: {id:any; index:number}) {
                         </label>
                         <ReactQuill theme="snow" value={description} onChange={setDescription} />
                         
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Maximum Score
+                        </label>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Task Name" value={score.toString()} onChange={(e) => setScore(parseInt(e.target.value) || 0)}/>
                     </div>
 
                     <div className="flex flex-row items-center justify-between">
