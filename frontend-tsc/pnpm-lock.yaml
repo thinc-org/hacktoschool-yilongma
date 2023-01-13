@@ -28,7 +28,7 @@ specifiers:
   react-player: ^2.11.0
   react-quill: ^2.0.0
   react-remove-scroll: ^2.5.5
-  react-router-dom: ^6.6.1
+  react-router-dom: ^6.6.2
   react-select: ^5.7.0
   react-tabs: ^6.0.0
   socket.io-client: ^4.5.4
@@ -61,7 +61,7 @@ dependencies:
   react-player: 2.11.0_react@18.2.0
   react-quill: 2.0.0_biqbaboplfbrettd7655fr4n2y
   react-remove-scroll: 2.5.5_kzbn2opkn2327fwg5yzwzya5o4
-  react-router-dom: 6.6.1_biqbaboplfbrettd7655fr4n2y
+  react-router-dom: 6.6.2_biqbaboplfbrettd7655fr4n2y
   react-select: 5.7.0_ib3m5ricvtkl2cll7qpr2f6lvq
   react-tabs: 6.0.0_react@18.2.0
   socket.io-client: 4.5.4
@@ -2203,8 +2203,8 @@ packages:
       use-sidecar: 1.1.2_kzbn2opkn2327fwg5yzwzya5o4
     dev: false
 
-  /react-router-dom/6.6.1_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-u+8BKUtelStKbZD5UcY0NY90WOzktrkJJhyhNg7L0APn9t1qJNLowzrM9CHdpB6+rcPt6qQrlkIXsTvhuXP68g==}
+  /react-router-dom/6.6.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-6SCDXxRQqW5af8ImOqKza7icmQ47/EMbz572uFjzvcArg3lZ+04PxSPp8qGs+p2Y+q+b+S/AjXv8m8dyLndIIA==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
@@ -2213,11 +2213,11 @@ packages:
       '@remix-run/router': 1.2.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router: 6.6.1_react@18.2.0
+      react-router: 6.6.2_react@18.2.0
     dev: false
 
-  /react-router/6.6.1_react@18.2.0:
-    resolution: {integrity: sha512-YkvlYRusnI/IN0kDtosUCgxqHeulN5je+ew8W+iA1VvFhf86kA+JEI/X/8NqYcr11hCDDp906S+SGMpBheNeYQ==}
+  /react-router/6.6.2_react@18.2.0:
+    resolution: {integrity: sha512-uJPG55Pek3orClbURDvfljhqFvMgJRo59Pktywkk8hUUkTY2aRfza8Yhl/vZQXs+TNQyr6tu+uqz/fLxPICOGQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
