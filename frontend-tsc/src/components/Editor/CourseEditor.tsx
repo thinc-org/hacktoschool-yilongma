@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 const pb = new PocketBase('https://pb.jjus.dev');
 
 const CourseEditor = () => {
-    let { id, userId } = useParams();
+    let { id, courseId } = useParams();
     const token = pb.authStore.token;
     const dataFetchedRef = useRef(false);
     let navigate = useNavigate();
@@ -20,23 +20,19 @@ const CourseEditor = () => {
     
     const [clearAvatar, setClearAvatar] = useState(false)
     const [name, setName] = useState("");
+    const [descriptionText, setDescriptionText] = useState("");
     const [file, setFile] = useState<File>();
     const [resetFileInput, setResetFileInput] = useState(1);
 
 
 
-    function useForceUpdate(){
-        const [value, setValue] = useState(0); // integer state
-        return () => setValue(value => value + 1); // update state to force render
-        // A function that increment 👆🏻 the previous state like here 
-        // is better than directly setting `setValue(value + 1)`
-    }
 
 
     const getData = async () => {
-        await pb.collection('users').getOne(userId || "")
+        await pb.collection('courses').getOne(courseId || "")
         .then((record) => {
             setName(record.name)
+            setName(record.description)
         });
         
     }
@@ -59,7 +55,7 @@ const CourseEditor = () => {
                 formData.append('avatar', file);
             }
             formData.append('name', name);
-            await pb.collection('users').update(userId || "", formData)
+            await pb.collection('course').update(courseId || "", formData)
             .then(async () => {
                 await Swal.fire({
                     title: "Success",
