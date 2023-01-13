@@ -10,6 +10,8 @@ import Video from './Video';
 import Tag from '../Tags/Tag';
 import GirlStudying from '../../assets/images/girl-studying.png?webp&imagetools'
 import Assignment from './Assignment';
+import MailSender from '../NotificationSender/MailSender';
+import SlackSender from '../NotificationSender/SlackSender';
 
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
@@ -88,11 +90,16 @@ const Course = () => {
                 showConfirmButton: false,
                 timer: 1000
             }).then(async () => {
+                let tempEmail = ""
                 const newNotification = await pb.collection('notifications').create({ "description": `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"` })
                 await pb.collection('users').getOne(courseData.instructor).then(async (urec) => {
                     await pb.collection('users').update(courseData.instructor, { "notification": [...urec.notification, newNotification.id] })
+                    tempEmail = urec.email
                 })
+                
                 window.location.reload()
+                await MailSender(`Hack2School - GlobalTalk : New student enrolled in "${courseData.name}"`, `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`, [tempEmail])
+                await SlackSender(`"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`)
             })
         }
         catch {
