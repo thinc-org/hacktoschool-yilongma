@@ -114,13 +114,13 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                             
                             </div>
                             <div className="flex flex-row flex-wrap gap-2">
-                                <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
+                                <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
                                 {
                                     pb.authStore.model!.role.includes('student') && 
                                     (isInterested?
-                                    <button className="bg-[#A15993] hover:bg-[#b072a4] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
+                                    <button className="bg-[#A15993] hover:bg-[#b072a4] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
                                     :
-                                    <button className="bg-[#C4A24C] hover:bg-[#d6bb78] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
+                                    <button className="bg-[#C4A24C] hover:bg-[#d6bb78] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
                                 }
                             </div>
                             
@@ -145,13 +145,13 @@ const CourseBox = ({ id, name, instructor, data, tag }: { id: string; name: stri
                                 }))
                             }
                             </div>
-                            <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
+                            <button className="bg-[#639B6D] hover:bg-[#74bf81] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={routeChange}>View</button>
                             {
                                 pb.authStore.model!.role.includes('student') && 
                                 (isInterested?
-                                <button className="bg-[#A15993] hover:bg-[#b072a4] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
+                                <button className="bg-[#A15993] hover:bg-[#b072a4] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={uninterested}>Uninterest</button>
                                 :
-                                <button className="bg-[#C4A24C] hover:bg-[#d6bb78] w-[80%] md:w-32 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
+                                <button className="bg-[#C4A24C] hover:bg-[#d6bb78] w-[80%] md:w-32 text-white font-bold py-2 rounded-full focus:outline-none focus:shadow-outline mt-auto md:mt-0" onClick={interested}>Interest</button>)
                             }
                         </div>
                     </div>
