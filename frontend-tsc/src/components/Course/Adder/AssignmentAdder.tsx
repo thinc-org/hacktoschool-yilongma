@@ -15,8 +15,19 @@ const AssignmentAdder = ({ data }:{data:any;}) => {
                 "public": false,
 
             };
-            await pb.collection('assignments').create(createdData)
-                .then((record) => navigate('assignments/'+record.id))
+            const record = await pb.collection('assignments').create(createdData)
+            
+            const oldCourseRecord = await pb.collection('courses').getOne(data.id || "", {
+                expand: '',
+            });
+
+            var sendData = {
+                "assignment": [...oldCourseRecord.assignment, record.id]
+            };
+            const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
+            .then(() => {
+                navigate("assignments/"+record.id)
+            })
             
         
     }
