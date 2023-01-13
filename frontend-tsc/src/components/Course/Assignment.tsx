@@ -41,9 +41,7 @@ const Assignment = ({ data }:{data:any;}) => {
                                 })}}>
                                 Delete
                             </button>
-                            <button className="bg-[#5996A5] hover:bg-blue-700 text-[0.8rem] text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => {navigate('/courses/'+data.id+'/assignments/'+assignmentData.id+'/edit')}}>
-                                Edit
-                            </button>
+                       
                         </div>
                     </td>
                         
