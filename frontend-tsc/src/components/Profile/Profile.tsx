@@ -52,6 +52,11 @@ const Profile = () => {
                         <div className="flex flex-col justify-center gap-2 p-2 -m-2 mt-2 mb-2 px-10 md:px-3 py-2 md:w-[60%]">
                             <p className='font-[Montserrat] text-[0.85rem]'><span className="font-bold">E-mail:</span> {pb.authStore.model!.email}</p>
                             <p className='font-[Montserrat] text-[0.85rem]'><span className="font-bold">Account created on:</span> {(new Date (pb.authStore.model!.created).toLocaleString())}</p>
+                            <div className="flex flex-row items-center justify-between">
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full focus:outline-none focus:shadow-outline" type="button" onClick={() => navigate('edit')}>
+                                    Edit Profile
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
