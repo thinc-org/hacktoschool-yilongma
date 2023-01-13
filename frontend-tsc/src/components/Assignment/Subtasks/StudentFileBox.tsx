@@ -35,6 +35,10 @@ function StudentFileBox ({ id, index }: {id:any; index:number}) {
     },[])
 
 
+    function setFile(arg0: File) {
+        throw new Error('Function not implemented.');
+    }
+
     return (
         <div>
             <div className='flex flex-col rounded-lg bg-[#FFFFFF] min-h-64 mt-8 mb-8 shadow hover:shadow-lg'>
