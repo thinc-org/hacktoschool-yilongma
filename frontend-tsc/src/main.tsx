@@ -16,6 +16,7 @@ import VideoBox from './components/Video/VideoBox';
 import VideoEditor from './components/Editor/VideoEditor';
 import Profile from './components/Profile/Profile';
 import ProfileEditor from './components/Editor/ProfileEditor';
+import CourseEditor from './components/Editor/CourseEditor';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/register' element={<><Register/></>} />
           <Route path='/courses' element={<><Header/><CoursesList/><Footer/></>} />
           <Route path='/courses/:id' element={<><Header/><Course/><Footer/></>} />
+          <Route path='/courses/:id/edit' element={<><Header/><CourseEditor/><Footer/></>} />
           <Route path='/courses/:id/announcements/:announcementId' element={<><Header/><AnnouncementBox/><Footer/></>} />
           <Route path='/courses/:id/announcements/:announcementId/edit' element={<><Header/><AnnouncementEditor/><Footer/></>} />
           <Route path='/courses/:id/materials/:materialId/edit' element={<><Header/><MaterialEditor/><Footer/></>} />
