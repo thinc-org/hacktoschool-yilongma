@@ -9,6 +9,7 @@ import Material from './Material'
 import Video from './Video';
 import Tag from '../Tags/Tag';
 import GirlStudying from '../../assets/images/girl-studying.png?webp&imagetools'
+import Assignment from './Assignment';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -33,6 +34,7 @@ const Course = () => {
             "announcement": [],
             "material": [],
             "video": [],
+            "assignment": [],
             "tag": [],
         },
         "description": "",
@@ -40,12 +42,14 @@ const Course = () => {
         "announcement": [],
         "material": [],
         "video": [],
+        "assignment": [],
         "tag": [],
+        
     });
 
     const getCourseData = async () => {
         const record = await pb.collection('courses').getOne(id || "", {
-            expand: 'instructor,student,announcement,material,video,tag',
+            expand: 'instructor,student,announcement,material,video,tag,assignment',
         });
         console.log(record)
         setCourseData(record)
@@ -166,6 +170,7 @@ const Course = () => {
                 {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Announcement data={courseData} /> : ""}
                 {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Material data={courseData} /> : ""}
                 {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Video data={courseData} /> : ""}
+                {pb.authStore.model!.role.includes('instructor') || courseData.student.includes(pb.authStore.model!.id) ? <Assignment data={courseData} /> : ""}
             </div>
 
         </div>
