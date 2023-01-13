@@ -117,8 +117,8 @@ const Course = () => {
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
                                     (!courseData.student.includes(pb.authStore.model!.id) ?
-                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" onClick={enrolling}>Enroll</button> :
-                                        <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
+                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" onClick={enrolling}>Enroll</button> :
+                                        <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
                                     ""
                             }
                         </div>
@@ -145,8 +145,8 @@ const Course = () => {
                             {
                                 ((pb.authStore.model!.role).includes('student')) ?
                                     (!courseData.student.includes(pb.authStore.model!.id) ?
-                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">Enroll</button> :
-                                        <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
+                                        <button className="bg-[#639B6D] hover:bg-[#74bf81] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline">Enroll</button> :
+                                        <button className="bg-[#585858] w-40 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline disabled">Enrolled</button>) :
                                     ""
                             }
                         </div>
