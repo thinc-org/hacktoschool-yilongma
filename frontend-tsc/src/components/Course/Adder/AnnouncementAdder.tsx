@@ -4,7 +4,7 @@ import PocketBase from 'pocketbase';
 import { useNavigate } from 'react-router-dom';
 import MailSender from '../../NotificationSender/MailSender';
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 const AnnouncementAdder = ({ data }:{data:any;}) => {
 

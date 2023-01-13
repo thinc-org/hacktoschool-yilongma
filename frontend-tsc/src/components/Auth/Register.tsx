@@ -23,7 +23,7 @@ const regisSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function Register() {

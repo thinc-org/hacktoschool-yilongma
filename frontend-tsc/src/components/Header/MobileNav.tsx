@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 function MobileNav() {
     return (
