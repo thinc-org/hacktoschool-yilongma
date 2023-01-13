@@ -80,7 +80,11 @@ const Course = () => {
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 1000
-            }).then(() => {
+            }).then(async () => {
+                const newNotification = await pb.collection('notifications').create({"description": `"${pb.authStore.model!.name}" enrolled the course "${courseData.name}"`})
+                await pb.collection('users').getOne(courseData.instructor).then(async (urec) => {
+                    await pb.collection('users').update(courseData.instructor, {"notification": [...urec.notification, newNotification.id]})
+                })
                 window.location.reload()
             })
         }

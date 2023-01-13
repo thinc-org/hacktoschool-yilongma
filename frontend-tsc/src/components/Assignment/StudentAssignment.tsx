@@ -17,6 +17,8 @@ const StudentAssignment = () => {
 
     const [assignmentData, setAssignmentData] = useState<any>({});
 
+    const [answer, setAnswer] = useState<any>([])
+
 
 
     const getData = async () => {
