@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import PocketBase from 'pocketbase';
 import { useNavigate } from 'react-router-dom';
+import MailSender from '../../NotificationSender/MailSender';
 
 const pb = new PocketBase('https://pb.jjus.dev');
 
@@ -49,10 +50,13 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                     const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
                     .then(async () => {
                         const newNotification = await pb.collection('notifications').create({"description": `There is new announcement in the course "${data.name}"`})
+                        let tempEmail: any[] = []
                         for (const eachStudentId of data.student)
                         await pb.collection('users').getOne(eachStudentId).then(async (urec) => {
                             await pb.collection('users').update(eachStudentId, {"notification": [...urec.notification, newNotification.id]})
+                            tempEmail.push(urec.email)
                         })
+                        
                         await Swal.fire({
                             title: "Success",
                             text: 'Create new announcement successfully!',
@@ -60,10 +64,12 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                             showConfirmButton: false,
                             timer: 1000
                     
-                        }).then(() => {
+                        }).then(async () => {
                             navigate('/courses/'+data.id+'/announcements/'+record.id)
+                            await MailSender("New announcement in Hack2School - GlobalTalk", `There is new announcement in the course "${data.name}\nTopic: ${record.name}\n${record.description}"`, tempEmail)
                         })
-                    }).catch(() => {
+                    }).catch((e) => {
+                        console.log(e)
                     Swal.fire({
                         title:'Error', 
                         text:'Please try again later', 
