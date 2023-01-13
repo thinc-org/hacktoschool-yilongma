@@ -48,6 +48,11 @@ const AnnouncementAdder = ({ data }:{data:any;}) => {
                     };
                     const newRecord = await pb.collection('courses').update(oldCourseRecord.id || "", sendData)
                     .then(async () => {
+                        const newNotification = await pb.collection('notifications').create({"description": `There is new announcement in the course "${data.name}"`})
+                        for (const eachStudentId of data.student)
+                        await pb.collection('users').getOne(eachStudentId).then(async (urec) => {
+                            await pb.collection('users').update(eachStudentId, {"notification": [...urec.notification, newNotification.id]})
+                        })
                         await Swal.fire({
                             title: "Success",
                             text: 'Create new announcement successfully!',

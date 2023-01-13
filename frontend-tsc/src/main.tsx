@@ -41,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/users/:userId' element={<><Header/><Profile/><Footer/></>} />
           <Route path='/users/:userId/edit' element={<><Header/><ProfileEditor/><Footer/></>} />
           <Route path='/courses/:id/assignments/:assignmentId' element={<><Header/><AssignmentBox/><Footer/></>} />
-          <Route path='/notifications/:userId' element={<><Header/><Notification/><Footer/></>} />
+          <Route path='/notifications' element={<><Header/><Notification/><Footer/></>} />
           <Route path='/payment' element={<><Payment/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
