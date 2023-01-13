@@ -10,7 +10,7 @@
   font-weight: 400;
   src: url('./assets/fonts/DelaGothicOne-Regular.woff2') format('woff2'),
   url('./assets/fonts/DelaGothicOne-Regular.ttf') format('truetype');
-  font-display: swap;
+  font-display: block;
 }
 
 
