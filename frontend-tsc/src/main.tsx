@@ -19,6 +19,8 @@ import ProfileEditor from './components/Editor/ProfileEditor';
 import CourseEditor from './components/Editor/CourseEditor';
 import AssignmentBox from './components/Assignment/AssignmentBox';
 
+import Payment from './components/Payment'
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -38,6 +40,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='/users/:userId' element={<><Header/><Profile/><Footer/></>} />
           <Route path='/users/:userId/edit' element={<><Header/><ProfileEditor/><Footer/></>} />
           <Route path='/courses/:id/assignments/:assignmentId' element={<><Header/><AssignmentBox/><Footer/></>} />
+          <Route path='/payment' element={<><Payment/></>} />
           {/* <Route path='*' element={<Navigate to="/" />} /> */}
 
         </Routes>
