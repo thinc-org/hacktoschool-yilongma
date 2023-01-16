@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
-import Cookies from 'js-cookie'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +23,7 @@ const regisSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 
 function Register() {
@@ -41,7 +40,6 @@ function Register() {
     const handleLogin = async (values: { email: string; password: string }) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
-                Cookies.set('token', value.token)
                 Swal.fire({
                     title: "Success",
                     text: 'Yay',

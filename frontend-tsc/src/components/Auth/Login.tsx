@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PocketBase from 'pocketbase';
 import Swal from 'sweetalert2';
-import Cookies from 'js-cookie'
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik'
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,7 @@ const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required")
 });
 
-const pb = new PocketBase('https://pb.jjus.dev');
+const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
 function Login() {
     const navigate = useNavigate();
@@ -26,28 +25,40 @@ function Login() {
         }
     })
 
-    const handleLogin = async (values: { email: string; password: string; } , actions: FormikHelpers<{ email: string; password: string; }>) => {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+    })
+
+    const handleLogin = async (values: { email: string; password: string; }, actions: FormikHelpers<{ email: string; password: string; }>) => {
         await pb.collection('users').authWithPassword(values.email, values.password)
             .then((value) => {
-                Cookies.set('token', value.token)
-                Swal.fire({
-                    title: "Success",
-                    text: 'Yay',
+                Toast.fire({
+                    title: "Logged In",
+                    text: 'Welcome ' + pb.authStore.model!.name,
                     icon: 'success',
-                    showConfirmButton: false,
-                    timer: 1000
+                    timer: 1500
                 }).then(() => {
                     navigate('/');
                 })
             }).catch(() => {
-                Swal.fire({
+                Toast.fire({
                     title: 'Error',
                     text: 'Wrong Username or Password',
                     icon: 'error',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1500
                 });
-                actions.resetForm()
+                actions.resetForm({
+                    values: {
+                        email: values.email,
+                        password: ''
+                    },
+                    isSubmitting : false
+                })
             })
     }
 
