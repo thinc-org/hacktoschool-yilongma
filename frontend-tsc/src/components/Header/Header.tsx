@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { BiMenuAltLeft } from 'react-icons/bi'
-import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
+
 
 import {
     XMarkIcon,
@@ -15,20 +13,6 @@ import User from './User'
 
 import PocketBase from 'pocketbase'
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
-
-
-const games = [
-    {
-        name: 'Sprint',
-        href: '#',
-        icon: ArrowSmallRightIcon,
-    },
-    {
-        name: 'Audio-Call',
-        href: '#',
-        icon: ArrowSmallRightIcon,
-    },
-]
 
 function Header() {
     function classNames(...classes: string[]) {
@@ -53,8 +37,6 @@ function Header() {
                                     <button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-900 hover:bg-gray-100 outline-none focus:ring-1" onClick={handleNavMenu}>
                                         <span className="sr-only">Open menu</span>
                                         {!open ? <BiMenuAltLeft className="h-6 w-6" aria-hidden="true" /> : <XMarkIcon className="h-6 w-6" aria-hidden="true" />}
-
-
                                     </button>
 
                                 </div>

@@ -5,24 +5,19 @@ from pocketbase_api import *
 from flask_mail import Mail, Message
 from discord_webhook import DiscordWebhook
 
-
-import os
-import stripe
-
-
 app = Flask(__name__)
 
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = ''
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'mailhw1234@gmail.com'
-app.config['MAIL_PASSWORD'] = 'sdgmlgsthwjmpixu'
+app.config['MAIL_USERNAME'] = ''
+app.config['MAIL_PASSWORD'] = ''
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
-endpoint_secret = 'whsec_MMHtiLZEuignGR0LshbYYhwFaqtEpyFx'
+endpoint_secret = ''
 
 
 @app.route('/users', methods=["GET", "POST"])
@@ -97,39 +92,5 @@ def login_sso():
         return {"result": r.url.split('?')[1].split('ticket=')[1]}, 201
     except:
         return {"result": 0}, 500
-
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    event = None
-    payload = request.data
-    sig_header = request.headers['STRIPE_SIGNATURE']
-
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret
-        )
-    except ValueError as e:
-        # Invalid payload
-        raise e
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        raise e
-
-    # Handle the event
-    if event['type'] == 'checkout.session.async_payment_failed':
-        session = event['data']['object']
-    elif event['type'] == 'checkout.session.async_payment_succeeded':
-        session = event['data']['object']
-    elif event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
-    elif event['type'] == 'checkout.session.expired':
-        session = event['data']['object']
-    # ... handle other event types
-    else:
-        print('Unhandled event type {}'.format(event['type']))
-
-    return jsonify(success=True)
-
 
 app.run()

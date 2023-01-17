@@ -118,21 +118,4 @@ app.post('/create-checkout-session', async (req, res) => {
     res.redirect(303, session.url);
 });
 
-
-app.get('/', async (req, res) => {
-    const record = await pb.collection('courses').getOne("g8ihlv62o5c2ept" || "", {
-        expand: 'instructor,student,announcement,material,video,tag,assignment',
-    })
-    console.log(record)
-    console.log(typeof(record))
-    console.log(Object.keys(record))
-    console.log(record.name)
-    res.json(req.body)
-});
-
-
-app.get('/success', (req, res) => {
-    res.redirect('https://127.0.0.1:3000/payment');
-});
-
 app.listen(4242, () => console.log('Running on port 4242'));
