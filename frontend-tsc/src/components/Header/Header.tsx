@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { Popover, Transition } from '@headlessui/react'
-
-
 import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
@@ -13,7 +11,6 @@ import User from './User'
 
 import PocketBase from 'pocketbase'
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
-
 function Header() {
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
